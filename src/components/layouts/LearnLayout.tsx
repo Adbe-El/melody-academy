@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { Music, BookOpen, FileText, Award, FolderOpen, LogOut, Menu, X, Home } from 'lucide-react';
+import { Music, BookOpen, FileText, Award, FolderOpen, LogOut, Menu, X, Home, User } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { signOut } from '../../services/auth';
 
@@ -10,6 +10,7 @@ const sidebarLinks = [
   { to: '/learn/assignments', icon: FileText, label: 'Assignments' },
   { to: '/learn/resources', icon: FolderOpen, label: 'Resources' },
   { to: '/learn/certificates', icon: Award, label: 'Certificates' },
+  { to: '/learn/profile', icon: User, label: 'Profile' },
 ];
 
 export const LearnLayout: React.FC = () => {

@@ -2,7 +2,7 @@ import React from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import {
   Music, LayoutDashboard, BookOpen, Users, Briefcase, MessageSquare,
-  GraduationCap, FileText, BarChart3, Settings, LogOut, Menu, X, Home
+  Building2, LogOut, Menu, X
 } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { signOut } from '../../services/auth';
@@ -13,11 +13,7 @@ const sidebarLinks = [
   { to: '/admin/learners', icon: Users, label: 'Learners' },
   { to: '/admin/instructors', icon: Briefcase, label: 'Instructors' },
   { to: '/admin/consultations', icon: MessageSquare, label: 'Consultations' },
-  { to: '/admin/exams', icon: GraduationCap, label: 'Exams' },
-  { to: '/admin/instruments', icon: Music, label: 'Instruments' },
-  { to: '/admin/announcements', icon: FileText, label: 'Announcements' },
-  { to: '/admin/reports', icon: BarChart3, label: 'Reports' },
-  { to: '/admin/settings', icon: Settings, label: 'Settings' },
+  { to: '/admin/consultancy', icon: Building2, label: 'Consultancy' },
 ];
 
 export const AdminLayout: React.FC = () => {

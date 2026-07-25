@@ -28,10 +28,20 @@ import { ForgotPasswordPage } from './pages/auth/ForgotPasswordPage';
 import { AuthCallback } from './pages/auth/AuthCallback';
 
 // Learner pages
-import { LearnerPortal } from './pages/lms/LearnerPortal';
+import { LearnerDashboard } from './pages/learner/LearnerDashboard';
+import { LessonNotes } from './pages/learner/LessonNotes';
+import { Assignments } from './pages/learner/Assignments';
+import { Resources } from './pages/learner/Resources';
+import { Certificates } from './pages/learner/Certificates';
+import { Profile } from './pages/learner/Profile';
 
 // Admin pages
 import { AdminDashboard } from './pages/admin/AdminDashboard';
+import { ProgrammeManagement } from './pages/admin/ProgrammeManagement';
+import { LearnerManagement } from './pages/admin/LearnerManagement';
+import { InstructorManagement } from './pages/admin/InstructorManagement';
+import { ConsultationManagement } from './pages/admin/ConsultationManagement';
+import { ConsultancyManagement } from './pages/admin/ConsultancyManagement';
 
 // Legacy — keep for backward compat during migration
 import { AppProvider } from './context/AppContext';
@@ -78,11 +88,12 @@ export function App() {
               {/* Learner routes — protected */}
               <Route element={<ProtectedRoute allowedRoles={['learner', 'admin']} />}>
                 <Route element={<LearnLayout />}>
-                  <Route path="/learn" element={<PageTransition><LearnerPortal /></PageTransition>} />
-                  <Route path="/learn/lessons" element={<PageTransition><LearnerPortal /></PageTransition>} />
-                  <Route path="/learn/assignments" element={<PageTransition><LearnerPortal /></PageTransition>} />
-                  <Route path="/learn/resources" element={<PageTransition><LearnerPortal /></PageTransition>} />
-                  <Route path="/learn/certificates" element={<PageTransition><LearnerPortal /></PageTransition>} />
+                  <Route path="/learn" element={<PageTransition><LearnerDashboard /></PageTransition>} />
+                  <Route path="/learn/lessons" element={<PageTransition><LessonNotes /></PageTransition>} />
+                  <Route path="/learn/assignments" element={<PageTransition><Assignments /></PageTransition>} />
+                  <Route path="/learn/resources" element={<PageTransition><Resources /></PageTransition>} />
+                  <Route path="/learn/certificates" element={<PageTransition><Certificates /></PageTransition>} />
+                  <Route path="/learn/profile" element={<PageTransition><Profile /></PageTransition>} />
                 </Route>
               </Route>
 
@@ -90,15 +101,11 @@ export function App() {
               <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
                 <Route element={<AdminLayout />}>
                   <Route path="/admin" element={<PageTransition><AdminDashboard /></PageTransition>} />
-                  <Route path="/admin/programmes" element={<PageTransition><AdminDashboard /></PageTransition>} />
-                  <Route path="/admin/learners" element={<PageTransition><AdminDashboard /></PageTransition>} />
-                  <Route path="/admin/instructors" element={<PageTransition><AdminDashboard /></PageTransition>} />
-                  <Route path="/admin/consultations" element={<PageTransition><AdminDashboard /></PageTransition>} />
-                  <Route path="/admin/exams" element={<PageTransition><AdminDashboard /></PageTransition>} />
-                  <Route path="/admin/instruments" element={<PageTransition><AdminDashboard /></PageTransition>} />
-                  <Route path="/admin/announcements" element={<PageTransition><AdminDashboard /></PageTransition>} />
-                  <Route path="/admin/reports" element={<PageTransition><AdminDashboard /></PageTransition>} />
-                  <Route path="/admin/settings" element={<PageTransition><AdminDashboard /></PageTransition>} />
+                  <Route path="/admin/programmes" element={<PageTransition><ProgrammeManagement /></PageTransition>} />
+                  <Route path="/admin/learners" element={<PageTransition><LearnerManagement /></PageTransition>} />
+                  <Route path="/admin/instructors" element={<PageTransition><InstructorManagement /></PageTransition>} />
+                  <Route path="/admin/consultations" element={<PageTransition><ConsultationManagement /></PageTransition>} />
+                  <Route path="/admin/consultancy" element={<PageTransition><ConsultancyManagement /></PageTransition>} />
                 </Route>
               </Route>
 
