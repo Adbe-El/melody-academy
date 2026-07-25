@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FileText, Send } from 'lucide-react';
-import { useAuth } from '../../hooks/useAuth';
-import { getLearnerByUserId } from '../../services/learners';
+import { useLearner } from '../../context/LearnerContext';
 import { assignmentsService, getAssignmentsByLearner } from '../../services/assignments';
 import { EmptyState } from '../../components/ui/EmptyState';
 import { Skeleton } from '../../components/ui/Skeleton';
@@ -9,26 +8,19 @@ import { useToast } from '../../components/ui/Toast';
 import type { Assignment } from '../../types';
 
 export const Assignments: React.FC = () => {
-  const { user } = useAuth();
+  const { learnerId, loading: learnerLoading } = useLearner();
   const { showToast } = useToast();
   const [assignments, setAssignments] = useState<Assignment[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const load = async () => {
-      try {
-        if (!user) return;
-        const learner = await getLearnerByUserId(user.id);
-        if (learner) {
-          const data = await getAssignmentsByLearner(learner.id);
-          setAssignments(data);
-        }
-      } catch { /* empty */ } finally {
-        setLoading(false);
-      }
-    };
-    load();
-  }, [user]);
+    if (learnerLoading) return;
+    if (!learnerId) { setLoading(false); return; }
+    getAssignmentsByLearner(learnerId)
+      .then(setAssignments)
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, [learnerId, learnerLoading]);
 
   const handleSubmit = async (id: string) => {
     try {

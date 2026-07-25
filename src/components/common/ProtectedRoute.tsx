@@ -32,7 +32,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ allowedRoles }) 
     if (user.role === 'admin') {
       return <Navigate to="/admin" replace />;
     }
-    return <Navigate to="/learn" replace />;
+    return <Navigate to="/learner" replace />;
   }
 
   return <Outlet />;

@@ -36,7 +36,7 @@ export const LoginPage: React.FC = () => {
     if (profile?.role === 'admin') {
       navigate('/admin');
     } else {
-      navigate('/learn');
+      navigate('/learner');
     }
     setLoading(false);
   };

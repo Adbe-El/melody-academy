@@ -5,12 +5,12 @@ import { useAuth } from '../../hooks/useAuth';
 import { signOut } from '../../services/auth';
 
 const sidebarLinks = [
-  { to: '/learn', icon: Home, label: 'Dashboard', end: true },
-  { to: '/learn/lessons', icon: BookOpen, label: 'Lesson Notes' },
-  { to: '/learn/assignments', icon: FileText, label: 'Assignments' },
-  { to: '/learn/resources', icon: FolderOpen, label: 'Resources' },
-  { to: '/learn/certificates', icon: Award, label: 'Certificates' },
-  { to: '/learn/profile', icon: User, label: 'Profile' },
+  { to: '/learner', icon: Home, label: 'Dashboard', end: true },
+  { to: '/learner/lessons', icon: BookOpen, label: 'Lesson Notes' },
+  { to: '/learner/assignments', icon: FileText, label: 'Assignments' },
+  { to: '/learner/resources', icon: FolderOpen, label: 'Resources' },
+  { to: '/learner/certificates', icon: Award, label: 'Certificates' },
+  { to: '/learner/profile', icon: User, label: 'Profile' },
 ];
 
 export const LearnLayout: React.FC = () => {

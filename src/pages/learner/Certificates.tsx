@@ -1,32 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { Award } from 'lucide-react';
-import { useAuth } from '../../hooks/useAuth';
-import { getLearnerByUserId } from '../../services/learners';
+import { useLearner } from '../../context/LearnerContext';
 import { getCertificatesByLearner } from '../../services/certificates';
 import { EmptyState } from '../../components/ui/EmptyState';
 import { Skeleton } from '../../components/ui/Skeleton';
 import type { Certificate } from '../../types';
 
 export const Certificates: React.FC = () => {
-  const { user } = useAuth();
+  const { learnerId, loading: learnerLoading } = useLearner();
   const [certs, setCerts] = useState<Certificate[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const load = async () => {
-      try {
-        if (!user) return;
-        const learner = await getLearnerByUserId(user.id);
-        if (learner) {
-          const data = await getCertificatesByLearner(learner.id);
-          setCerts(data);
-        }
-      } catch { /* empty */ } finally {
-        setLoading(false);
-      }
-    };
-    load();
-  }, [user]);
+    if (learnerLoading) return;
+    if (!learnerId) { setLoading(false); return; }
+    getCertificatesByLearner(learnerId)
+      .then(setCerts)
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, [learnerId, learnerLoading]);
 
   if (loading) {
     return (

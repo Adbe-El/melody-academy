@@ -30,7 +30,7 @@ export const Navbar: React.FC = () => {
     } else if (user.role === 'admin') {
       navigate('/admin');
     } else {
-      navigate('/learn');
+      navigate('/learner');
     }
   };
 

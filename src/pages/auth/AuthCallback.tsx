@@ -14,7 +14,7 @@ export const AuthCallback: React.FC = () => {
         // Magic link — Supabase handles the session from the URL hash
         const { error } = await supabase.auth.exchangeCodeForSession(window.location.href);
         if (!error) {
-          navigate('/learn');
+          navigate('/learner');
           return;
         }
       }
@@ -31,7 +31,7 @@ export const AuthCallback: React.FC = () => {
         if (profile?.role === 'admin') {
           navigate('/admin');
         } else {
-          navigate('/learn');
+          navigate('/learner');
         }
       } else {
         navigate('/auth/login');

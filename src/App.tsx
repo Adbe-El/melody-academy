@@ -35,6 +35,7 @@ import { Assignments } from './pages/learner/Assignments';
 import { Resources } from './pages/learner/Resources';
 import { Certificates } from './pages/learner/Certificates';
 import { Profile } from './pages/learner/Profile';
+import { LearnerProvider } from './context/LearnerContext';
 
 // Admin pages
 import { AdminDashboard } from './pages/admin/AdminDashboard';
@@ -88,13 +89,13 @@ export function App() {
 
               {/* Learner routes — protected */}
               <Route element={<ProtectedRoute allowedRoles={['learner', 'admin']} />}>
-                <Route element={<LearnLayout />}>
-                  <Route path="/learn" element={<PageTransition><LearnerDashboard /></PageTransition>} />
-                  <Route path="/learn/lessons" element={<PageTransition><LessonNotes /></PageTransition>} />
-                  <Route path="/learn/assignments" element={<PageTransition><Assignments /></PageTransition>} />
-                  <Route path="/learn/resources" element={<PageTransition><Resources /></PageTransition>} />
-                  <Route path="/learn/certificates" element={<PageTransition><Certificates /></PageTransition>} />
-                  <Route path="/learn/profile" element={<PageTransition><Profile /></PageTransition>} />
+                <Route element={<LearnerProvider><LearnLayout /></LearnerProvider>}>
+                  <Route path="/learner" element={<PageTransition><LearnerDashboard /></PageTransition>} />
+                  <Route path="/learner/lessons" element={<PageTransition><LessonNotes /></PageTransition>} />
+                  <Route path="/learner/assignments" element={<PageTransition><Assignments /></PageTransition>} />
+                  <Route path="/learner/resources" element={<PageTransition><Resources /></PageTransition>} />
+                  <Route path="/learner/certificates" element={<PageTransition><Certificates /></PageTransition>} />
+                  <Route path="/learner/profile" element={<PageTransition><Profile /></PageTransition>} />
                 </Route>
               </Route>
 

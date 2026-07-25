@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { GraduationCap, BookOpen, Award, Bell } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
-import { getLearnerByUserId } from '../../services/learners';
+import { useLearner } from '../../context/LearnerContext';
 import { getLessonNotesByLearner } from '../../services/lessonNotes';
 import { getAssignmentsByLearner } from '../../services/assignments';
 import { announcementsService } from '../../services/announcements';
 import { getCertificatesByLearner } from '../../services/certificates';
 import { Skeleton } from '../../components/ui/Skeleton';
-import type { Learner, LessonNote, Assignment, Announcement, Certificate } from '../../types';
+import type { LessonNote, Assignment, Announcement, Certificate } from '../../types';
 
 export const LearnerDashboard: React.FC = () => {
   const { user } = useAuth();
-  const [learner, setLearner] = useState<Learner | null>(null);
+  const { learner, loading: learnerLoading } = useLearner();
   const [notes, setNotes] = useState<LessonNote[]>([]);
   const [assignments, setAssignments] = useState<Assignment[]>([]);
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
@@ -19,31 +19,17 @@ export const LearnerDashboard: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const load = async () => {
-      try {
-        if (!user) return;
-        const l = await getLearnerByUserId(user.id);
-        setLearner(l);
-        if (l) {
-          const [n, a, an, c] = await Promise.all([
-            getLessonNotesByLearner(l.id),
-            getAssignmentsByLearner(l.id),
-            announcementsService.getAll(),
-            getCertificatesByLearner(l.id),
-          ]);
-          setNotes(n);
-          setAssignments(a);
-          setAnnouncements(an);
-          setCerts(c);
-        }
-      } catch {
-        // services may fail if Supabase tables don't exist yet — fall back to empty
-      } finally {
-        setLoading(false);
-      }
-    };
-    load();
-  }, [user]);
+    if (learnerLoading || !learner) { if (!learnerLoading) setLoading(false); return; }
+    Promise.all([
+      getLessonNotesByLearner(learner.id),
+      getAssignmentsByLearner(learner.id),
+      announcementsService.getAll(),
+      getCertificatesByLearner(learner.id),
+    ])
+      .then(([n, a, an, c]) => { setNotes(n); setAssignments(a); setAnnouncements(an); setCerts(c); })
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, [learner, learnerLoading]);
 
   if (loading) {
     return (

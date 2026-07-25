@@ -1,32 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { BookOpen } from 'lucide-react';
-import { useAuth } from '../../hooks/useAuth';
-import { getLearnerByUserId } from '../../services/learners';
+import { useLearner } from '../../context/LearnerContext';
 import { getLessonNotesByLearner } from '../../services/lessonNotes';
 import { EmptyState } from '../../components/ui/EmptyState';
 import { Skeleton } from '../../components/ui/Skeleton';
 import type { LessonNote } from '../../types';
 
 export const LessonNotes: React.FC = () => {
-  const { user } = useAuth();
+  const { learnerId, loading: learnerLoading } = useLearner();
   const [notes, setNotes] = useState<LessonNote[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const load = async () => {
-      try {
-        if (!user) return;
-        const learner = await getLearnerByUserId(user.id);
-        if (learner) {
-          const data = await getLessonNotesByLearner(learner.id);
-          setNotes(data);
-        }
-      } catch { /* empty */ } finally {
-        setLoading(false);
-      }
-    };
-    load();
-  }, [user]);
+    if (learnerLoading) return;
+    if (!learnerId) { setLoading(false); return; }
+    getLessonNotesByLearner(learnerId)
+      .then(setNotes)
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, [learnerId, learnerLoading]);
 
   if (loading) {
     return (

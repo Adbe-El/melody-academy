@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Download, FileText, Music, File } from 'lucide-react';
-import { useAuth } from '../../hooks/useAuth';
-import { getLearnerByUserId } from '../../services/learners';
+import { useLearner } from '../../context/LearnerContext';
 import { getResourcesByProgramme } from '../../services/resources';
 import { EmptyState } from '../../components/ui/EmptyState';
 import { Skeleton } from '../../components/ui/Skeleton';
@@ -14,25 +13,18 @@ const fileTypeIcons: Record<string, React.ReactNode> = {
 };
 
 export const Resources: React.FC = () => {
-  const { user } = useAuth();
+  const { learner, learnerId, loading: learnerLoading } = useLearner();
   const [resources, setResources] = useState<LMSResource[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const load = async () => {
-      try {
-        if (!user) return;
-        const learner = await getLearnerByUserId(user.id);
-        if (learner) {
-          const data = await getResourcesByProgramme(learner.programmeId);
-          setResources(data);
-        }
-      } catch { /* empty */ } finally {
-        setLoading(false);
-      }
-    };
-    load();
-  }, [user]);
+    if (learnerLoading) return;
+    if (!learner?.programmeId) { setLoading(false); return; }
+    getResourcesByProgramme(learner.programmeId)
+      .then(setResources)
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, [learner, learnerId, learnerLoading]);
 
   if (loading) {
     return (
