@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Building2, Search, Eye, ChevronDown, Filter } from 'lucide-react';
 import { consultancyRequestsService } from '../../services/consultancyRequests';
+import { getCached, setCache, clearCache } from '../../lib/dataCache';
 import { Badge } from '../../components/ui/Badge';
 import { Modal } from '../../components/ui/Modal';
 import { Skeleton } from '../../components/ui/Skeleton';
@@ -23,7 +24,12 @@ export const ConsultancyManagement: React.FC = () => {
   const [updating, setUpdating] = useState(false);
 
   useEffect(() => {
-    consultancyRequestsService.getAll().then(setRequests).finally(() => setLoading(false));
+    const cached = getCached<ConsultancyRequest[]>('admin_consultancy');
+    if (cached) { setRequests(cached); setLoading(false); return; }
+    consultancyRequestsService.getAll()
+      .then(d => { setRequests(d); setCache('admin_consultancy', d); })
+      .catch(() => setRequests([]))
+      .finally(() => setLoading(false));
   }, []);
 
   const filtered = requests.filter(r => {
@@ -39,6 +45,7 @@ export const ConsultancyManagement: React.FC = () => {
       const updated = await consultancyRequestsService.update(id, { status });
       setRequests(prev => prev.map(r => r.id === id ? updated : r));
       setSelected(prev => prev?.id === id ? { ...prev, status: status as ConsultancyRequest['status'] } : prev);
+      clearCache('admin_consultancy');
     } catch { /* empty */ } finally {
       setUpdating(false);
     }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Users, Search, Filter, Eye, ChevronDown } from 'lucide-react';
 import { learnersService } from '../../services/learners';
+import { getCached, setCache } from '../../lib/dataCache';
 import { Badge } from '../../components/ui/Badge';
 import { Modal } from '../../components/ui/Modal';
 import { Skeleton } from '../../components/ui/Skeleton';
@@ -20,7 +21,12 @@ export const LearnerManagement: React.FC = () => {
   const [selected, setSelected] = useState<Learner | null>(null);
 
   useEffect(() => {
-    learnersService.getAll().then(setLearners).finally(() => setLoading(false));
+    const cached = getCached<Learner[]>('admin_learners');
+    if (cached) { setLearners(cached); setLoading(false); return; }
+    learnersService.getAll()
+      .then(d => { setLearners(d); setCache('admin_learners', d); })
+      .catch(() => setLearners([]))
+      .finally(() => setLoading(false));
   }, []);
 
   const filtered = learners.filter(l => {

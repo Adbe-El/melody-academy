@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { MessageSquare, Search, Filter, Eye, ChevronDown } from 'lucide-react';
 import { consultationsService, updateConsultationStatus } from '../../services/consultations';
+import { getCached, setCache, clearCache } from '../../lib/dataCache';
 import { Badge } from '../../components/ui/Badge';
 import { Modal } from '../../components/ui/Modal';
 import { Skeleton } from '../../components/ui/Skeleton';
@@ -26,7 +27,12 @@ export const ConsultationManagement: React.FC = () => {
   const [updatingStatus, setUpdatingStatus] = useState(false);
 
   useEffect(() => {
-    consultationsService.getAll().then(setConsultations).finally(() => setLoading(false));
+    const cached = getCached<Consultation[]>('admin_consultations');
+    if (cached) { setConsultations(cached); setLoading(false); return; }
+    consultationsService.getAll()
+      .then(d => { setConsultations(d); setCache('admin_consultations', d); })
+      .catch(() => setConsultations([]))
+      .finally(() => setLoading(false));
   }, []);
 
   const filtered = consultations.filter(c => {
@@ -41,6 +47,7 @@ export const ConsultationManagement: React.FC = () => {
       const updated = await updateConsultationStatus(id, status);
       setConsultations(prev => prev.map(c => c.id === id ? updated : c));
       setSelected(prev => prev?.id === id ? { ...prev, status: status as Consultation['status'] } : prev);
+      clearCache('admin_consultations');
     } catch { /* empty */ } finally {
       setUpdatingStatus(false);
     }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Briefcase, Search, Eye, ChevronDown, Filter } from 'lucide-react';
 import { instructorAppsService } from '../../services/instructorApps';
+import { getCached, setCache, clearCache } from '../../lib/dataCache';
 import { Badge } from '../../components/ui/Badge';
 import { Modal } from '../../components/ui/Modal';
 import { Skeleton } from '../../components/ui/Skeleton';
@@ -25,7 +26,12 @@ export const InstructorManagement: React.FC = () => {
   const [updating, setUpdating] = useState(false);
 
   useEffect(() => {
-    instructorAppsService.getAll().then(setApps).finally(() => setLoading(false));
+    const cached = getCached<InstructorApplication[]>('admin_instructor_apps');
+    if (cached) { setApps(cached); setLoading(false); return; }
+    instructorAppsService.getAll()
+      .then(d => { setApps(d); setCache('admin_instructor_apps', d); })
+      .catch(() => setApps([]))
+      .finally(() => setLoading(false));
   }, []);
 
   const filtered = apps.filter(a => {
@@ -41,6 +47,7 @@ export const InstructorManagement: React.FC = () => {
       const updated = await instructorAppsService.update(id, { status });
       setApps(prev => prev.map(a => a.id === id ? updated : a));
       setSelected(prev => prev?.id === id ? { ...prev, status: status as InstructorApplication['status'] } : prev);
+      clearCache('admin_instructor_apps');
     } catch { /* empty */ } finally {
       setUpdating(false);
     }

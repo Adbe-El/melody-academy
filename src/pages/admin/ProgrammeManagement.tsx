@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { BookOpen, Search, Plus, Pencil, Trash2 } from 'lucide-react';
 import { programmesService } from '../../services/programmes';
+import { getCached, setCache, clearCache } from '../../lib/dataCache';
 import { Badge } from '../../components/ui/Badge';
 import { Modal } from '../../components/ui/Modal';
 import { Skeleton } from '../../components/ui/Skeleton';
@@ -18,7 +19,12 @@ export const ProgrammeManagement: React.FC = () => {
   const [form, setForm] = useState({ title: '', category: 'Keyboard' as Programme['category'], description: '', level: 'Beginner' as Programme['level'], duration: '', ageGroup: 'All Ages' as Programme['ageGroup'], imageUrl: '', featured: false });
 
   useEffect(() => {
-    programmesService.getAll().then(setProgrammes).finally(() => setLoading(false));
+    const cached = getCached<Programme[]>('programmes');
+    if (cached) { setProgrammes(cached); setLoading(false); return; }
+    programmesService.getAll()
+      .then(d => { setProgrammes(d); setCache('programmes', d); })
+      .catch(() => setProgrammes([]))
+      .finally(() => setLoading(false));
   }, []);
 
   const filtered = programmes.filter(p =>
@@ -36,6 +42,7 @@ export const ProgrammeManagement: React.FC = () => {
         const created = await programmesService.create(form);
         setProgrammes(prev => [created, ...prev]);
       }
+      clearCache('programmes');
       setEditing(null);
       setShowNew(false);
       resetForm();
@@ -47,6 +54,7 @@ export const ProgrammeManagement: React.FC = () => {
     try {
       await programmesService.delete(id);
       setProgrammes(prev => prev.filter(p => p.id !== id));
+      clearCache('programmes');
     } catch { /* empty */ }
   };
 
