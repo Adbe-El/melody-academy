@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth, DEV_BYPASS } from '../../hooks/useAuth';
 
 interface ProtectedRouteProps {
   allowedRoles: ('admin' | 'learner')[];
@@ -9,6 +9,8 @@ interface ProtectedRouteProps {
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ allowedRoles }) => {
   const { user, loading } = useAuth();
   const location = useLocation();
+
+  if (DEV_BYPASS) return <Outlet />;
 
   if (loading) {
     return (

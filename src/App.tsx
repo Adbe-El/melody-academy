@@ -7,6 +7,7 @@ import { PublicLayout } from './components/layouts/PublicLayout';
 import { LearnLayout } from './components/layouts/LearnLayout';
 import { AdminLayout } from './components/layouts/AdminLayout';
 import { ProtectedRoute } from './components/common/ProtectedRoute';
+import { DevRoleToggle } from './components/common/DevRoleToggle';
 
 // Public pages
 import { Home } from './pages/public/Home';
@@ -112,6 +113,7 @@ export function App() {
               {/* Catch all */}
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
+            <DevRoleToggle />
           </AppProvider>
         </ToastProvider>
       </AuthProvider>
