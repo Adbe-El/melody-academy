@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { Briefcase, Search, Eye, ChevronDown, Filter } from 'lucide-react';
 import { instructorAppsService } from '../../services/instructorApps';
-import { getCached, setCache, clearCache } from '../../lib/dataCache';
+import { useAdmin } from '../../context/AdminContext';
 import { Badge } from '../../components/ui/Badge';
 import { Modal } from '../../components/ui/Modal';
 import { Skeleton } from '../../components/ui/Skeleton';
@@ -18,40 +18,29 @@ const statusColors: Record<string, 'emerald' | 'gold' | 'red' | 'gray' | 'green'
 const STATUS_OPTIONS = ['pending', 'under_review', 'shortlisted', 'accepted', 'rejected'] as const;
 
 export const InstructorManagement: React.FC = () => {
-  const [apps, setApps] = useState<InstructorApplication[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { instructorApps, loading, refreshInstructorApps } = useAdmin();
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [selected, setSelected] = useState<InstructorApplication | null>(null);
   const [updating, setUpdating] = useState(false);
 
-  useEffect(() => {
-    const cached = getCached<InstructorApplication[]>('admin_instructor_apps');
-    if (cached) { setApps(cached); setLoading(false); return; }
-    instructorAppsService.getAll()
-      .then(d => { setApps(d); setCache('admin_instructor_apps', d); })
-      .catch(() => setApps([]))
-      .finally(() => setLoading(false));
-  }, []);
-
-  const filtered = apps.filter(a => {
+  const filtered = useMemo(() => instructorApps.filter(a => {
     const q = search.toLowerCase();
     const matchesSearch = a.fullName.toLowerCase().includes(q) || a.email.toLowerCase().includes(q) || a.primaryInstrument?.toLowerCase().includes(q);
     const matchesStatus = statusFilter === 'all' || a.status === statusFilter;
     return matchesSearch && matchesStatus;
-  });
+  }), [instructorApps, search, statusFilter]);
 
-  const handleStatusUpdate = async (id: string, status: string) => {
+  const handleStatusUpdate = useCallback(async (id: string, status: string) => {
     setUpdating(true);
     try {
-      const updated = await instructorAppsService.update(id, { status });
-      setApps(prev => prev.map(a => a.id === id ? updated : a));
+      await instructorAppsService.update(id, { status: status as InstructorApplication['status'] });
+      await refreshInstructorApps();
       setSelected(prev => prev?.id === id ? { ...prev, status: status as InstructorApplication['status'] } : prev);
-      clearCache('admin_instructor_apps');
     } catch { /* empty */ } finally {
       setUpdating(false);
     }
-  };
+  }, [refreshInstructorApps]);
 
   if (loading) return <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-2"><Skeleton variant="table-row" count={5} /></div>;
 
@@ -63,7 +52,7 @@ export const InstructorManagement: React.FC = () => {
         </div>
         <div>
           <h1 className="font-serif text-2xl font-bold text-gray-900">Instructor Applications</h1>
-          <p className="text-xs text-gray-500">{apps.length} applications</p>
+          <p className="text-xs text-gray-500">{instructorApps.length} applications</p>
         </div>
       </div>
 

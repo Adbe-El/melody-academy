@@ -1,44 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Shield, Calendar, Users, Briefcase, ShoppingBag } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
-import { consultationsService } from '../../services/consultations';
-import { instructorAppsService } from '../../services/instructorApps';
-import { programmesService } from '../../services/programmes';
-import { instrumentsService } from '../../services/instruments';
-import { learnersService } from '../../services/learners';
+import { useAdmin } from '../../context/AdminContext';
 import { Skeleton } from '../../components/ui/Skeleton';
-import type { Consultation, InstructorApplication, Programme, Instrument, Learner } from '../../types';
 
 export const AdminDashboard: React.FC = () => {
   const { user } = useAuth();
-  const [consultations, setConsultations] = useState<Consultation[]>([]);
-  const [apps, setApps] = useState<InstructorApplication[]>([]);
-  const [programmes, setProgrammes] = useState<Programme[]>([]);
-  const [instruments, setInstruments] = useState<Instrument[]>([]);
-  const [learners, setLearners] = useState<Learner[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const load = async () => {
-      try {
-        const [c, a, p, i, l] = await Promise.allSettled([
-          consultationsService.getAll(),
-          instructorAppsService.getAll(),
-          programmesService.getAll(),
-          instrumentsService.getAll(),
-          learnersService.getAll(),
-        ]);
-        if (c.status === 'fulfilled') setConsultations(c.value);
-        if (a.status === 'fulfilled') setApps(a.value);
-        if (p.status === 'fulfilled') setProgrammes(p.value);
-        if (i.status === 'fulfilled') setInstruments(i.value);
-        if (l.status === 'fulfilled') setLearners(l.value);
-      } catch { /* empty */ } finally {
-        setLoading(false);
-      }
-    };
-    load();
-  }, []);
+  const { consultations, instructorApps, programmes, learners, loading } = useAdmin();
 
   if (loading) {
     return (
@@ -50,7 +18,7 @@ export const AdminDashboard: React.FC = () => {
   }
 
   const newConsultations = consultations.filter(c => c.status === 'new').length;
-  const pendingApps = apps.filter(a => a.status === 'pending' || a.status === 'under_review').length;
+  const pendingApps = instructorApps.filter(a => a.status === 'pending' || a.status === 'under_review').length;
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
@@ -92,7 +60,7 @@ export const AdminDashboard: React.FC = () => {
             <Briefcase className="w-5 h-5" />
           </div>
           <p className="text-xs text-gray-500 font-semibold uppercase">Tutor Applications</p>
-          <p className="font-serif text-3xl font-bold text-gray-900">{apps.length}</p>
+          <p className="font-serif text-3xl font-bold text-gray-900">{instructorApps.length}</p>
           <span className="text-[11px] text-amber-700 font-medium">{pendingApps} under review</span>
         </div>
 
@@ -100,8 +68,8 @@ export const AdminDashboard: React.FC = () => {
           <div className="w-10 h-10 rounded-2xl bg-academy-sage text-academy-emerald flex items-center justify-center">
             <ShoppingBag className="w-5 h-5" />
           </div>
-          <p className="text-xs text-gray-500 font-semibold uppercase">Instruments</p>
-          <p className="font-serif text-3xl font-bold text-gray-900">{instruments.length}</p>
+          <p className="text-xs text-gray-500 font-semibold uppercase">Programmes</p>
+          <p className="font-serif text-3xl font-bold text-gray-900">{programmes.length}</p>
           <span className="text-[11px] text-emerald-700 font-medium">Catalogue active</span>
         </div>
       </div>

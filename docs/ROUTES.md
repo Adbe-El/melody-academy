@@ -39,11 +39,10 @@ export const ROUTES = {
   ADMIN: '/admin',
   ADMIN_PROGRAMMES: '/admin/programmes',
   ADMIN_LEARNERS: '/admin/learners',
-  ADMIN_CONSULTATIONS: '/admin/consultations',
+  ADMIN_BOOKINGS: '/admin/bookings',
   ADMIN_INSTRUCTORS: '/admin/instructors',
   ADMIN_EXAMS: '/admin/exams',
   ADMIN_INSTRUMENTS: '/admin/instruments',
-  ADMIN_CONSULTANCY: '/admin/consultancy',
   ADMIN_LMS: '/admin/lms',
   ADMIN_CONTENT: '/admin/content',
   ADMIN_REPORTS: '/admin/reports',
@@ -97,11 +96,10 @@ export const ROUTES = {
 | `/admin` | `AdminDashboard` | `AdminLayout` | Dashboard |
 | `/admin/programmes` | `ProgrammeManagement` | `AdminLayout` | Programmes |
 | `/admin/learners` | `LearnerManagement` | `AdminLayout` | Learners |
-| `/admin/consultations` | `ConsultationManagement` | `AdminLayout` | Consultations |
 | `/admin/instructors` | `InstructorManagement` | `AdminLayout` | Instructors |
+| `/admin/bookings` | `BookingsManagement` | `AdminLayout` | Bookings (Individual/Corporate toggle) |
 | `/admin/exams` | `ExamManagement` | `AdminLayout` | Exams |
 | `/admin/instruments` | `InstrumentManagement` | `AdminLayout` | Instruments |
-| `/admin/consultancy` | `ConsultancyManagement` | `AdminLayout` | Consultancy |
 | `/admin/lms` | `LMSManagement` | `AdminLayout` | LMS |
 | `/admin/content` | `WebsiteCMS` | `AdminLayout` | Website Content |
 | `/admin/reports` | `Reports` | `AdminLayout` | Reports |

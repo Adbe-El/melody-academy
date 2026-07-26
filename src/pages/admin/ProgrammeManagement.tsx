@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { BookOpen, Search, Plus, Pencil, Trash2 } from 'lucide-react';
 import { programmesService } from '../../services/programmes';
-import { getCached, setCache, clearCache } from '../../lib/dataCache';
+import { useAdmin } from '../../context/AdminContext';
 import { Badge } from '../../components/ui/Badge';
 import { Modal } from '../../components/ui/Modal';
 import { Skeleton } from '../../components/ui/Skeleton';
@@ -11,57 +11,44 @@ const CATEGORIES = ['Keyboard', 'Guitar', 'Vocals', 'Drums', 'Production', 'Stri
 const LEVELS = ['Beginner', 'Intermediate', 'Advanced', 'All Levels'] as const;
 
 export const ProgrammeManagement: React.FC = () => {
-  const [programmes, setProgrammes] = useState<Programme[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { programmes, loading, refreshProgrammes } = useAdmin();
   const [search, setSearch] = useState('');
   const [editing, setEditing] = useState<Programme | null>(null);
   const [showNew, setShowNew] = useState(false);
   const [form, setForm] = useState({ title: '', category: 'Keyboard' as Programme['category'], description: '', level: 'Beginner' as Programme['level'], duration: '', ageGroup: 'All Ages' as Programme['ageGroup'], imageUrl: '', featured: false });
 
-  useEffect(() => {
-    const cached = getCached<Programme[]>('programmes');
-    if (cached) { setProgrammes(cached); setLoading(false); return; }
-    programmesService.getAll()
-      .then(d => { setProgrammes(d); setCache('programmes', d); })
-      .catch(() => setProgrammes([]))
-      .finally(() => setLoading(false));
-  }, []);
-
-  const filtered = programmes.filter(p =>
+  const filtered = useMemo(() => programmes.filter(p =>
     p.title.toLowerCase().includes(search.toLowerCase()) || p.category.toLowerCase().includes(search.toLowerCase())
-  );
+  ), [programmes, search]);
 
-  const resetForm = () => setForm({ title: '', category: 'Keyboard', description: '', level: 'Beginner', duration: '', ageGroup: 'All Ages', imageUrl: '', featured: false });
+  const resetForm = useCallback(() => setForm({ title: '', category: 'Keyboard', description: '', level: 'Beginner', duration: '', ageGroup: 'All Ages', imageUrl: '', featured: false }), []);
 
-  const handleSave = async () => {
+  const handleSave = useCallback(async () => {
     try {
       if (editing) {
-        const updated = await programmesService.update(editing.id, form);
-        setProgrammes(prev => prev.map(p => p.id === editing.id ? updated : p));
+        await programmesService.update(editing.id, form);
       } else {
-        const created = await programmesService.create(form);
-        setProgrammes(prev => [created, ...prev]);
+        await programmesService.create(form);
       }
-      clearCache('programmes');
+      await refreshProgrammes();
       setEditing(null);
       setShowNew(false);
       resetForm();
     } catch { /* empty */ }
-  };
+  }, [editing, form, resetForm, refreshProgrammes]);
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = useCallback(async (id: string) => {
     if (!confirm('Delete this programme?')) return;
     try {
       await programmesService.delete(id);
-      setProgrammes(prev => prev.filter(p => p.id !== id));
-      clearCache('programmes');
+      await refreshProgrammes();
     } catch { /* empty */ }
-  };
+  }, [refreshProgrammes]);
 
-  const openEdit = (p: Programme) => {
+  const openEdit = useCallback((p: Programme) => {
     setForm({ title: p.title, category: p.category, description: p.description, level: p.level, duration: p.duration, ageGroup: p.ageGroup, imageUrl: p.imageUrl, featured: p.featured || false });
     setEditing(p);
-  };
+  }, []);
 
   if (loading) return <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-2"><Skeleton variant="table-row" count={5} /></div>;
 

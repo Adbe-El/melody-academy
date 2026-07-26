@@ -9,8 +9,8 @@
 - **Last completed phase:** Phase 2 (ALL COMPLETE)
 - **Current phase:** Phase 3 — Consultation & Recruitment (not started)
 - **Current feature:** All 5 public website features complete — landing page, programme/instrument details, exam prep, consultancy, contact
-- **Last file modified:** src/pages/public/Home.tsx, ProgrammeDetails.tsx, InstrumentDetails.tsx, ExamPrep.tsx, Consultancy.tsx, Contact.tsx, App.tsx
-- **Last session summary:** Completed Phase 2. Rewrote Home page with About, Why Learn With Us, Featured Instructors sections. Created ProgrammeDetails page with banner, outcomes, FAQ accordion. Created InstrumentDetails page with image, specs, WhatsApp enquiry, related instruments. Rewrote ExamPrep with practical vs theory, timeline, FAQ. Enhanced Consultancy with success stories + FAQ. Enhanced Contact with social links + Google Maps embed. Production build passes. Updated DESIGN_SYSTEM.md to adopt OKLCH color format, green-tinted shadows, and new animations (float, marquee, shimmer, pulse-ring) from reference site.
+- **Last file modified:** src/pages/admin/BookingsManagement.tsx, AdminLayout.tsx, App.tsx, factory.ts, dataCache.ts, services/supabase.ts, services/consultations.ts
+- **Last session summary:** Unified Consultation + Consultancy admin pages into single BookingsManagement with Individual/Corporate toggle. Added column selection to factory.ts for slim queries. Fixed duplicate Supabase client. Increased cache TTL to 5min. Added useMemo/useCallback to all admin pages. Fixed 2 TS build errors. Updated ROUTES.md, PAGES.md, MEMORY.md.
 - **Blockers:** None
 
 ---
@@ -134,12 +134,17 @@
 - `context/AppContext.tsx` — Global state (legacy, to be phased out)
 - `services/auth.ts` — Supabase auth (signIn, signUp, signOut, resetPassword, magicLink)
 - `lib/supabase.ts` — Supabase client init
+- `lib/dataCache.ts` — In-memory cache with 5-minute TTL
 - `hooks/useAuth.tsx` — AuthProvider + useAuth hook
 - `types/index.ts` — TypeScript interfaces
 - `types/database.ts` — Supabase database types
 - `pages/public/` — 7 public pages (no props — use React Router)
-- `pages/admin/AdminDashboard.tsx` — Admin dashboard
-- `pages/lms/LearnerPortal.tsx` — Learner LMS
+- `pages/admin/AdminDashboard.tsx` — Admin dashboard (cached, slim column queries)
+- `pages/admin/BookingsManagement.tsx` — Unified Bookings page with Individual/Corporate toggle
+- `pages/admin/ProgrammeManagement.tsx` — Programme CRUD (useMemo, column-specific fetch)
+- `pages/admin/LearnerManagement.tsx` — Learner table (useMemo, column-specific fetch)
+- `pages/admin/InstructorManagement.tsx` — Instructor application pipeline (useMemo, column-specific fetch)
+- `pages/learner/LearnerPortal.tsx` — Learner LMS
 - `pages/auth/LoginPage.tsx` — Login with Supabase Auth
 - `pages/auth/SignupPage.tsx` — Sign up with email confirmation
 - `pages/auth/ForgotPasswordPage.tsx` — Password reset

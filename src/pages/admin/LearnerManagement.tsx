@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Users, Search, Filter, Eye, ChevronDown } from 'lucide-react';
-import { learnersService } from '../../services/learners';
-import { getCached, setCache } from '../../lib/dataCache';
+import { useAdmin } from '../../context/AdminContext';
 import { Badge } from '../../components/ui/Badge';
 import { Modal } from '../../components/ui/Modal';
 import { Skeleton } from '../../components/ui/Skeleton';
-import type { Learner } from '../../types';
 
 const statusColors: Record<string, 'emerald' | 'gold' | 'red' | 'gray' | 'green'> = {
   active: 'green',
@@ -14,27 +12,17 @@ const statusColors: Record<string, 'emerald' | 'gold' | 'red' | 'gray' | 'green'
 };
 
 export const LearnerManagement: React.FC = () => {
-  const [learners, setLearners] = useState<Learner[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { learners, loading } = useAdmin();
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
-  const [selected, setSelected] = useState<Learner | null>(null);
+  const [selected, setSelected] = useState<typeof learners[number] | null>(null);
 
-  useEffect(() => {
-    const cached = getCached<Learner[]>('admin_learners');
-    if (cached) { setLearners(cached); setLoading(false); return; }
-    learnersService.getAll()
-      .then(d => { setLearners(d); setCache('admin_learners', d); })
-      .catch(() => setLearners([]))
-      .finally(() => setLoading(false));
-  }, []);
-
-  const filtered = learners.filter(l => {
+  const filtered = useMemo(() => learners.filter(l => {
     const q = search.toLowerCase();
     const matchesSearch = l.fullName.toLowerCase().includes(q) || l.email.toLowerCase().includes(q) || l.programmeTitle?.toLowerCase().includes(q);
     const matchesStatus = statusFilter === 'all' || l.status === statusFilter;
     return matchesSearch && matchesStatus;
-  });
+  }), [learners, search, statusFilter]);
 
   if (loading) return <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-2"><Skeleton variant="table-row" count={5} /></div>;
 

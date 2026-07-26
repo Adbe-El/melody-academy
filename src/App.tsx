@@ -36,14 +36,14 @@ import { Resources } from './pages/learner/Resources';
 import { Certificates } from './pages/learner/Certificates';
 import { Profile } from './pages/learner/Profile';
 import { LearnerProvider } from './context/LearnerContext';
+import { AdminProvider } from './context/AdminContext';
 
 // Admin pages
 import { AdminDashboard } from './pages/admin/AdminDashboard';
 import { ProgrammeManagement } from './pages/admin/ProgrammeManagement';
 import { LearnerManagement } from './pages/admin/LearnerManagement';
 import { InstructorManagement } from './pages/admin/InstructorManagement';
-import { ConsultationManagement } from './pages/admin/ConsultationManagement';
-import { ConsultancyManagement } from './pages/admin/ConsultancyManagement';
+import { BookingsManagement } from './pages/admin/BookingsManagement';
 
 // Legacy — keep for backward compat during migration
 import { AppProvider } from './context/AppContext';
@@ -101,13 +101,12 @@ export function App() {
 
               {/* Admin routes — protected */}
               <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
-                <Route element={<AdminLayout />}>
+                <Route element={<AdminProvider><AdminLayout /></AdminProvider>}>
                   <Route path="/admin" element={<PageTransition><AdminDashboard /></PageTransition>} />
                   <Route path="/admin/programmes" element={<PageTransition><ProgrammeManagement /></PageTransition>} />
                   <Route path="/admin/learners" element={<PageTransition><LearnerManagement /></PageTransition>} />
                   <Route path="/admin/instructors" element={<PageTransition><InstructorManagement /></PageTransition>} />
-                  <Route path="/admin/consultations" element={<PageTransition><ConsultationManagement /></PageTransition>} />
-                  <Route path="/admin/consultancy" element={<PageTransition><ConsultancyManagement /></PageTransition>} />
+                  <Route path="/admin/bookings" element={<PageTransition><BookingsManagement /></PageTransition>} />
                 </Route>
               </Route>
 

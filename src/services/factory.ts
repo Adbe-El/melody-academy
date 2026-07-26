@@ -3,23 +3,23 @@ import { createAppError } from '../lib/errors';
 
 export function createService<T extends { id: string }>(tableName: string) {
   return {
-    async getAll(): Promise<T[]> {
+    async getAll(columns?: string): Promise<T[]> {
       const { data, error } = await supabase
         .from(tableName)
-        .select('*')
+        .select(columns || '*')
         .order('created_at', { ascending: false });
       if (error) throw createAppError(`FETCH_${tableName.toUpperCase()}`, error.message, error);
-      return data as T[];
+      return data as unknown as T[];
     },
 
-    async getById(id: string): Promise<T> {
+    async getById(id: string, columns?: string): Promise<T> {
       const { data, error } = await supabase
         .from(tableName)
-        .select('*')
+        .select(columns || '*')
         .eq('id', id)
         .single();
       if (error) throw createAppError(`FETCH_${tableName.toUpperCase()}_BY_ID`, error.message, error);
-      return data as T;
+      return data as unknown as T;
     },
 
     async create(record: Record<string, unknown>): Promise<T> {

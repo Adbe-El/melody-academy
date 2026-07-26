@@ -293,11 +293,10 @@ All under `/admin/*`, use `AdminLayout` (sidebar + content), require auth + `adm
 | `/admin` | Dashboard | KPI stat cards (5), recent consultations table, recent activity feed | All services aggregate |
 | `/admin/programmes` | Programme Mgmt | Table + create/edit form, image upload | `programmesService` |
 | `/admin/learners` | Learner Mgmt | Learner table, post notes, assign homework, issue certs | `learnersService`, `lessonNotesService`, etc. |
-| `/admin/consultations` | Consultation Mgmt | Table with status workflow, notes | `consultationsService` |
 | `/admin/instructors` | Instructor Mgmt | Application cards with review/shortlist/approve/reject | `instructorAppsService` |
+| `/admin/bookings` | Bookings Mgmt | Individual/Corporate toggle — consultation table + consultancy request table with status workflows | `consultationsService`, `consultancyRequestsService` |
 | `/admin/exams` | Exam Mgmt | Table with candidate, type, level, status | `examRegistrationsService` |
 | `/admin/instruments` | Instrument Mgmt | Grid/table with CRUD, image upload | `instrumentsService` |
-| `/admin/consultancy` | Consultancy Mgmt | Table with status workflow | `consultancyRequestsService` |
 | `/admin/lms` | LMS Management | Lesson notes, assignments, resources per programme | Multiple services |
 | `/admin/content` | Website CMS | Edit hero, testimonials, FAQs, sections | Static or Supabase |
 | `/admin/reports` | Reports | Charts: consultations, programme interest, exams, applications | Aggregate queries |
