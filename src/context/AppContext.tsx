@@ -13,18 +13,17 @@ import {
   Certificate,
   Announcement
 } from '../types';
-import {
-  INITIAL_PROGRAMMES,
-  INITIAL_INSTRUMENTS,
-  INITIAL_CONSULTATIONS,
-  INITIAL_INSTRUCTORS,
-  INITIAL_LEARNERS,
-  INITIAL_LESSON_NOTES,
-  INITIAL_ASSIGNMENTS,
-  INITIAL_RESOURCES,
-  INITIAL_CERTIFICATES,
-  INITIAL_ANNOUNCEMENTS
-} from '../services/supabase';
+import { programmesService } from '../services/programmes';
+import { instrumentsService } from '../services/instruments';
+import { consultationsService } from '../services/consultations';
+import { instructorAppsService } from '../services/instructorApps';
+import { consultancyRequestsService } from '../services/consultancyRequests';
+import { lessonNotesService } from '../services/lessonNotes';
+import { assignmentsService } from '../services/assignments';
+import { resourcesService } from '../services/resources';
+import { certificatesService } from '../services/certificates';
+import { announcementsService } from '../services/announcements';
+import { getSettings, updateSettings as saveSettings } from '../services/settings';
 
 interface AppContextType {
   userRole: UserRole;
@@ -40,32 +39,33 @@ interface AppContextType {
   resources: LMSResource[];
   certificates: Certificate[];
   announcements: Announcement[];
-  
+  loading: boolean;
+
   // Handlers
-  addConsultation: (cons: Omit<Consultation, 'id' | 'status' | 'createdAt'>) => void;
+  addConsultation: (cons: Omit<Consultation, 'id' | 'status' | 'created_at'>) => void;
   updateConsultationStatus: (id: string, status: Consultation['status'], notes?: string) => void;
-  
-  addInstructorApp: (app: Omit<InstructorApplication, 'id' | 'status' | 'createdAt'>) => void;
+
+  addInstructorApp: (app: Omit<InstructorApplication, 'id' | 'status' | 'created_at'>) => void;
   updateInstructorAppStatus: (id: string, status: InstructorApplication['status']) => void;
-  
-  addConsultancyRequest: (req: Omit<ConsultancyRequest, 'id' | 'status' | 'createdAt'>) => void;
+
+  addConsultancyRequest: (req: Omit<ConsultancyRequest, 'id' | 'status' | 'created_at'>) => void;
   updateConsultancyStatus: (id: string, status: ConsultancyRequest['status']) => void;
-  
+
   addProgramme: (prog: Omit<Programme, 'id'>) => void;
   updateProgramme: (id: string, prog: Partial<Programme>) => void;
   deleteProgramme: (id: string) => void;
-  
+
   addInstrument: (inst: Omit<Instrument, 'id'>) => void;
   updateInstrument: (id: string, inst: Partial<Instrument>) => void;
   deleteInstrument: (id: string) => void;
-  
+
   // LMS Handlers
-  addLessonNote: (note: Omit<LessonNote, 'id' | 'dateAssigned'>) => void;
+  addLessonNote: (note: Omit<LessonNote, 'id' | 'upload_date'>) => void;
   addAssignment: (assign: Omit<Assignment, 'id' | 'status'>) => void;
   submitAssignment: (id: string) => void;
   addResource: (res: Omit<LMSResource, 'id'>) => void;
-  issueCertificate: (cert: Omit<Certificate, 'id' | 'issueDate' | 'certificateCode'>) => void;
-  
+  issueCertificate: (cert: Omit<Certificate, 'id' | 'issue_date' | 'certificate_code'>) => void;
+
   // Utility
   whatsappNumber: string;
   setWhatsappNumber: (num: string) => void;
@@ -74,226 +74,242 @@ interface AppContextType {
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
-const LOCAL_STORAGE_KEY_PREFIX = 'melody_academy_v1_';
-
-function getInitialStorage<T>(key: string, defaultValue: T): T {
-  try {
-    const saved = localStorage.getItem(LOCAL_STORAGE_KEY_PREFIX + key);
-    return saved ? JSON.parse(saved) : defaultValue;
-  } catch (err) {
-    console.error(`Error reading ${key} from localStorage`, err);
-    return defaultValue;
-  }
-}
-
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [userRole, setUserRole] = useState<UserRole>('visitor');
-  const [whatsappNumber, setWhatsappNumber] = useState<string>(() =>
-    getInitialStorage('whatsapp_num', '+2348006356391')
-  );
+  const [whatsappNumber, setWhatsappNumberState] = useState<string>('+2348006356391');
+  const [loading, setLoading] = useState(true);
 
-  const [programmes, setProgrammes] = useState<Programme[]>(() =>
-    getInitialStorage('programmes', INITIAL_PROGRAMMES)
-  );
+  const [programmes, setProgrammes] = useState<Programme[]>([]);
+  const [instruments, setInstruments] = useState<Instrument[]>([]);
+  const [consultations, setConsultations] = useState<Consultation[]>([]);
+  const [instructorApps, setInstructorApps] = useState<InstructorApplication[]>([]);
+  const [consultancyRequests, setConsultancyRequests] = useState<ConsultancyRequest[]>([]);
+  const [learners] = useState<Learner[]>([]);
+  const [lessonNotes, setLessonNotes] = useState<LessonNote[]>([]);
+  const [assignments, setAssignments] = useState<Assignment[]>([]);
+  const [resources, setResources] = useState<LMSResource[]>([]);
+  const [certificates, setCertificates] = useState<Certificate[]>([]);
+  const [announcements, setAnnouncements] = useState<Announcement[]>([]);
 
-  const [instruments, setInstruments] = useState<Instrument[]>(() =>
-    getInitialStorage('instruments', INITIAL_INSTRUMENTS)
-  );
+  // Load all data from Supabase on mount
+  useEffect(() => {
+    async function loadAll() {
+      try {
+        const [
+          progs,
+          insts,
+          cons,
+          apps,
+          consultReqs,
+          notes,
+          assigns,
+          res,
+          certs,
+          anns,
+          settings
+        ] = await Promise.allSettled([
+          programmesService.getAll(),
+          instrumentsService.getAll(),
+          consultationsService.getAll(),
+          instructorAppsService.getAll(),
+          consultancyRequestsService.getAll(),
+          lessonNotesService.getAll(),
+          assignmentsService.getAll(),
+          resourcesService.getAll(),
+          certificatesService.getAll(),
+          announcementsService.getAll(),
+          getSettings()
+        ]);
 
-  const [consultations, setConsultations] = useState<Consultation[]>(() =>
-    getInitialStorage('consultations', INITIAL_CONSULTATIONS)
-  );
-
-  const [instructorApps, setInstructorApps] = useState<InstructorApplication[]>(() =>
-    getInitialStorage('instructors', INITIAL_INSTRUCTORS)
-  );
-
-  const [consultancyRequests, setConsultancyRequests] = useState<ConsultancyRequest[]>(() =>
-    getInitialStorage('consultancy', [
-      {
-        id: 'c-req-1',
-        organizationName: 'Grace Baptist Church',
-        organizationType: 'Church',
-        contactPerson: 'Pastor Daniel',
-        email: 'pastor.d@example.com',
-        phone: '+234 803 999 1111',
-        serviceNeeded: 'Worship Team Audits & Band Training',
-        details: 'Looking to train our 12-member choir and rhythm section over 4 weekends.',
-        status: 'in_discussion',
-        createdAt: '2026-07-15T11:00:00Z'
+        if (progs.status === 'fulfilled') setProgrammes(progs.value);
+        if (insts.status === 'fulfilled') setInstruments(insts.value);
+        if (cons.status === 'fulfilled') setConsultations(cons.value);
+        if (apps.status === 'fulfilled') setInstructorApps(apps.value);
+        if (consultReqs.status === 'fulfilled') setConsultancyRequests(consultReqs.value);
+        if (notes.status === 'fulfilled') setLessonNotes(notes.value);
+        if (assigns.status === 'fulfilled') setAssignments(assigns.value);
+        if (res.status === 'fulfilled') setResources(res.value);
+        if (certs.status === 'fulfilled') setCertificates(certs.value);
+        if (anns.status === 'fulfilled') setAnnouncements(anns.value);
+        if (settings.status === 'fulfilled' && settings.value.whatsapp_number) {
+          setWhatsappNumberState(settings.value.whatsapp_number);
+        }
+      } catch (err) {
+        console.error('Failed to load data from Supabase:', err);
+      } finally {
+        setLoading(false);
       }
-    ])
-  );
-
-  const [learners] = useState<Learner[]>(() =>
-    getInitialStorage('learners', INITIAL_LEARNERS)
-  );
-
-  const [lessonNotes, setLessonNotes] = useState<LessonNote[]>(() =>
-    getInitialStorage('lesson_notes', INITIAL_LESSON_NOTES)
-  );
-
-  const [assignments, setAssignments] = useState<Assignment[]>(() =>
-    getInitialStorage('assignments', INITIAL_ASSIGNMENTS)
-  );
-
-  const [resources, setResources] = useState<LMSResource[]>(() =>
-    getInitialStorage('resources', INITIAL_RESOURCES)
-  );
-
-  const [certificates, setCertificates] = useState<Certificate[]>(() =>
-    getInitialStorage('certificates', INITIAL_CERTIFICATES)
-  );
-
-  const [announcements] = useState<Announcement[]>(() =>
-    getInitialStorage('announcements', INITIAL_ANNOUNCEMENTS)
-  );
-
-  // Sync state to local storage
-  useEffect(() => {
-    localStorage.setItem(LOCAL_STORAGE_KEY_PREFIX + 'programmes', JSON.stringify(programmes));
-  }, [programmes]);
-
-  useEffect(() => {
-    localStorage.setItem(LOCAL_STORAGE_KEY_PREFIX + 'instruments', JSON.stringify(instruments));
-  }, [instruments]);
-
-  useEffect(() => {
-    localStorage.setItem(LOCAL_STORAGE_KEY_PREFIX + 'consultations', JSON.stringify(consultations));
-  }, [consultations]);
-
-  useEffect(() => {
-    localStorage.setItem(LOCAL_STORAGE_KEY_PREFIX + 'instructors', JSON.stringify(instructorApps));
-  }, [instructorApps]);
-
-  useEffect(() => {
-    localStorage.setItem(LOCAL_STORAGE_KEY_PREFIX + 'consultancy', JSON.stringify(consultancyRequests));
-  }, [consultancyRequests]);
-
-  useEffect(() => {
-    localStorage.setItem(LOCAL_STORAGE_KEY_PREFIX + 'lesson_notes', JSON.stringify(lessonNotes));
-  }, [lessonNotes]);
-
-  useEffect(() => {
-    localStorage.setItem(LOCAL_STORAGE_KEY_PREFIX + 'assignments', JSON.stringify(assignments));
-  }, [assignments]);
-
-  useEffect(() => {
-    localStorage.setItem(LOCAL_STORAGE_KEY_PREFIX + 'resources', JSON.stringify(resources));
-  }, [resources]);
-
-  useEffect(() => {
-    localStorage.setItem(LOCAL_STORAGE_KEY_PREFIX + 'certificates', JSON.stringify(certificates));
-  }, [certificates]);
+    }
+    loadAll();
+  }, []);
 
   // Handlers
-  const addConsultation = (data: Omit<Consultation, 'id' | 'status' | 'createdAt'>) => {
-    const newCons: Consultation = {
-      ...data,
-      id: 'cons-' + Date.now(),
-      status: 'new',
-      createdAt: new Date().toISOString()
-    };
-    setConsultations(prev => [newCons, ...prev]);
+  const addConsultation = async (data: Omit<Consultation, 'id' | 'status' | 'created_at'>) => {
+    try {
+      const created = await consultationsService.create({ ...data, status: 'new' });
+      setConsultations(prev => [created, ...prev]);
+    } catch (err) {
+      console.error('Failed to add consultation:', err);
+    }
   };
 
-  const updateConsultationStatus = (id: string, status: Consultation['status'], notes?: string) => {
-    setConsultations(prev =>
-      prev.map(c => (c.id === id ? { ...c, status, notes: notes !== undefined ? notes : c.notes } : c))
-    );
+  const updateConsultationStatus = async (id: string, status: Consultation['status'], notes?: string) => {
+    try {
+      const updates: Record<string, unknown> = { status };
+      if (notes !== undefined) updates.notes = notes;
+      const updated = await consultationsService.update(id, updates);
+      setConsultations(prev => prev.map(c => (c.id === id ? updated : c)));
+    } catch (err) {
+      console.error('Failed to update consultation:', err);
+    }
   };
 
-  const addInstructorApp = (data: Omit<InstructorApplication, 'id' | 'status' | 'createdAt'>) => {
-    const newApp: InstructorApplication = {
-      ...data,
-      id: 'app-' + Date.now(),
-      status: 'pending',
-      createdAt: new Date().toISOString()
-    };
-    setInstructorApps(prev => [newApp, ...prev]);
+  const addInstructorApp = async (data: Omit<InstructorApplication, 'id' | 'status' | 'created_at'>) => {
+    try {
+      const created = await instructorAppsService.create({ ...data, status: 'pending' });
+      setInstructorApps(prev => [created, ...prev]);
+    } catch (err) {
+      console.error('Failed to add instructor application:', err);
+    }
   };
 
-  const updateInstructorAppStatus = (id: string, status: InstructorApplication['status']) => {
-    setInstructorApps(prev => prev.map(a => (a.id === id ? { ...a, status } : a)));
+  const updateInstructorAppStatus = async (id: string, status: InstructorApplication['status']) => {
+    try {
+      const updated = await instructorAppsService.update(id, { status });
+      setInstructorApps(prev => prev.map(a => (a.id === id ? updated : a)));
+    } catch (err) {
+      console.error('Failed to update instructor application:', err);
+    }
   };
 
-  const addConsultancyRequest = (data: Omit<ConsultancyRequest, 'id' | 'status' | 'createdAt'>) => {
-    const newReq: ConsultancyRequest = {
-      ...data,
-      id: 'creq-' + Date.now(),
-      status: 'new',
-      createdAt: new Date().toISOString()
-    };
-    setConsultancyRequests(prev => [newReq, ...prev]);
+  const addConsultancyRequest = async (data: Omit<ConsultancyRequest, 'id' | 'status' | 'created_at'>) => {
+    try {
+      const created = await consultancyRequestsService.create({ ...data, status: 'new' });
+      setConsultancyRequests(prev => [created, ...prev]);
+    } catch (err) {
+      console.error('Failed to add consultancy request:', err);
+    }
   };
 
-  const updateConsultancyStatus = (id: string, status: ConsultancyRequest['status']) => {
-    setConsultancyRequests(prev => prev.map(cr => (cr.id === id ? { ...cr, status } : cr)));
+  const updateConsultancyStatus = async (id: string, status: ConsultancyRequest['status']) => {
+    try {
+      const updated = await consultancyRequestsService.update(id, { status });
+      setConsultancyRequests(prev => prev.map(cr => (cr.id === id ? updated : cr)));
+    } catch (err) {
+      console.error('Failed to update consultancy request:', err);
+    }
   };
 
-  const addProgramme = (prog: Omit<Programme, 'id'>) => {
-    const newProg: Programme = { ...prog, id: 'prog-' + Date.now() };
-    setProgrammes(prev => [newProg, ...prev]);
+  const addProgramme = async (prog: Omit<Programme, 'id'>) => {
+    try {
+      const created = await programmesService.create(prog);
+      setProgrammes(prev => [created, ...prev]);
+    } catch (err) {
+      console.error('Failed to add programme:', err);
+    }
   };
 
-  const updateProgramme = (id: string, prog: Partial<Programme>) => {
-    setProgrammes(prev => prev.map(p => (p.id === id ? { ...p, ...prog } : p)));
+  const updateProgramme = async (id: string, prog: Partial<Programme>) => {
+    try {
+      const updated = await programmesService.update(id, prog);
+      setProgrammes(prev => prev.map(p => (p.id === id ? updated : p)));
+    } catch (err) {
+      console.error('Failed to update programme:', err);
+    }
   };
 
-  const deleteProgramme = (id: string) => {
-    setProgrammes(prev => prev.filter(p => p.id !== id));
+  const deleteProgramme = async (id: string) => {
+    try {
+      await programmesService.delete(id);
+      setProgrammes(prev => prev.filter(p => p.id !== id));
+    } catch (err) {
+      console.error('Failed to delete programme:', err);
+    }
   };
 
-  const addInstrument = (inst: Omit<Instrument, 'id'>) => {
-    const newInst: Instrument = { ...inst, id: 'inst-' + Date.now() };
-    setInstruments(prev => [newInst, ...prev]);
+  const addInstrument = async (inst: Omit<Instrument, 'id'>) => {
+    try {
+      const created = await instrumentsService.create(inst);
+      setInstruments(prev => [created, ...prev]);
+    } catch (err) {
+      console.error('Failed to add instrument:', err);
+    }
   };
 
-  const updateInstrument = (id: string, inst: Partial<Instrument>) => {
-    setInstruments(prev => prev.map(i => (i.id === id ? { ...i, ...inst } : i)));
+  const updateInstrument = async (id: string, inst: Partial<Instrument>) => {
+    try {
+      const updated = await instrumentsService.update(id, inst);
+      setInstruments(prev => prev.map(i => (i.id === id ? updated : i)));
+    } catch (err) {
+      console.error('Failed to update instrument:', err);
+    }
   };
 
-  const deleteInstrument = (id: string) => {
-    setInstruments(prev => prev.filter(i => i.id !== id));
+  const deleteInstrument = async (id: string) => {
+    try {
+      await instrumentsService.delete(id);
+      setInstruments(prev => prev.filter(i => i.id !== id));
+    } catch (err) {
+      console.error('Failed to delete instrument:', err);
+    }
   };
 
-  const addLessonNote = (note: Omit<LessonNote, 'id' | 'dateAssigned'>) => {
-    const newNote: LessonNote = {
-      ...note,
-      id: 'note-' + Date.now(),
-      dateAssigned: new Date().toISOString().split('T')[0]
-    };
-    setLessonNotes(prev => [newNote, ...prev]);
+  const addLessonNote = async (note: Omit<LessonNote, 'id' | 'upload_date'>) => {
+    try {
+      const created = await lessonNotesService.create(note);
+      setLessonNotes(prev => [created, ...prev]);
+    } catch (err) {
+      console.error('Failed to add lesson note:', err);
+    }
   };
 
-  const addAssignment = (assign: Omit<Assignment, 'id' | 'status'>) => {
-    const newAssign: Assignment = {
-      ...assign,
-      id: 'assign-' + Date.now(),
-      status: 'pending'
-    };
-    setAssignments(prev => [newAssign, ...prev]);
+  const addAssignment = async (assign: Omit<Assignment, 'id' | 'status'>) => {
+    try {
+      const created = await assignmentsService.create({ ...assign, status: 'pending' });
+      setAssignments(prev => [created, ...prev]);
+    } catch (err) {
+      console.error('Failed to add assignment:', err);
+    }
   };
 
-  const submitAssignment = (id: string) => {
-    setAssignments(prev =>
-      prev.map(a => (a.id === id ? { ...a, status: 'submitted' as const } : a))
-    );
+  const submitAssignment = async (id: string) => {
+    try {
+      const updated = await assignmentsService.update(id, { status: 'submitted' });
+      setAssignments(prev => prev.map(a => (a.id === id ? updated : a)));
+    } catch (err) {
+      console.error('Failed to submit assignment:', err);
+    }
   };
 
-  const addResource = (res: Omit<LMSResource, 'id'>) => {
-    const newRes: LMSResource = { ...res, id: 'res-' + Date.now() };
-    setResources(prev => [newRes, ...prev]);
+  const addResource = async (res: Omit<LMSResource, 'id'>) => {
+    try {
+      const created = await resourcesService.create(res);
+      setResources(prev => [created, ...prev]);
+    } catch (err) {
+      console.error('Failed to add resource:', err);
+    }
   };
 
-  const issueCertificate = (cert: Omit<Certificate, 'id' | 'issueDate' | 'certificateCode'>) => {
-    const newCert: Certificate = {
-      ...cert,
-      id: 'cert-' + Date.now(),
-      issueDate: new Date().toISOString().split('T')[0],
-      certificateCode: `MA-CERT-2026-${Math.floor(1000 + Math.random() * 9000)}`
-    };
-    setCertificates(prev => [newCert, ...prev]);
+  const issueCertificate = async (cert: Omit<Certificate, 'id' | 'issue_date' | 'certificate_code'>) => {
+    try {
+      const code = `MA-CERT-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+      const created = await certificatesService.create({
+        ...cert,
+        certificate_code: code
+      });
+      setCertificates(prev => [created, ...prev]);
+    } catch (err) {
+      console.error('Failed to issue certificate:', err);
+    }
+  };
+
+  const setWhatsappNumber = async (num: string) => {
+    setWhatsappNumberState(num);
+    try {
+      await saveSettings({ whatsapp_number: num });
+    } catch (err) {
+      console.error('Failed to save WhatsApp number:', err);
+    }
   };
 
   const getWhatsAppUrl = (messageText: string) => {
@@ -318,6 +334,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         resources,
         certificates,
         announcements,
+        loading,
         addConsultation,
         updateConsultationStatus,
         addInstructorApp,

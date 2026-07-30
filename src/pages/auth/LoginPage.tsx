@@ -55,29 +55,6 @@ export const LoginPage: React.FC = () => {
           <p className="text-xs text-gray-500">Sign in to access your portal</p>
         </div>
 
-        {/* Demo Login Hint */}
-        <div className="bg-academy-sage/50 p-4 rounded-2xl border border-academy-sage">
-          <p className="text-[11px] font-bold uppercase tracking-wider text-academy-emerald text-center mb-2">
-            Demo Credentials
-          </p>
-          <div className="grid grid-cols-2 gap-2 text-center text-xs">
-            <button
-              type="button"
-              onClick={() => { setEmail('learner@demo.com'); setPassword('demo1234'); }}
-              className="py-2 px-2 rounded-xl bg-white border border-gray-200 text-gray-700 font-medium hover:border-academy-emerald transition-all shadow-sm"
-            >
-              Learner Portal
-            </button>
-            <button
-              type="button"
-              onClick={() => { setEmail('admin@demo.com'); setPassword('demo1234'); }}
-              className="py-2 px-2 rounded-xl bg-academy-emerald text-white font-medium hover:bg-academy-emerald-hover transition-all shadow-sm"
-            >
-              Admin Panel
-            </button>
-          </div>
-        </div>
-
         {error && (
           <div className="bg-red-50 text-red-600 text-xs p-3 rounded-xl border border-red-200">
             {error}
@@ -117,6 +94,7 @@ export const LoginPage: React.FC = () => {
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
               >
                 {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               </button>
@@ -138,11 +116,8 @@ export const LoginPage: React.FC = () => {
           </button>
         </form>
 
-        <p className="text-center text-xs text-gray-500">
-          Don't have an account?{' '}
-          <Link to="/auth/signup" className="text-academy-emerald font-semibold hover:underline">
-            Sign Up
-          </Link>
+        <p className="text-center text-xs text-gray-400">
+          Contact your administrator for account access.
         </p>
       </div>
     </div>

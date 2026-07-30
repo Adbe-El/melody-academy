@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { UploadCloud, CheckCircle, FileText, Send, ChevronDown, ChevronUp, Music, Award, Users, Clock } from 'lucide-react';
 import { useToast } from '../../components/ui/Toast';
 import { instructorAppsService } from '../../services/instructorApps';
+import { uploadFile } from '../../services/storage';
 
 const requirements = [
   'Minimum 3 years of professional music teaching or performance experience',
@@ -29,7 +30,9 @@ const faqs = [
 export const ApplyInstructor: React.FC = () => {
   const { showToast } = useToast();
   const [submitted, setSubmitted] = useState(false);
+  const [resumeFile, setResumeFile] = useState<File | null>(null);
   const [resumeName, setResumeName] = useState('');
+  const [uploading, setUploading] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const [formData, setFormData] = useState({
@@ -45,13 +48,21 @@ export const ApplyInstructor: React.FC = () => {
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
+      setResumeFile(e.target.files[0]);
       setResumeName(e.target.files[0].name);
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setUploading(true);
     try {
+      let cvUrl: string | null = null;
+      if (resumeFile) {
+        const path = `instructor-cvs/${Date.now()}-${resumeFile.name}`;
+        cvUrl = await uploadFile('instructor-applications', path, resumeFile);
+      }
+
       await instructorAppsService.create({
         full_name: formData.fullName,
         email: formData.email,
@@ -61,7 +72,7 @@ export const ApplyInstructor: React.FC = () => {
         years_experience: formData.yearsExperience,
         qualifications: formData.qualifications,
         bio: formData.bio,
-        cv_url: resumeName || null,
+        cv_url: cvUrl || resumeName || null,
         certificates_urls: [],
         status: 'pending',
         admin_notes: null,
@@ -70,6 +81,8 @@ export const ApplyInstructor: React.FC = () => {
       showToast('success', 'Application submitted successfully!');
     } catch {
       showToast('error', 'Failed to submit application. Please try again.');
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -97,7 +110,7 @@ export const ApplyInstructor: React.FC = () => {
           <h3 className="font-serif text-3xl font-bold text-academy-emerald">Application Submitted!</h3>
           <p className="text-gray-600 text-sm max-w-md mx-auto leading-relaxed">
             Thank you, <span className="font-bold text-black">{formData.fullName}</span>. Your application
-            has been submitted to the MelodyAcademy Academic Review Board. Our recruitment officer will
+            has been submitted to the Matt-Agba Music Consult Academic Review Board. Our recruitment officer will
             review your credentials and contact you shortly.
           </p>
           <div className="pt-4">
@@ -110,6 +123,7 @@ export const ApplyInstructor: React.FC = () => {
                   secondaryInstruments: '', yearsExperience: 5,
                   qualifications: '', bio: '',
                 });
+                setResumeFile(null);
                 setResumeName('');
               }}
               className="px-8 py-3 rounded-full bg-academy-emerald text-white font-medium text-xs shadow"
@@ -271,8 +285,8 @@ export const ApplyInstructor: React.FC = () => {
                 )}
               </div>
 
-              <button type="submit" className="w-full py-4 rounded-full bg-academy-emerald text-white font-bold text-sm shadow-md hover:bg-academy-emerald-hover transition-all flex items-center justify-center gap-2">
-                <Send className="w-4 h-4" /> Submit Instructor Application
+              <button type="submit" disabled={uploading} className="w-full py-4 rounded-full bg-academy-emerald text-white font-bold text-sm shadow-md hover:bg-academy-emerald-hover transition-all flex items-center justify-center gap-2 disabled:opacity-50">
+                <Send className="w-4 h-4" /> {uploading ? 'Uploading & Submitting...' : 'Submit Instructor Application'}
               </button>
             </form>
           </section>

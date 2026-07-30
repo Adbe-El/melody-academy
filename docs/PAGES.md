@@ -1,6 +1,6 @@
 # Pages
 
-## Music Academy & Services Platform
+## Matt-Agba Music Consult
 
 ---
 
@@ -14,26 +14,43 @@ Each page lists: route, layout, auth requirement, sections with component mappin
 
 **Layout:** PublicLayout
 **Auth:** None
-**Title:** Home
+**Title:** Home — Matt-Agba Music Consult
 
 | Section | Components | Data |
 |---------|-----------|------|
-| Hero | Headline, subtext, 2 CTAs, hero image (arch mask), floating badges | Static |
-| About the Academy | Two-column: text + image, mission statement | Static |
-| Featured Programmes | `ProgrammeCard` grid (3-4 featured) | `programmesService.getFeatured()` |
-| Why Learn With Us | 4-column grid: expert tutors, flexible schedule, LMS access, certificates | Static |
-| Explore Our Services | 6 service cards with icons | Static |
-| Featured Instructors | Instructor card carousel/grid | Static (hardcoded) |
-| How It Works | 4-step numbered cards (Choose, Book, Learn, Achieve) | Static |
-| Testimonials | 3 testimonial cards on dark background | Static |
-| Stats Bar | 4 stat counters (10K+ learners, 600+ tutors, etc.) | Static |
-| Final CTA | Full-width banner with consultation button | Static |
+| Hero | Pill badge ("Learn from a pianist with 25+ years"), headline ("Master the Piano…"), subtext (mentions Matthew Agba), 2 CTAs, hero image (arch mask), floating badges (One-on-One Coaching, ABRSM & Trinity) | Static |
+| Explore Our Services | 6 service cards with icons (Learn Music, Find a Tutor, Buy Instruments, Exam Preparation, Consultancy, Hire Musicians) | Static |
+| Marquee Logo Strip | Animated scrolling instrument names (Piano, Guitar, Violin, etc.) | Static |
+| Popular Categories | 5 image cards (Keyboard, Guitar, Vocals, Drums, Production) | Static |
+| How It Works | 4-step numbered cards (Choose, Connect with Matthew, Learn & Grow, Excel) | Static |
+| Featured Instruments Preview | 4 instrument cards with image, name, price, condition | `instruments.slice(0, 4)` |
+| Testimonials & Stats | 3 testimonial cards on dark background + 4 stat counters (25+ Years, 100+ Mentored, ABRSM/Trinity/MUSON Certified, Global reach) | Static |
+| Final CTA | Full-width banner ("Ready to Begin Your Piano Journey?") with consultation button | Static |
 
-**Primary CTAs:** Book Consultation, Explore Services
+**Primary CTAs:** Start Learning, Explore Services, Book Free Consultation
 
 ---
 
-### 2. Programme Listing (`/programmes`)
+### 2. About (`/about`)
+
+**Layout:** PublicLayout
+**Auth:** None
+**Title:** About Matthew Agba
+
+| Section | Components | Data |
+|---------|-----------|------|
+| Hero | Pill badge ("About Matthew Agba"), headline ("A Life Dedicated to the Piano"), biography subtext, 2 CTAs, hero image (arch mask), floating badges (25+ Years, Global Reach) | Static |
+| Biography | Two-column: story text + certifications checklist (ABRSM, MUSON, ISoM, Trinity) | Static |
+| Global Affiliations | 3 card grid (Fox Music School London, Global Conservatory, ISoM London West African Representative) | Static |
+| Charity Work | 2 card grid on green bg (Art Sphere Inc. USA, Art to Heart Foundation Canada) | Static |
+| Teaching Philosophy | Quote block with Matthew Agba signature | Static |
+| Final CTA | Full-width sage banner ("Work with Matthew") with consultation button | Static |
+
+**Primary CTAs:** Book a Consultation, Explore Courses
+
+---
+
+### 3. Programme Listing (`/programmes`)
 
 **Layout:** PublicLayout
 **Auth:** None
@@ -51,7 +68,7 @@ Each page lists: route, layout, auth requirement, sections with component mappin
 
 ---
 
-### 3. Programme Details (`/programmes/:id`)
+### 4. Programme Details (`/programmes/:id`)
 
 **Layout:** PublicLayout
 **Auth:** None
@@ -71,7 +88,7 @@ Each page lists: route, layout, auth requirement, sections with component mappin
 
 ---
 
-### 4. Exam Prep (`/exams`)
+### 5. Exam Prep (`/exams`)
 
 **Layout:** PublicLayout
 **Auth:** None
@@ -91,7 +108,7 @@ Each page lists: route, layout, auth requirement, sections with component mappin
 
 ---
 
-### 5. Instrument Shop (`/instruments`)
+### 6. Instrument Shop (`/instruments`)
 
 **Layout:** PublicLayout
 **Auth:** None
@@ -110,7 +127,7 @@ Each page lists: route, layout, auth requirement, sections with component mappin
 
 ---
 
-### 6. Instrument Details (`/instruments/:id`)
+### 7. Instrument Details (`/instruments/:id`)
 
 **Layout:** PublicLayout
 **Auth:** None
@@ -127,7 +144,7 @@ Each page lists: route, layout, auth requirement, sections with component mappin
 
 ---
 
-### 7. Consultancy (`/consultancy`)
+### 8. Consultancy (`/consultancy`)
 
 **Layout:** PublicLayout
 **Auth:** None
@@ -145,7 +162,7 @@ Each page lists: route, layout, auth requirement, sections with component mappin
 
 ---
 
-### 8. Instructors (`/instructors`)
+### 9. Instructors (`/instructors`)
 
 **Layout:** PublicLayout
 **Auth:** None
@@ -161,7 +178,7 @@ Each page lists: route, layout, auth requirement, sections with component mappin
 
 ---
 
-### 9. Apply as Instructor (`/apply`)
+### 10. Apply as Instructor (`/apply`)
 
 **Layout:** PublicLayout
 **Auth:** None
@@ -181,7 +198,7 @@ Each page lists: route, layout, auth requirement, sections with component mappin
 
 ---
 
-### 10. Contact (`/contact`)
+### 11. Contact (`/contact`)
 
 **Layout:** PublicLayout
 **Auth:** None
@@ -198,7 +215,7 @@ Each page lists: route, layout, auth requirement, sections with component mappin
 
 ---
 
-### 11. Book Consultation (`/consultation`)
+### 12. Book Consultation (`/consultation`)
 
 **Layout:** PublicLayout
 **Auth:** None
@@ -219,7 +236,7 @@ Each page lists: route, layout, auth requirement, sections with component mappin
 
 ---
 
-### 12. Login (`/auth/login`)
+### 13. Login (`/auth/login`)
 
 **Layout:** None (full page)
 **Auth:** Redirects if already logged in
@@ -227,7 +244,7 @@ Each page lists: route, layout, auth requirement, sections with component mappin
 
 | Section | Components |
 |---------|-----------|
-| Logo + Brand | MelodyAcademy logo |
+| Logo + Brand | Matt-Agba Music Consult logo |
 | Login Form | Email, password, Login button, Forgot Password link |
 | Sign Up Link | "Don't have an account? Sign up" |
 | Demo Buttons | Quick login as Visitor / Learner / Admin (for demo) |
@@ -236,7 +253,7 @@ Each page lists: route, layout, auth requirement, sections with component mappin
 
 ---
 
-### 13. Sign Up (`/auth/signup`)
+### 14. Sign Up (`/auth/signup`)
 
 **Layout:** None (full page)
 **Auth:** Redirects if already logged in
@@ -244,7 +261,7 @@ Each page lists: route, layout, auth requirement, sections with component mappin
 
 | Section | Components |
 |---------|-----------|
-| Logo + Brand | MelodyAcademy logo |
+| Logo + Brand | Matt-Agba Music Consult logo |
 | Sign Up Form | firstName, lastName, email, password, confirmPassword, Sign Up button |
 | Login Link | "Already have an account? Log in" |
 
@@ -252,7 +269,7 @@ Each page lists: route, layout, auth requirement, sections with component mappin
 
 ---
 
-### 14. Forgot Password (`/auth/forgot-password`)
+### 15. Forgot Password (`/auth/forgot-password`)
 
 **Layout:** None (full page)
 **Auth:** None
@@ -260,7 +277,7 @@ Each page lists: route, layout, auth requirement, sections with component mappin
 
 | Section | Components |
 |---------|-----------|
-| Logo + Brand | MelodyAcademy logo |
+| Logo + Brand | Matt-Agba Music Consult logo |
 | Form | Email input, Send Reset Link button |
 | Success State | "Check your email" confirmation |
 | Back to Login | Link |
@@ -269,7 +286,7 @@ Each page lists: route, layout, auth requirement, sections with component mappin
 
 ---
 
-### 15-20. Learner Pages
+### 16-21. Learner Pages
 
 All under `/learn/*`, use `LearnLayout` (sidebar + content), require auth + `learner` role.
 
@@ -284,7 +301,7 @@ All under `/learn/*`, use `LearnLayout` (sidebar + content), require auth + `lea
 
 ---
 
-### 21-32. Admin Pages
+### 22-33. Admin Pages
 
 All under `/admin/*`, use `AdminLayout` (sidebar + content), require auth + `admin` role.
 

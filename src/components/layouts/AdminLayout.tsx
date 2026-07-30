@@ -2,10 +2,12 @@ import React from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import {
   Music, LayoutDashboard, BookOpen, Users, Briefcase, Calendar,
+  GraduationCap, Package, BookOpenCheck, Globe, BarChart3, Settings,
   LogOut, Menu, X
 } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { signOut } from '../../services/auth';
+import { ErrorBoundary } from '../common/ErrorBoundary';
 
 const sidebarLinks = [
   { to: '/admin', icon: LayoutDashboard, label: 'Dashboard', end: true },
@@ -13,6 +15,12 @@ const sidebarLinks = [
   { to: '/admin/learners', icon: Users, label: 'Learners' },
   { to: '/admin/instructors', icon: Briefcase, label: 'Instructors' },
   { to: '/admin/bookings', icon: Calendar, label: 'Bookings' },
+  { to: '/admin/exams', icon: GraduationCap, label: 'Exams' },
+  { to: '/admin/instruments', icon: Package, label: 'Instruments' },
+  { to: '/admin/lms', icon: BookOpenCheck, label: 'LMS Content' },
+  { to: '/admin/content', icon: Globe, label: 'Website CMS' },
+  { to: '/admin/reports', icon: BarChart3, label: 'Reports' },
+  { to: '/admin/settings', icon: Settings, label: 'Settings' },
 ];
 
 export const AdminLayout: React.FC = () => {
@@ -30,7 +38,7 @@ export const AdminLayout: React.FC = () => {
               <Music className="w-4 h-4 text-academy-gold" />
             </div>
             <span className="font-serif text-lg font-bold text-white">
-              Melody<span className="text-gray-300">Academy</span>
+              Matt-Agba Music Consult
             </span>
           </Link>
           <p className="text-[10px] text-white/40 uppercase tracking-wider mt-2 font-semibold">Admin Panel</p>
@@ -78,7 +86,7 @@ export const AdminLayout: React.FC = () => {
 
       {/* Mobile Header */}
       <div className="lg:hidden fixed top-0 inset-x-0 z-40 bg-academy-emerald-dark px-4 py-3 flex items-center gap-3">
-        <button onClick={() => setSidebarOpen(!sidebarOpen)} className="p-1.5 rounded-lg hover:bg-white/10 text-white">
+        <button onClick={() => setSidebarOpen(!sidebarOpen)} className="p-2 rounded-lg hover:bg-white/10 text-white" aria-label={sidebarOpen ? 'Close menu' : 'Open menu'}>
           {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
         <div className="flex items-center gap-2">
@@ -120,7 +128,9 @@ export const AdminLayout: React.FC = () => {
 
       {/* Main Content */}
       <div className="flex-1 lg:ml-64 pt-14 lg:pt-0">
-        <Outlet />
+        <ErrorBoundary>
+          <Outlet />
+        </ErrorBoundary>
       </div>
     </div>
   );

@@ -32,7 +32,15 @@ export const Consultancy: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
-    addConsultancyRequest(formData);
+    addConsultancyRequest({
+      organization_name: formData.organizationName,
+      organization_type: formData.organizationType,
+      contact_person: formData.contactPerson,
+      email: formData.email,
+      phone: formData.phone,
+      service_needed: formData.serviceNeeded,
+      details: formData.details,
+    });
     setSubmitted(true);
   };
 
@@ -66,7 +74,7 @@ export const Consultancy: React.FC = () => {
 
   const testimonials = [
     {
-      quote: "MelodyAcademy transformed our church worship team from a struggling group into a polished, spirit-filled band. The vocal coaching and sound check protocols alone were worth every naira.",
+      quote: "Matt-Agba Music Consult transformed our church worship team from a struggling group into a polished, spirit-filled band. The vocal coaching and sound check protocols alone were worth every naira.",
       name: "Pastor Emeka Obi",
       role: "Worship Director, Redeem Life Church"
     },
@@ -107,13 +115,13 @@ export const Consultancy: React.FC = () => {
       {/* Hero Header */}
       <div className="bg-academy-emerald rounded-3xl p-8 sm:p-14 text-white text-center space-y-4 shadow-xl">
         <span className="text-xs font-bold uppercase tracking-wider bg-white/10 text-academy-gold px-4 py-1.5 rounded-full border border-white/10">
-          Institutional Advisory Services
+          Expert Music Consultancy
         </span>
         <h1 className="font-serif text-3xl sm:text-5xl font-bold">
-          Music Consultancy for Schools & Churches
+          Consultancy by Matthew Agba
         </h1>
         <p className="text-gray-300 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
-          Elevate your organization's musical standards. We partner with educational institutions, worship ministries, and corporate brands to build world-class music programs.
+          With 25+ years as a pianist, organist, and music educator — and certifications from ABRSM, MUSON, and ISoM London — Matthew Agba partners with schools, churches, and corporate brands to build world-class music programs.
         </p>
       </div>
 
@@ -145,7 +153,7 @@ export const Consultancy: React.FC = () => {
             Submit Consultancy Inquiry
           </h2>
           <p className="text-xs text-gray-600">
-            Fill out the details below and our Senior Consultancy Director will contact your office with a tailored proposal.
+            Fill out the details below and Matthew Agba (or a team member) will contact your office with a tailored proposal.
           </p>
         </div>
 
@@ -154,7 +162,7 @@ export const Consultancy: React.FC = () => {
             <CheckCircle className="w-14 h-14 text-academy-emerald mx-auto" />
             <h3 className="font-serif text-2xl font-bold text-gray-900">Request Submitted Successfully</h3>
             <p className="text-xs text-gray-600 max-w-md mx-auto">
-              Thank you, <span className="font-semibold text-black">{formData.contactPerson}</span> ({formData.organizationName}). Our consultancy team will reach out to you within 24 hours.
+               Thank you, <span className="font-semibold text-black">{formData.contactPerson}</span> ({formData.organizationName}). Matthew Agba's consultancy team will reach out to you within 24 hours.
             </p>
             <button
               onClick={() => {
@@ -283,7 +291,7 @@ export const Consultancy: React.FC = () => {
         <div className="text-center space-y-2">
           <h2 className="font-serif text-3xl font-bold text-gray-900">Success Stories</h2>
           <p className="text-xs text-gray-600 max-w-lg mx-auto">
-            See what our past consultancy clients have to say about working with us.
+            See what past consultancy clients say about working with Matthew Agba.
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

@@ -1,6 +1,6 @@
 # Data Model
 
-## Music Academy & Services Platform
+## Matt-Agba Music Consult
 
 ---
 
@@ -188,7 +188,7 @@ Programme completion records.
 
 ### 9. consultations
 
-Stores consultation bookings from visitors.
+Stores consultation bookings from visitors (hybrid model: DATA_MODEL.md base + lesson-specific fields).
 
 | Column | Type | Nullable | Default | Reference |
 |--------|------|----------|---------|-----------|
@@ -199,6 +199,10 @@ Stores consultation bookings from visitors.
 | `consultation_type` | `text` | NOT NULL | | CHECK: `'music_lessons'`, `'exams'`, `'consultancy'`, `'general'` |
 | `preferred_date` | `date` | YES | | |
 | `programme_id` | `uuid` | YES | | → `programmes.id` |
+| `preferred_instrument` | `text` | YES | | e.g., `'Keyboard & Grand Piano'` |
+| `age_group` | `text` | YES | | CHECK: `'Kids (5-12)'`, `'Teens (13-17)'`, `'Adults (18+)'` |
+| `experience_level` | `text` | YES | | CHECK: `'Complete Beginner'`, `'Some Experience'`, `'Intermediate'`, `'Advanced'` |
+| `goals` | `text` | YES | | Learner's goals/motivation |
 | `notes` | `text` | YES | | |
 | `status` | `text` | NOT NULL | `'new'` | CHECK: `'new'`, `'contacted'`, `'scheduled'`, `'completed'`, `'enrolled'`, `'cancelled'` |
 | `admin_notes` | `text` | YES | | |
@@ -324,6 +328,40 @@ Messages shown to enrolled learners.
 
 ---
 
+### 16. website_content
+
+CMS content for hero banners, testimonials, FAQs, and other homepage sections.
+
+| Column | Type | Nullable | Default | Reference |
+|--------|------|----------|---------|-----------|
+| `id` | `uuid` | NOT NULL | `gen_random_uuid()` | |
+| `section` | `text` | NOT NULL | | CHECK: `'hero'`, `'testimonial'`, `'faq'`, `'partner'`, `'stat'`, `'cta'` |
+| `title` | `text` | NOT NULL | | |
+| `content` | `text` | NOT NULL | | |
+| `image_url` | `text` | YES | | |
+| `active` | `boolean` | NOT NULL | `true` | |
+| `order` | `integer` | NOT NULL | `0` | |
+| `created_at` | `timestamptz` | NOT NULL | `now()` | |
+| `updated_at` | `timestamptz` | NOT NULL | `now()` | |
+
+---
+
+### 17. settings
+
+Single-row academy configuration (WhatsApp number, name, contact info).
+
+| Column | Type | Nullable | Default | Reference |
+|--------|------|----------|---------|-----------|
+| `id` | `text` | NOT NULL | `'academy'` | PK (always `'academy'`) |
+| `whatsapp_number` | `text` | NOT NULL | `''` | |
+| `academy_name` | `text` | NOT NULL | `'Matt-Agba Music Consult'` | |
+| `academy_email` | `text` | NOT NULL | `''` | |
+| `academy_phone` | `text` | NOT NULL | `''` | |
+| `address` | `text` | NOT NULL | `''` | |
+| `updated_at` | `timestamptz` | NOT NULL | `now()` | |
+
+---
+
 ## Row Level Security (RLS) Policies
 
 ### users
@@ -393,6 +431,14 @@ Messages shown to enrolled learners.
 - **SELECT:** Learners can read published announcements. Admins can read all.
 - **INSERT/UPDATE/DELETE:** Admins only.
 
+### website_content
+- **SELECT:** Public can view active items. Admins can view all.
+- **INSERT/UPDATE/DELETE:** Admins only.
+
+### settings
+- **SELECT:** Public (needed for WhatsApp links, contact info).
+- **UPDATE/INSERT:** Admins only.
+
 ---
 
 ## Storage Buckets
@@ -413,9 +459,11 @@ Messages shown to enrolled learners.
 
 ## Seed Data Strategy
 
-1. **Programmes:** Migrate existing `INITIAL_PROGRAMMES` from `supabase.ts` into SQL INSERT statements
-2. **Instruments:** Migrate existing `INITIAL_INSTRUMENTS`
-3. **Instrument Categories:** Create 5 categories: Keyboard, Guitar, Strings, Drums & Percussion, Wind, Accessories
-4. **Admin User:** Create one admin user via Supabase Auth + insert into `users` with `role = 'admin'`
-5. **Demo Learner:** Create via Supabase Auth + insert into `users` + `learners` for testing LMS
-6. **Sample data:** Migrate existing mock consultations, instructor apps, lesson notes, assignments, resources, certificates, announcements
+1. **Instrument Categories:** Created via SQL INSERT (keyboard, guitar, strings, drums, wind, accessories)
+2. **Settings:** Single-row `academy` record with WhatsApp number, name, contact info
+3. **Website Content:** Hero banners, testimonials, FAQs, partners, stats, CTAs via SQL INSERT
+4. **Admin Users:** Created via Supabase Auth Dashboard (email/password), then INSERT into `users` with `role = 'admin'`
+   - `adbeelomiunu@gmail.com`
+   - `mattagbamusicconsult@gmail.com`
+5. **Programmes:** Migrate existing `INITIAL_PROGRAMMES` into SQL INSERT (pending)
+6. **Instruments:** Migrate existing `INITIAL_INSTRUMENTS` into SQL INSERT (pending)

@@ -1,6 +1,6 @@
 # Services
 
-## Music Academy & Services Platform
+## Matt-Agba Music Consult
 
 ---
 

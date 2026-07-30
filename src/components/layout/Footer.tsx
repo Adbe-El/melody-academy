@@ -17,12 +17,12 @@ export const Footer: React.FC = () => {
               <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-academy-gold">
                 <Music className="w-5 h-5" />
               </div>
-              <span className="font-serif text-2xl font-bold tracking-tight text-white">
-                Melody<span className="text-academy-gold">Academy</span>
+              <span className="font-serif text-lg sm:text-2xl font-bold tracking-tight text-white">
+                Matt-Agba Music Consult
               </span>
             </Link>
             <p className="text-gray-300 text-sm leading-relaxed max-w-sm">
-              Empowering the next generation of musicians through live education, expert guidance, professional exam preparation, and real opportunities.
+              Empowering the next generation of musicians through expert piano education, professional exam preparation, consultancy, and global opportunities — founded by Matthew Agba, a distinguished pianist and educator with 25+ years of experience.
             </p>
             <div className="pt-2 flex items-center space-x-3 text-gray-400">
               <span className="w-9 h-9 rounded-full bg-white/5 flex items-center justify-center text-academy-gold">
@@ -39,7 +39,6 @@ export const Footer: React.FC = () => {
             <h4 className="text-sm font-semibold uppercase tracking-wider text-academy-gold">Explore</h4>
             <ul className="space-y-2 text-sm text-gray-300">
               <li><Link to="/programmes" className="hover:text-white transition-colors">Music Programmes</Link></li>
-              <li><Link to="/instructors" className="hover:text-white transition-colors">Meet Tutors</Link></li>
               <li><Link to="/instruments" className="hover:text-white transition-colors">Buy Instruments</Link></li>
               <li><Link to="/exam-prep" className="hover:text-white transition-colors">Exam Preparation</Link></li>
               <li><Link to="/consultancy" className="hover:text-white transition-colors">School & Church Consultancy</Link></li>
@@ -48,7 +47,7 @@ export const Footer: React.FC = () => {
 
           {/* Column 2: Company */}
           <div className="space-y-3">
-            <h4 className="text-sm font-semibold uppercase tracking-wider text-academy-gold">Academy & Jobs</h4>
+            <h4 className="text-sm font-semibold uppercase tracking-wider text-academy-gold">Quick Links</h4>
             <ul className="space-y-2 text-sm text-gray-300">
               <li><Link to="/apply-instructor" className="hover:text-white transition-colors">Apply as Instructor</Link></li>
               <li><Link to="/contact" className="hover:text-white transition-colors">Book Consultation</Link></li>
@@ -63,7 +62,7 @@ export const Footer: React.FC = () => {
             <ul className="space-y-2.5 text-sm text-gray-300">
               <li className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-academy-gold mt-0.5 flex-shrink-0" />
-                <span>12 Academy Boulevard, Victoria Island, Lagos</span>
+                <span>Lagos, Nigeria (contact for exact location)</span>
               </li>
               <li className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-academy-gold flex-shrink-0" />
@@ -71,7 +70,7 @@ export const Footer: React.FC = () => {
               </li>
               <li className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-academy-gold flex-shrink-0" />
-                <span>admissions@melodyacademy.com</span>
+                <span>mattagbamusicconsult@gmail.com</span>
               </li>
             </ul>
           </div>
@@ -80,7 +79,7 @@ export const Footer: React.FC = () => {
 
         {/* Bottom copyright */}
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-gray-400 gap-4">
-          <p>© {new Date().getFullYear()} MelodyAcademy. All rights reserved. Professional Music Training & Consultancy.</p>
+          <p>© {new Date().getFullYear()} Matt-Agba Music Consult. All rights reserved. Professional Music Training & Consultancy.</p>
           <div className="flex space-x-6">
             <a href="#" className="hover:text-white">Privacy Policy</a>
             <a href="#" className="hover:text-white">Terms of Service</a>

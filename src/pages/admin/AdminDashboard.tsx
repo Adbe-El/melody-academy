@@ -28,7 +28,7 @@ export const AdminDashboard: React.FC = () => {
           <div className="inline-flex items-center gap-2 bg-white/10 text-academy-gold px-3.5 py-1 rounded-full text-xs font-semibold border border-white/10">
             <Shield className="w-4 h-4" /> Administrative Portal
           </div>
-          <h1 className="font-serif text-3xl sm:text-4xl font-bold">Academy Management</h1>
+          <h1 className="font-serif text-3xl sm:text-4xl font-bold">Admin Dashboard</h1>
           <p className="text-gray-300 text-xs sm:text-sm">
             Welcome back, {user?.fullName || 'Admin'}. Here's your academy overview.
           </p>
@@ -93,8 +93,8 @@ export const AdminDashboard: React.FC = () => {
               <tbody className="divide-y divide-gray-100">
                 {consultations.slice(0, 5).map(c => (
                   <tr key={c.id} className="hover:bg-gray-50">
-                    <td className="p-3 font-semibold text-gray-900">{c.fullName}</td>
-                    <td className="p-3">{c.preferredInstrument}</td>
+                    <td className="p-3 font-semibold text-gray-900">{c.full_name}</td>
+                    <td className="p-3">{c.preferred_instrument}</td>
                     <td className="p-3">
                       <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase ${
                         c.status === 'new' ? 'bg-amber-100 text-amber-800' :
@@ -104,7 +104,7 @@ export const AdminDashboard: React.FC = () => {
                         {c.status}
                       </span>
                     </td>
-                    <td className="p-3 text-gray-500">{c.createdAt?.split('T')[0]}</td>
+                    <td className="p-3 text-gray-500">{c.created_at?.split('T')[0]}</td>
                   </tr>
                 ))}
               </tbody>

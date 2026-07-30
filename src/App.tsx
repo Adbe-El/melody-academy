@@ -16,15 +16,15 @@ import { Instruments } from './pages/public/Instruments';
 import { InstrumentDetails } from './pages/public/InstrumentDetails';
 import { ExamPrep } from './pages/public/ExamPrep';
 import { Consultancy } from './pages/public/Consultancy';
-import { Instructors } from './pages/public/Instructors';
+
 import { Contact } from './pages/public/Contact';
+import { About } from './pages/public/About';
 import { ProgrammeDetails } from './pages/public/ProgrammeDetails';
 import { ApplyInstructor } from './pages/recruitment/ApplyInstructor';
-import { ConsultationWizard } from './pages/public/ConsultationWizard';
+
 
 // Auth pages
 import { LoginPage } from './pages/auth/LoginPage';
-import { SignupPage } from './pages/auth/SignupPage';
 import { ForgotPasswordPage } from './pages/auth/ForgotPasswordPage';
 import { AuthCallback } from './pages/auth/AuthCallback';
 
@@ -44,6 +44,12 @@ import { ProgrammeManagement } from './pages/admin/ProgrammeManagement';
 import { LearnerManagement } from './pages/admin/LearnerManagement';
 import { InstructorManagement } from './pages/admin/InstructorManagement';
 import { BookingsManagement } from './pages/admin/BookingsManagement';
+import { ExamManagement } from './pages/admin/ExamManagement';
+import { InstrumentManagement } from './pages/admin/InstrumentManagement';
+import { LMSManagement } from './pages/admin/LMSManagement';
+import { WebsiteCMS } from './pages/admin/WebsiteCMS';
+import { Reports } from './pages/admin/Reports';
+import { Settings } from './pages/admin/Settings';
 
 // Legacy — keep for backward compat during migration
 import { AppProvider } from './context/AppContext';
@@ -68,7 +74,6 @@ export function App() {
             <Routes>
               {/* Auth routes — no layout */}
               <Route path="/auth/login" element={<PageTransition><LoginPage /></PageTransition>} />
-              <Route path="/auth/signup" element={<PageTransition><SignupPage /></PageTransition>} />
               <Route path="/auth/forgot-password" element={<PageTransition><ForgotPasswordPage /></PageTransition>} />
               <Route path="/auth/callback" element={<AuthCallback />} />
 
@@ -81,10 +86,9 @@ export function App() {
                 <Route path="/instruments/:id" element={<PageTransition><InstrumentDetails /></PageTransition>} />
                 <Route path="/exam-prep" element={<PageTransition><ExamPrep /></PageTransition>} />
                 <Route path="/consultancy" element={<PageTransition><Consultancy /></PageTransition>} />
-                <Route path="/instructors" element={<PageTransition><Instructors /></PageTransition>} />
                 <Route path="/apply-instructor" element={<PageTransition><ApplyInstructor /></PageTransition>} />
+                <Route path="/about" element={<PageTransition><About /></PageTransition>} />
                 <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
-                <Route path="/consultation" element={<PageTransition><ConsultationWizard /></PageTransition>} />
               </Route>
 
               {/* Learner routes — protected */}
@@ -107,6 +111,12 @@ export function App() {
                   <Route path="/admin/learners" element={<PageTransition><LearnerManagement /></PageTransition>} />
                   <Route path="/admin/instructors" element={<PageTransition><InstructorManagement /></PageTransition>} />
                   <Route path="/admin/bookings" element={<PageTransition><BookingsManagement /></PageTransition>} />
+                  <Route path="/admin/exams" element={<PageTransition><ExamManagement /></PageTransition>} />
+                  <Route path="/admin/instruments" element={<PageTransition><InstrumentManagement /></PageTransition>} />
+                  <Route path="/admin/lms" element={<PageTransition><LMSManagement /></PageTransition>} />
+                  <Route path="/admin/content" element={<PageTransition><WebsiteCMS /></PageTransition>} />
+                  <Route path="/admin/reports" element={<PageTransition><Reports /></PageTransition>} />
+                  <Route path="/admin/settings" element={<PageTransition><Settings /></PageTransition>} />
                 </Route>
               </Route>
 

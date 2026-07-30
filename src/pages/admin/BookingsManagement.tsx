@@ -40,14 +40,14 @@ export const BookingsManagement: React.FC = () => {
 
   const filteredIndividual = useMemo(() => consultations.filter(c => {
     const q = search.toLowerCase();
-    const matchesSearch = c.fullName.toLowerCase().includes(q) || c.email.toLowerCase().includes(q);
+    const matchesSearch = c.full_name.toLowerCase().includes(q) || c.email.toLowerCase().includes(q);
     const matchesStatus = statusFilter === 'all' || c.status === statusFilter;
     return matchesSearch && matchesStatus;
   }), [consultations, search, statusFilter]);
 
   const filteredCorporate = useMemo(() => consultancyRequests.filter(r => {
     const q = search.toLowerCase();
-    const matchesSearch = r.organizationName?.toLowerCase().includes(q) || r.contactPerson?.toLowerCase().includes(q) || r.email?.toLowerCase().includes(q);
+    const matchesSearch = r.organization_name?.toLowerCase().includes(q) || r.contact_person?.toLowerCase().includes(q) || r.email?.toLowerCase().includes(q);
     const matchesStatus = statusFilter === 'all' || r.status === statusFilter;
     return matchesSearch && matchesStatus;
   }), [consultancyRequests, search, statusFilter]);
@@ -157,13 +157,13 @@ export const BookingsManagement: React.FC = () => {
                 {filteredIndividual.map(c => (
                   <tr key={c.id} className="hover:bg-gray-50 transition-colors">
                     <td className="p-4">
-                      <p className="font-semibold text-gray-900">{c.fullName}</p>
+                      <p className="font-semibold text-gray-900">{c.full_name}</p>
                       <p className="text-gray-500 text-[11px]">{c.email}</p>
                     </td>
-                    <td className="p-4">{c.preferredInstrument}</td>
-                    <td className="p-4">{c.experienceLevel}</td>
+                    <td className="p-4">{c.preferred_instrument}</td>
+                    <td className="p-4">{c.experience_level}</td>
                     <td className="p-4"><Badge variant={currentStatusColors[c.status] || 'gray'}>{c.status}</Badge></td>
-                    <td className="p-4 text-gray-500">{c.createdAt?.split('T')[0]}</td>
+                    <td className="p-4 text-gray-500">{c.created_at?.split('T')[0]}</td>
                     <td className="p-4 text-right">
                       <button onClick={() => setSelected(c)} className="p-2 rounded-lg hover:bg-academy-sage text-gray-500 hover:text-academy-emerald transition-colors">
                         <Eye className="w-4 h-4" />
@@ -191,13 +191,13 @@ export const BookingsManagement: React.FC = () => {
               <tbody className="divide-y divide-gray-100">
                 {filteredCorporate.map(r => (
                   <tr key={r.id} className="hover:bg-gray-50 transition-colors">
-                    <td className="p-4 font-semibold text-gray-900">{r.organizationName}</td>
-                    <td className="p-4"><Badge variant="emerald">{r.organizationType}</Badge></td>
+                    <td className="p-4 font-semibold text-gray-900">{r.organization_name}</td>
+                    <td className="p-4"><Badge variant="emerald">{r.organization_type}</Badge></td>
                     <td className="p-4">
-                      <p className="font-medium">{r.contactPerson}</p>
+                      <p className="font-medium">{r.contact_person}</p>
                       <p className="text-gray-500 text-[11px]">{r.email}</p>
                     </td>
-                    <td className="p-4">{r.serviceNeeded}</td>
+                    <td className="p-4">{r.service_needed}</td>
                     <td className="p-4"><Badge variant={currentStatusColors[r.status] || 'gray'}>{formatStatus(r.status)}</Badge></td>
                     <td className="p-4 text-right">
                       <button onClick={() => setSelected(r)} className="p-2 rounded-lg hover:bg-academy-sage text-gray-500 hover:text-academy-emerald transition-colors">
@@ -216,15 +216,15 @@ export const BookingsManagement: React.FC = () => {
       </div>
 
       <Modal isOpen={!!selected} onClose={() => setSelected(null)} title={isIndividual ? 'Consultation Details' : 'Consultancy Request Details'} size="lg">
-        {selected && isIndividual && 'preferredInstrument' in selected && (
+        {selected && isIndividual && 'preferred_instrument' in selected && (
           <div className="space-y-4 text-sm">
-            <div className="grid grid-cols-2 gap-4">
-              <div><p className="text-gray-500 text-[10px] uppercase font-bold">Full Name</p><p className="font-semibold">{selected.fullName}</p></div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div><p className="text-gray-500 text-[10px] uppercase font-bold">Full Name</p><p className="font-semibold">{selected.full_name}</p></div>
               <div><p className="text-gray-500 text-[10px] uppercase font-bold">Email</p><p className="font-semibold">{selected.email}</p></div>
               <div><p className="text-gray-500 text-[10px] uppercase font-bold">Phone</p><p className="font-semibold">{(selected as Consultation).phone}</p></div>
-              <div><p className="text-gray-500 text-[10px] uppercase font-bold">Instrument</p><p className="font-semibold">{(selected as Consultation).preferredInstrument}</p></div>
-              <div><p className="text-gray-500 text-[10px] uppercase font-bold">Age Group</p><p className="font-semibold">{(selected as Consultation).ageGroup}</p></div>
-              <div><p className="text-gray-500 text-[10px] uppercase font-bold">Experience</p><p className="font-semibold">{(selected as Consultation).experienceLevel}</p></div>
+              <div><p className="text-gray-500 text-[10px] uppercase font-bold">Instrument</p><p className="font-semibold">{(selected as Consultation).preferred_instrument}</p></div>
+              <div><p className="text-gray-500 text-[10px] uppercase font-bold">Age Group</p><p className="font-semibold">{(selected as Consultation).age_group}</p></div>
+              <div><p className="text-gray-500 text-[10px] uppercase font-bold">Experience</p><p className="font-semibold">{(selected as Consultation).experience_level}</p></div>
             </div>
             <div><p className="text-gray-500 text-[10px] uppercase font-bold mb-1">Goals</p><p className="text-gray-700">{(selected as Consultation).goals}</p></div>
             <div className="border-t pt-4">
@@ -248,15 +248,15 @@ export const BookingsManagement: React.FC = () => {
             </div>
           </div>
         )}
-        {selected && !isIndividual && 'organizationName' in selected && (
+        {selected && !isIndividual && 'organization_name' in selected && (
           <div className="space-y-4 text-sm">
-            <div className="grid grid-cols-2 gap-4">
-              <div><p className="text-gray-500 text-[10px] uppercase font-bold">Organization</p><p className="font-semibold">{(selected as ConsultancyRequest).organizationName}</p></div>
-              <div><p className="text-gray-500 text-[10px] uppercase font-bold">Type</p><p className="font-semibold">{(selected as ConsultancyRequest).organizationType}</p></div>
-              <div><p className="text-gray-500 text-[10px] uppercase font-bold">Contact Person</p><p className="font-semibold">{(selected as ConsultancyRequest).contactPerson}</p></div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div><p className="text-gray-500 text-[10px] uppercase font-bold">Organization</p><p className="font-semibold">{(selected as ConsultancyRequest).organization_name}</p></div>
+              <div><p className="text-gray-500 text-[10px] uppercase font-bold">Type</p><p className="font-semibold">{(selected as ConsultancyRequest).organization_type}</p></div>
+              <div><p className="text-gray-500 text-[10px] uppercase font-bold">Contact Person</p><p className="font-semibold">{(selected as ConsultancyRequest).contact_person}</p></div>
               <div><p className="text-gray-500 text-[10px] uppercase font-bold">Email</p><p className="font-semibold">{(selected as ConsultancyRequest).email}</p></div>
               <div><p className="text-gray-500 text-[10px] uppercase font-bold">Phone</p><p className="font-semibold">{(selected as ConsultancyRequest).phone}</p></div>
-              <div><p className="text-gray-500 text-[10px] uppercase font-bold">Service Needed</p><p className="font-semibold">{(selected as ConsultancyRequest).serviceNeeded}</p></div>
+              <div><p className="text-gray-500 text-[10px] uppercase font-bold">Service Needed</p><p className="font-semibold">{(selected as ConsultancyRequest).service_needed}</p></div>
             </div>
             <div><p className="text-gray-500 text-[10px] uppercase font-bold mb-1">Details</p><p className="text-gray-700">{(selected as ConsultancyRequest).details}</p></div>
             <div className="border-t pt-4">

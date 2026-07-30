@@ -1,6 +1,6 @@
 # Design System
 
-## Music Academy & Services Platform
+## Matt-Agba Music Consult
 
 > Adopted from reference site: https://melody-academy.lovable.app
 > Fonts kept as Playfair Display + Plus Jakarta Sans. Colors, shadows, and animations adapted from the reference's OKLCH-based green-tinted design system.

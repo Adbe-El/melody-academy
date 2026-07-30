@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { User, Save } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { useToast } from '../../components/ui/Toast';
+import { updateProfile } from '../../services/auth';
 
 export const Profile: React.FC = () => {
   const { user, refreshUser } = useAuth();
@@ -11,9 +12,11 @@ export const Profile: React.FC = () => {
   const [saving, setSaving] = useState(false);
 
   const handleSave = async () => {
+    if (!user) return;
     setSaving(true);
     try {
-      // Profile update will be handled when Supabase users table is connected
+      const parts = fullName.split(' ');
+      await updateProfile(user.id, { first_name: parts[0] || '', last_name: parts.slice(1).join(' ') || parts[0] || '', phone: phone || null });
       await refreshUser();
       showToast('success', 'Profile updated successfully!');
     } catch {

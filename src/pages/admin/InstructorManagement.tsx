@@ -26,7 +26,7 @@ export const InstructorManagement: React.FC = () => {
 
   const filtered = useMemo(() => instructorApps.filter(a => {
     const q = search.toLowerCase();
-    const matchesSearch = a.fullName.toLowerCase().includes(q) || a.email.toLowerCase().includes(q) || a.primaryInstrument?.toLowerCase().includes(q);
+    const matchesSearch = a.full_name.toLowerCase().includes(q) || a.email.toLowerCase().includes(q) || a.primary_instrument?.toLowerCase().includes(q);
     const matchesStatus = statusFilter === 'all' || a.status === statusFilter;
     return matchesSearch && matchesStatus;
   }), [instructorApps, search, statusFilter]);
@@ -98,13 +98,13 @@ export const InstructorManagement: React.FC = () => {
               {filtered.map(a => (
                 <tr key={a.id} className="hover:bg-gray-50 transition-colors">
                   <td className="p-4">
-                    <p className="font-semibold text-gray-900">{a.fullName}</p>
+                    <p className="font-semibold text-gray-900">{a.full_name}</p>
                     <p className="text-gray-500 text-[11px]">{a.email}</p>
                   </td>
-                  <td className="p-4"><Badge variant="emerald">{a.primaryInstrument}</Badge></td>
-                  <td className="p-4">{a.yearsExperience} years</td>
+                  <td className="p-4"><Badge variant="emerald">{a.primary_instrument}</Badge></td>
+                  <td className="p-4">{a.years_experience} years</td>
                   <td className="p-4"><Badge variant={statusColors[a.status] || 'gray'}>{a.status.replace('_', ' ')}</Badge></td>
-                  <td className="p-4 text-gray-500">{a.createdAt?.split('T')[0]}</td>
+                  <td className="p-4 text-gray-500">{a.created_at?.split('T')[0]}</td>
                   <td className="p-4 text-right">
                     <button onClick={() => setSelected(a)} className="p-2 rounded-lg hover:bg-academy-sage text-gray-500 hover:text-academy-emerald transition-colors">
                       <Eye className="w-4 h-4" />
@@ -123,13 +123,13 @@ export const InstructorManagement: React.FC = () => {
       <Modal isOpen={!!selected} onClose={() => setSelected(null)} title="Application Details" size="lg">
         {selected && (
           <div className="space-y-4 text-sm">
-            <div className="grid grid-cols-2 gap-4">
-              <div><p className="text-gray-500 text-[10px] uppercase font-bold">Full Name</p><p className="font-semibold">{selected.fullName}</p></div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div><p className="text-gray-500 text-[10px] uppercase font-bold">Full Name</p><p className="font-semibold">{selected.full_name}</p></div>
               <div><p className="text-gray-500 text-[10px] uppercase font-bold">Email</p><p className="font-semibold">{selected.email}</p></div>
               <div><p className="text-gray-500 text-[10px] uppercase font-bold">Phone</p><p className="font-semibold">{selected.phone}</p></div>
-              <div><p className="text-gray-500 text-[10px] uppercase font-bold">Primary Instrument</p><p className="font-semibold">{selected.primaryInstrument}</p></div>
-              <div><p className="text-gray-500 text-[10px] uppercase font-bold">Experience</p><p className="font-semibold">{selected.yearsExperience} years</p></div>
-              <div><p className="text-gray-500 text-[10px] uppercase font-bold">Resume</p><p className="font-semibold">{selected.resumeFileName || '—'}</p></div>
+              <div><p className="text-gray-500 text-[10px] uppercase font-bold">Primary Instrument</p><p className="font-semibold">{selected.primary_instrument}</p></div>
+              <div><p className="text-gray-500 text-[10px] uppercase font-bold">Experience</p><p className="font-semibold">{selected.years_experience} years</p></div>
+              <div><p className="text-gray-500 text-[10px] uppercase font-bold">Resume</p><p className="font-semibold">{selected.cv_url || '—'}</p></div>
             </div>
             <div><p className="text-gray-500 text-[10px] uppercase font-bold mb-1">Qualifications</p><p className="text-gray-700">{selected.qualifications}</p></div>
             <div><p className="text-gray-500 text-[10px] uppercase font-bold mb-1">Bio</p><p className="text-gray-700">{selected.bio}</p></div>

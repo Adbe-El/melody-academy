@@ -1,6 +1,6 @@
 # Responsive Design
 
-## Music Academy & Services Platform
+## Matt-Agba Music Consult
 
 ---
 

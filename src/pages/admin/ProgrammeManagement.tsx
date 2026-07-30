@@ -15,13 +15,13 @@ export const ProgrammeManagement: React.FC = () => {
   const [search, setSearch] = useState('');
   const [editing, setEditing] = useState<Programme | null>(null);
   const [showNew, setShowNew] = useState(false);
-  const [form, setForm] = useState({ title: '', category: 'Keyboard' as Programme['category'], description: '', level: 'Beginner' as Programme['level'], duration: '', ageGroup: 'All Ages' as Programme['ageGroup'], imageUrl: '', featured: false });
+  const [form, setForm] = useState({ title: '', category: 'Keyboard' as Programme['category'], description: '', level: 'Beginner' as Programme['level'], duration: '', age_group: 'All Ages' as Programme['age_group'], image_url: '', featured: false });
 
   const filtered = useMemo(() => programmes.filter(p =>
     p.title.toLowerCase().includes(search.toLowerCase()) || p.category.toLowerCase().includes(search.toLowerCase())
   ), [programmes, search]);
 
-  const resetForm = useCallback(() => setForm({ title: '', category: 'Keyboard', description: '', level: 'Beginner', duration: '', ageGroup: 'All Ages', imageUrl: '', featured: false }), []);
+  const resetForm = useCallback(() => setForm({ title: '', category: 'Keyboard', description: '', level: 'Beginner', duration: '', age_group: 'All Ages', image_url: '', featured: false }), []);
 
   const handleSave = useCallback(async () => {
     try {
@@ -46,7 +46,7 @@ export const ProgrammeManagement: React.FC = () => {
   }, [refreshProgrammes]);
 
   const openEdit = useCallback((p: Programme) => {
-    setForm({ title: p.title, category: p.category, description: p.description, level: p.level, duration: p.duration, ageGroup: p.ageGroup, imageUrl: p.imageUrl, featured: p.featured || false });
+    setForm({ title: p.title, category: p.category, description: p.description, level: p.level, duration: p.duration, age_group: p.age_group, image_url: p.image_url, featured: p.featured || false });
     setEditing(p);
   }, []);
 
@@ -129,7 +129,7 @@ export const ProgrammeManagement: React.FC = () => {
             <label className="block text-[10px] uppercase font-bold text-gray-500 mb-1">Title</label>
             <input value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} className="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-academy-emerald/20" />
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-[10px] uppercase font-bold text-gray-500 mb-1">Category</label>
               <select value={form.category} onChange={e => setForm(f => ({ ...f, category: e.target.value as Programme['category'] }))} className="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm bg-white">
@@ -143,14 +143,14 @@ export const ProgrammeManagement: React.FC = () => {
               </select>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-[10px] uppercase font-bold text-gray-500 mb-1">Duration</label>
               <input value={form.duration} onChange={e => setForm(f => ({ ...f, duration: e.target.value }))} className="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-academy-emerald/20" placeholder="e.g. 12 weeks" />
             </div>
             <div>
               <label className="block text-[10px] uppercase font-bold text-gray-500 mb-1">Image URL</label>
-              <input value={form.imageUrl} onChange={e => setForm(f => ({ ...f, imageUrl: e.target.value }))} className="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-academy-emerald/20" />
+              <input value={form.image_url} onChange={e => setForm(f => ({ ...f, image_url: e.target.value }))} className="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-academy-emerald/20" />
             </div>
           </div>
           <div>

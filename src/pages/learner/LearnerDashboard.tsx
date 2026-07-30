@@ -55,15 +55,15 @@ export const LearnerDashboard: React.FC = () => {
           </h1>
           {learner && (
             <p className="text-gray-300 text-xs sm:text-sm">
-              Enrolled Programme: <span className="font-semibold text-white">{learner.programmeTitle}</span>
+              Enrolled Programme: <span className="font-semibold text-white">{learner.programme_title}</span>
             </p>
           )}
         </div>
-        <div className="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/10 text-center min-w-[200px]">
+        <div className="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/10 text-center min-w-0 sm:min-w-[200px]">
           <p className="text-xs text-gray-300 uppercase tracking-wider font-semibold">Course Progress</p>
-          <p className="font-serif text-3xl font-bold text-academy-gold">{learner?.progressPercentage ?? 0}%</p>
+          <p className="font-serif text-3xl font-bold text-academy-gold">{learner?.progress ?? 0}%</p>
           <div className="w-full bg-white/20 h-2 rounded-full mt-2 overflow-hidden">
-            <div className="bg-academy-gold h-full rounded-full" style={{ width: `${learner?.progressPercentage ?? 0}%` }} />
+            <div className="bg-academy-gold h-full rounded-full" style={{ width: `${learner?.progress ?? 0}%` }} />
           </div>
         </div>
       </div>
@@ -78,7 +78,7 @@ export const LearnerDashboard: React.FC = () => {
                 <span className="text-xs font-bold uppercase tracking-wider text-academy-emerald bg-academy-sage px-3 py-1 rounded-full">
                   Latest Lesson Note
                 </span>
-                <span className="text-xs text-gray-500 font-medium">{latestNote.dateAssigned}</span>
+                <span className="text-xs text-gray-500 font-medium">{latestNote.upload_date}</span>
               </div>
               <h3 className="font-serif text-2xl font-bold text-gray-900">{latestNote.title}</h3>
               <p className="text-xs text-gray-700 font-semibold">Topic: {latestNote.topic}</p>
@@ -87,7 +87,7 @@ export const LearnerDashboard: React.FC = () => {
               </p>
               <div className="p-4 bg-academy-sage rounded-2xl space-y-1 text-academy-emerald">
                 <p className="text-xs font-bold uppercase">Practice Goal for Next Session:</p>
-                <p className="text-xs">{latestNote.practiceGoals}</p>
+                <p className="text-xs">{latestNote.practice_goals}</p>
               </div>
             </div>
           )}
@@ -106,8 +106,8 @@ export const LearnerDashboard: React.FC = () => {
                         PENDING
                       </span>
                       <h4 className="font-bold text-sm text-gray-900 mt-1">{assign.title}</h4>
-                      <p className="text-xs text-gray-600">{assign.description}</p>
-                      <p className="text-[11px] text-gray-500 mt-1">Due: {assign.dueDate}</p>
+                      <p className="text-xs text-gray-600">{assign.instructions}</p>
+                      <p className="text-[11px] text-gray-500 mt-1">Due: {assign.due_date}</p>
                     </div>
                   </div>
                 ))}
@@ -144,7 +144,7 @@ export const LearnerDashboard: React.FC = () => {
                 {announcements.slice(0, 3).map(ann => (
                   <div key={ann.id} className="bg-white p-4 rounded-2xl border border-gray-200/80 space-y-1 shadow-sm">
                     <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-bold text-academy-emerald uppercase">{ann.date}</span>
+                      <span className="text-[10px] font-bold text-academy-emerald uppercase">{ann.publish_date}</span>
                       {ann.important && (
                         <span className="bg-red-100 text-red-800 text-[10px] font-bold px-2 py-0.5 rounded-full">Important</span>
                       )}

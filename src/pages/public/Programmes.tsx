@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Search, Filter, BookOpen, Clock, Users, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { Search, Clock, Users, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../../context/AppContext';
-import { Programme } from '../../types';
 
 export const Programmes = () => {
   const navigate = useNavigate();
@@ -80,7 +79,7 @@ export const Programmes = () => {
             {/* Image Banner */}
             <div className="group relative h-52 w-full overflow-hidden bg-gray-100">
               <img
-                src={prog.imageUrl}
+                src={prog.image_url}
                 alt={prog.title}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
@@ -98,7 +97,7 @@ export const Programmes = () => {
             <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
               <div className="space-y-2">
                 <div className="flex items-center gap-4 text-xs text-gray-500 font-medium">
-                  <span className="flex items-center gap-1"><Users className="w-3.5 h-3.5 text-academy-emerald" /> {prog.ageGroup}</span>
+                  <span className="flex items-center gap-1"><Users className="w-3.5 h-3.5 text-academy-emerald" /> {prog.age_group}</span>
                   <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5 text-academy-emerald" /> {prog.duration}</span>
                 </div>
 
@@ -114,7 +113,7 @@ export const Programmes = () => {
               <div className="pt-3 border-t border-gray-100 space-y-2">
                 <p className="text-[11px] font-bold uppercase text-gray-500 tracking-wider">Key Syllabus Topics:</p>
                 <ul className="space-y-1 text-xs text-gray-700">
-                  {prog.syllabusHighlights.map((item, i) => (
+                  {prog.syllabus_highlights.map((item, i) => (
                     <li key={i} className="flex items-center gap-2">
                       <CheckCircle2 className="w-3.5 h-3.5 text-academy-emerald flex-shrink-0" />
                       <span>{item}</span>

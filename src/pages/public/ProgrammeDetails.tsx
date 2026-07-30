@@ -64,7 +64,7 @@ const ProgrammeDetails = () => {
       {/* ─── Banner ───────────────────────────────────────────── */}
       <section className="relative w-full h-[340px] sm:h-[420px] overflow-hidden">
         <img
-          src={programme.imageUrl}
+          src={programme.image_url}
           alt={programme.title}
           className="absolute inset-0 w-full h-full object-cover"
         />
@@ -85,7 +85,7 @@ const ProgrammeDetails = () => {
               <Award className="w-4 h-4" /> {programme.level}
             </span>
             <span className="flex items-center gap-1.5">
-              <Users className="w-4 h-4" /> {programme.ageGroup}
+              <Users className="w-4 h-4" /> {programme.age_group}
             </span>
           </div>
         </div>
@@ -137,7 +137,7 @@ const ProgrammeDetails = () => {
                 </div>
                 <div>
                   <p className="text-[11px] font-bold uppercase tracking-wider text-gray-400">Age Group</p>
-                  <p className="text-sm font-semibold text-gray-900">{programme.ageGroup}</p>
+                  <p className="text-sm font-semibold text-gray-900">{programme.age_group}</p>
                 </div>
               </div>
             </div>
@@ -157,7 +157,7 @@ const ProgrammeDetails = () => {
 
           <div className="bg-white p-8 sm:p-10 rounded-3xl border border-gray-200/80 shadow-sm">
             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {programme.syllabusHighlights.map((item, i) => (
+              {programme.syllabus_highlights.map((item, i) => (
                 <li key={i} className="flex items-start gap-3 bg-academy-cream-light/50 p-4 rounded-2xl">
                   <CheckCircle2 className="w-5 h-5 text-academy-emerald flex-shrink-0 mt-0.5" />
                   <span className="text-sm text-gray-700 leading-relaxed">{item}</span>
@@ -185,9 +185,9 @@ const ProgrammeDetails = () => {
               </div>
               <h3 className="font-serif text-xl font-bold text-gray-900">Age Group</h3>
               <p className="text-sm text-gray-600">
-                {programme.ageGroup === 'All Ages'
+                {programme.age_group === 'All Ages'
                   ? 'Open to learners of all ages — kids, teens, and adults are all welcome.'
-                  : `Designed specifically for ${programme.ageGroup} learners with age-appropriate teaching methods.`}
+                  : `Designed specifically for ${programme.age_group} learners with age-appropriate teaching methods.`}
               </p>
             </div>
 

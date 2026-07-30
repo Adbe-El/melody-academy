@@ -1,6 +1,6 @@
 # Components
 
-## Music Academy & Services Platform
+## Matt-Agba Music Consult
 
 ---
 

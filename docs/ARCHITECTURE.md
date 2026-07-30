@@ -1,6 +1,6 @@
 # Architecture
 
-## Music Academy & Services Platform
+## Matt-Agba Music Consult
 
 ---
 
@@ -272,12 +272,17 @@ const { data } = await supabase
 | State | Location | Purpose |
 |-------|----------|---------|
 | Auth session | `AuthContext` (Supabase listener) | Current user, session, role |
-| App config | `AppContext` | WhatsApp number, site settings |
-| Page data | Component-level `useState` + service calls | Programme lists, consultations, etc. |
+| Admin data | `AdminContext` (pre-fetched on layout mount) | All admin datasets (programmes, learners, instructors, bookings, exams, instruments, LMS, announcements) |
+| Learner identity | `LearnerContext` (fetched on layout mount) | Current learner profile + ID |
+| App config | `AppContext` (legacy, being phased out) | WhatsApp number, site settings |
 | Form state | Component-level `useState` | Form field values |
 | UI state | Component-level `useState` | Modal open, active tab, filters |
 
-**No global state for business data** — each page fetches its own data from Supabase via service functions. This avoids stale data issues and simplifies cache invalidation.
+### Data Loading Pattern (MANDATORY)
+
+**Admin pages:** `AdminContext` pre-fetches ALL datasets in parallel on mount via `Promise.allSettled`. Individual pages read from `useAdmin()` — zero independent network requests. `dataCache` (in-memory, 5-min TTL) prevents redundant fetches. After mutations, pages call `context.refresh*()` to invalidate cache and re-fetch.
+
+**Learner pages:** `LearnerContext` provides learner identity (ID, profile). Individual pages fetch their own learner-scoped data (notes, assignments, etc.) using the learner ID from context.
 
 ---
 

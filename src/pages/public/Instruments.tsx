@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ShoppingBag, MessageSquare, Check, ShieldCheck, Tag } from 'lucide-react';
+import { MessageSquare, Check } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { Instrument } from '../../types';
 
@@ -12,11 +12,11 @@ export const Instruments: React.FC = () => {
 
   const filteredInstruments = instruments.filter(i => {
     if (selectedCat === 'All') return true;
-    return i.category.toLowerCase().includes(selectedCat.toLowerCase());
+    return (i.category_name || '').toLowerCase().includes(selectedCat.toLowerCase());
   });
 
   const handleWhatsAppEnquiry = (inst: Instrument) => {
-    const text = `Hi MelodyAcademy! 👋 I am interested in inquiring about purchasing the *${inst.name}* (${inst.price}). Please share availability, warranty details, and payment options.`;
+    const text = `Hi Matt-Agba Music Consult! 👋 I am interested in inquiring about purchasing the *${inst.name}* (${inst.price}). Please share availability, warranty details, and payment options.`;
     window.open(getWhatsAppUrl(text), '_blank');
   };
 
@@ -32,7 +32,7 @@ export const Instruments: React.FC = () => {
           Musical Instrument Catalogue
         </h1>
         <p className="text-gray-300 text-sm max-w-xl mx-auto">
-          Browse certified pianos, guitars, violins, drum kits, and accessories. Enquire directly on WhatsApp for personalized guidance, availability, and pricing.
+          Browse certified pianos, guitars, violins, drum kits, and accessories — personally vetted by Matthew Agba. Enquire directly on WhatsApp for guidance, availability, and pricing.
         </p>
       </div>
 
@@ -64,22 +64,22 @@ export const Instruments: React.FC = () => {
               {/* Image */}
               <div className="group relative h-48 rounded-2xl overflow-hidden bg-gray-100 mb-4">
                 <img
-                  src={inst.imageUrl}
+                  src={inst.image_url}
                   alt={inst.name}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform"
                 />
                 <span className="absolute top-3 left-3 bg-academy-emerald text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">
                   {inst.condition}
                 </span>
-                <span className={`absolute top-3 right-3 text-[10px] font-bold px-2.5 py-1 rounded-full ${inst.inStock ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800'}`}>
-                  {inst.inStock ? 'In Stock' : 'Pre-order'}
+                <span className={`absolute top-3 right-3 text-[10px] font-bold px-2.5 py-1 rounded-full ${inst.availability ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800'}`}>
+                  {inst.availability ? 'In Stock' : 'Pre-order'}
                 </span>
               </div>
 
               {/* Info */}
               <div className="space-y-2">
                 <span className="text-[11px] font-semibold uppercase tracking-wider text-academy-emerald">
-                  {inst.category}
+                  {inst.category_name}
                 </span>
                 <h3 className="font-serif text-lg font-bold text-gray-900 leading-snug line-clamp-2">
                   {inst.name}
@@ -118,7 +118,7 @@ export const Instruments: React.FC = () => {
           <div className="bg-academy-cream-light max-w-lg w-full rounded-3xl p-6 sm:p-8 space-y-4 border border-white relative shadow-2xl">
             <button
               onClick={() => setSelectedInstrument(null)}
-              className="absolute top-4 right-4 text-gray-400 hover:text-black text-sm font-bold bg-white w-8 h-8 rounded-full flex items-center justify-center shadow-sm"
+              className="absolute top-4 right-4 text-gray-400 hover:text-black text-sm font-bold bg-white w-10 h-10 rounded-full flex items-center justify-center shadow-sm"
             >
               ✕
             </button>
@@ -127,7 +127,7 @@ export const Instruments: React.FC = () => {
                 🎵
               </div>
               <div>
-                <span className="text-xs font-bold text-academy-emerald uppercase">{selectedInstrument.category}</span>
+                <span className="text-xs font-bold text-academy-emerald uppercase">{selectedInstrument.category_name}</span>
                 <h3 className="font-serif text-xl font-bold text-gray-900">{selectedInstrument.name}</h3>
               </div>
             </div>

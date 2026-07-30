@@ -3,7 +3,6 @@ import {
   getCurrentUser,
   onAuthStateChange,
   signIn as authSignIn,
-  signUp as authSignUp,
   signOut as authSignOut,
   resetPassword as authResetPassword,
   type AuthUser
@@ -15,7 +14,6 @@ interface AuthContextType {
   user: AuthUser | null;
   loading: boolean;
   signIn: typeof authSignIn;
-  signUp: typeof authSignUp;
   signOut: () => Promise<void>;
   resetPassword: typeof authResetPassword;
   refreshUser: () => Promise<void>;
@@ -77,7 +75,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       user,
       loading,
       signIn: authSignIn,
-      signUp: authSignUp,
       signOut,
       resetPassword: authResetPassword,
       refreshUser,

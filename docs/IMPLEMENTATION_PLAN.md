@@ -1,6 +1,6 @@
 # Implementation Plan
 
-## Music Academy & Services Platform
+## Matt-Agba Music Consult
 
 ### Delivery Strategy
 

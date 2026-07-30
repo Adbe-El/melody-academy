@@ -1,6 +1,6 @@
 # Interactions
 
-## Music Academy & Services Platform
+## Matt-Agba Music Consult
 
 ---
 
@@ -182,9 +182,9 @@ function getWhatsAppUrl(phone: string, message: string): string {
 
 | Context | Message Template |
 |---------|-----------------|
-| Instrument enquiry | "Hi MelodyAcademy! I am interested in purchasing the *{instrumentName}* ({price}). Please share availability and payment options." |
-| General consultation | "Hi MelodyAcademy! I would like to book a consultation about {purpose}." |
-| Contact page | "Hi MelodyAcademy! I have a question about {subject}." |
+| Instrument enquiry | "Hi Matt-Agba Music Consult! I am interested in purchasing the *{instrumentName}* ({price}). Please share availability and payment options." |
+| General consultation | "Hi Matt-Agba Music Consult! I would like to book a consultation about {purpose}." |
+| Contact page | "Hi Matt-Agba Music Consult! I have a question about {subject}." |
 
 ---
 

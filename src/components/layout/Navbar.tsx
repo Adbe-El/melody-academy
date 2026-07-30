@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Music, Menu, X, ArrowRight, LogIn } from 'lucide-react';
+import { Music, Menu, X, LogIn } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 
 export const Navbar: React.FC = () => {
@@ -10,18 +10,19 @@ export const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
-    { to: '/', label: 'Home' },
+    { to: '/about', label: 'About' },
     { to: '/programmes', label: 'Courses' },
-    { to: '/instructors', label: 'Tutors' },
     { to: '/instruments', label: 'Instruments' },
     { to: '/exam-prep', label: 'Exam Prep' },
     { to: '/consultancy', label: 'Consultancy' },
+    { to: '/contact?purpose=general', label: 'Contact Us' },
     { to: '/apply-instructor', label: 'Join as Tutor' },
   ];
 
   const isActive = (path: string) => {
-    if (path === '/') return location.pathname === '/';
-    return location.pathname.startsWith(path);
+    const clean = path.split('?')[0];
+    if (clean === '/') return location.pathname === '/';
+    return location.pathname.startsWith(clean);
   };
 
   const handlePortalClick = () => {
@@ -44,7 +45,7 @@ export const Navbar: React.FC = () => {
               <Music className="w-5 h-5 text-academy-gold" />
             </div>
             <span className="font-serif text-2xl font-bold tracking-tight text-academy-emerald">
-              Melody<span className="text-gray-800">Academy</span>
+              Matt-Agba Music Consult
             </span>
           </Link>
 
@@ -91,12 +92,6 @@ export const Navbar: React.FC = () => {
                   <LogIn className="w-4 h-4" />
                   Sign In
                 </Link>
-                <Link
-                  to="/auth/signup"
-                  className="px-5 py-2.5 rounded-full bg-academy-emerald hover:bg-academy-emerald-hover text-white text-sm font-medium shadow-sm hover:shadow transition-all flex items-center gap-2 btn-shimmer"
-                >
-                  Get Started <ArrowRight className="w-4 h-4" />
-                </Link>
               </div>
             )}
           </div>
@@ -106,6 +101,8 @@ export const Navbar: React.FC = () => {
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 rounded-lg text-gray-700 hover:bg-black/5"
+              aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={mobileMenuOpen}
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -151,16 +148,9 @@ export const Navbar: React.FC = () => {
               <Link
                 to="/auth/login"
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full py-3 rounded-full border border-gray-300 text-gray-700 font-medium text-center"
-              >
-                Sign In
-              </Link>
-              <Link
-                to="/auth/signup"
-                onClick={() => setMobileMenuOpen(false)}
                 className="w-full py-3 rounded-full bg-academy-emerald text-white font-medium text-center shadow"
               >
-                Get Started
+                Sign In
               </Link>
             </>
           )}

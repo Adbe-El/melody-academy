@@ -3,6 +3,7 @@ import { Outlet, Link, useLocation } from 'react-router-dom';
 import { Music, BookOpen, FileText, Award, FolderOpen, LogOut, Menu, X, Home, User } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { signOut } from '../../services/auth';
+import { ErrorBoundary } from '../common/ErrorBoundary';
 
 const sidebarLinks = [
   { to: '/learner', icon: Home, label: 'Dashboard', end: true },
@@ -28,7 +29,7 @@ export const LearnLayout: React.FC = () => {
               <Music className="w-4 h-4 text-academy-gold" />
             </div>
             <span className="font-serif text-lg font-bold text-academy-emerald">
-              Melody<span className="text-gray-800">Academy</span>
+              Matt-Agba Music Consult
             </span>
           </Link>
           <p className="text-[10px] text-gray-400 uppercase tracking-wider mt-2 font-semibold">Learner Portal</p>
@@ -76,7 +77,7 @@ export const LearnLayout: React.FC = () => {
 
       {/* Mobile Header */}
       <div className="lg:hidden fixed top-0 inset-x-0 z-40 bg-white border-b border-gray-200 px-4 py-3 flex items-center gap-3">
-        <button onClick={() => setSidebarOpen(!sidebarOpen)} className="p-1.5 rounded-lg hover:bg-gray-100">
+        <button onClick={() => setSidebarOpen(!sidebarOpen)} className="p-2 rounded-lg hover:bg-gray-100" aria-label={sidebarOpen ? 'Close menu' : 'Open menu'}>
           {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
         <div className="flex items-center gap-2">
@@ -121,7 +122,9 @@ export const LearnLayout: React.FC = () => {
 
       {/* Main Content */}
       <div className="flex-1 lg:ml-64 pt-14 lg:pt-0">
-        <Outlet />
+        <ErrorBoundary>
+          <Outlet />
+        </ErrorBoundary>
       </div>
     </div>
   );

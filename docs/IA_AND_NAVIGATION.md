@@ -1,6 +1,6 @@
 # Information Architecture & Navigation
 
-## Music Academy & Services Platform
+## Matt-Agba Music Consult
 
 ---
 

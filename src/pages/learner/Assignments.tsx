@@ -63,16 +63,14 @@ export const Assignments: React.FC = () => {
                   }`}>
                     {assign.status.toUpperCase()}
                   </span>
-                  <span className="text-xs text-gray-500 font-medium">Due: {assign.dueDate}</span>
+                  <span className="text-xs text-gray-500 font-medium">Due: {assign.due_date}</span>
                 </div>
                 <h3 className="font-serif text-lg font-bold text-gray-900">{assign.title}</h3>
-                <p className="text-xs text-gray-600 leading-relaxed">{assign.description}</p>
-                {assign.feedback && (
-                  <div className="p-3 bg-academy-sage rounded-2xl text-xs text-academy-emerald">
-                    <p className="font-bold">Tutor Feedback:</p>
-                    <p>"{assign.feedback}"</p>
-                  </div>
-                )}
+                <p className="text-xs text-gray-600 leading-relaxed">{assign.instructions}</p>
+                <div className="p-3 bg-academy-sage rounded-2xl text-xs text-academy-emerald">
+                  <p className="font-bold">Tutor Feedback:</p>
+                  <p>"—"</p>
+                </div>
               </div>
               {assign.status === 'pending' && (
                 <button

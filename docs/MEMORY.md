@@ -6,12 +6,14 @@
 
 ## Current Status
 
-- **Last completed phase:** Phase 2 (ALL COMPLETE)
-- **Current phase:** Phase 3 — Consultation & Recruitment (not started)
-- **Current feature:** All 5 public website features complete — landing page, programme/instrument details, exam prep, consultancy, contact
-- **Last file modified:** src/pages/admin/BookingsManagement.tsx, AdminLayout.tsx, App.tsx, factory.ts, dataCache.ts, services/supabase.ts, services/consultations.ts
-- **Last session summary:** Unified Consultation + Consultancy admin pages into single BookingsManagement with Individual/Corporate toggle. Added column selection to factory.ts for slim queries. Fixed duplicate Supabase client. Increased cache TTL to 5min. Added useMemo/useCallback to all admin pages. Fixed 2 TS build errors. Updated ROUTES.md, PAGES.md, MEMORY.md.
+- **Last completed phase:** Phase 9 — About Page (COMPLETE)
+- **Current phase:** ABOUT PAGE COMPLETE
+- **Current feature:** About page created with biography, certifications, global affiliations, charity work, and teaching philosophy; `/about` route registered in App.tsx and Navbar
+- **Next steps:** Test the app end-to-end (login as admin, verify data loads from Supabase); verify About page rendering at `/about`
 - **Blockers:** None
+- **Supabase credentials:** Project `zadrvszroluveuozckog`, URL `https://zadrvszroluveuozckog.supabase.co`
+- **Admin emails:** `adbeelomiunu@gmail.com`, `mattagbamusicconsult@gmail.com`
+- **SQL migration file:** `supabase/migrations/20260728000000_create_all_tables.sql` (17 tables, RLS, indexes, seeds)
 
 ---
 
@@ -45,43 +47,59 @@
 - [x] 2.4 Instrument shop + Instrument Details (/instruments/:id) with WhatsApp enquiry
 - [x] 2.5 Consultancy + Contact — success stories, FAQ, Google Maps embed
 
-### Phase 3 — Consultation & Recruitment (not started)
+### Phase 3 — Consultation & Recruitment (COMPLETE)
 
-- [ ] 3.1 4-step consultation wizard
-- [ ] 3.2 Become an Instructor page
-- [ ] 3.3 Instructors directory
-- [ ] 3.4 Admin consultation pipeline
+- [x] 3.1 4-step consultation wizard
+- [x] 3.2 Become an Instructor page
+- [x] 3.3 Instructors directory (hardcoded — pending Supabase migration)
+- [x] 3.4 Admin consultation pipeline (BookingsManagement with Individual/Corporate toggle)
 
-### Phase 4 — Learner LMS (not started)
+### Phase 4 — Learner LMS (COMPLETE)
 
-- [ ] 4.1 Learner dashboard
-- [ ] 4.2 Lesson notes
-- [ ] 4.3 Assignments
-- [ ] 4.4 Resources + Certificates
-- [ ] 4.5 Learner profile
+- [x] 4.1 Learner dashboard
+- [x] 4.2 Lesson notes
+- [x] 4.3 Assignments
+- [x] 4.4 Resources + Certificates
+- [x] 4.5 Learner profile
 
-### Phase 5 — Admin Core (not started)
+### Phase 5 — Admin Core (COMPLETE)
 
-- [ ] 5.1 Admin dashboard KPIs
-- [ ] 5.2 Programme management
-- [ ] 5.3 Learner & LMS management
-- [ ] 5.4 Instructor application pipeline
-- [ ] 5.5 Consultancy request management
+- [x] 5.1 Admin dashboard KPIs
+- [x] 5.2 Programme management
+- [x] 5.3 Learner & LMS management
+- [x] 5.4 Instructor application pipeline
+- [x] 5.5 Consultancy request management
 
-### Phase 6 — Admin Advanced (not started)
+### Phase 6 — Admin Advanced (COMPLETE)
 
-- [ ] 6.1 Exam registration management
-- [ ] 6.2 Instrument management
-- [ ] 6.3 Website CMS
-- [ ] 6.4 Reports dashboard
-- [ ] 6.5 Settings + Announcements
+- [x] 6.1 Exam registration management
+- [x] 6.2 Instrument management
+- [x] 6.3 Website CMS (localStorage — pending Supabase migration)
+- [x] 6.4 Reports dashboard
+- [x] 6.5 Settings + Announcements (localStorage — pending Supabase migration)
 
-### Phase 7 — Polish & QA (not started)
+### Phase 7 — Polish & QA (COMPLETE)
 
-- [ ] 7.1 Responsive QA
-- [ ] 7.2 Accessibility audit
-- [ ] 7.3 Error/loading/empty states
-- [ ] 7.4 Dead code cleanup + performance
+- [x] 7.1 Responsive QA — fixed wizard navigation wrapping, verified table overflow-x-auto on all admin pages
+- [x] 7.2 Accessibility audit — ARIA labels on hamburger buttons, modal dialog role + focus, skip-to-content link, password toggle labels
+- [x] 7.3 Error/loading/empty states — ErrorBoundary added to PublicLayout, LearnLayout, AdminLayout
+- [x] 7.4 Dead code cleanup + performance — removed App.css, fixed unused imports/vars (19→5 warnings), fixed LMSManagement ternary expressions
+
+### Phase 8 — Supabase Migration (COMPLETE)
+
+- [x] 8.1 SQL migration pushed to Supabase (17 tables, RLS, indexes)
+- [x] 8.2 Seed data SQL created and run (programmes, instruments, announcements, demo records)
+- [x] 8.3 AppContext migrated from localStorage/mock data to live Supabase queries
+- [x] 8.4 Missing service functions added (getLessonNotesByLearner, getAssignmentsByLearner, getResourcesByProgramme)
+- [x] 8.5 Old mock data cleaned up from services/supabase.ts
+- [x] 8.6 Two admin auth users created + linked in users table
+
+### Phase 9 — About Page (COMPLETE)
+
+- [x] 9.1 Created `pages/public/About.tsx` — biography, certifications, global affiliations, charity work, teaching philosophy, CTA
+- [x] 9.2 Registered `/about` route in `App.tsx` with `PageTransition` wrapper
+- [x] 9.3 Added "About" link to Navbar
+- [x] 9.4 Updated PAGES.md and MEMORY.md to document the new page
 
 ---
 
@@ -107,7 +125,51 @@
 | 2026-07-24 | CSS keyframes for modal (not tailwindcss-animate) | Tailwind v4 compatibility |
 | 2026-07-24 | @tailwindcss/postcss plugin for Tailwind v4 | Tailwind v4 PostCSS requirement |
 | 2026-07-24 | Context+Provider pattern for useAuth | Exportable AuthProvider for BrowserRouter wrapping |
-| 2026-07-24 | Adopt reference site color/animation style | Match https://melody-academy.lovable.app — OKLCH colors, green-tinted shadows, float/marquee/shimmer animations. Fonts kept as Playfair Display + Plus Jakarta Sans. |
+| 2026-07-24 | Adopt reference site color/animation style | Match https://melody-academy.lovable.app — OKLCH colors, green-tinted shadows, float/marquee/shimmer animations. Fonts kept as Playfair Display + Plus Jakarta Sans. Brand name is Matt-Agba Music Consult. |
+| 2026-07-27 | Never deploy unless explicitly asked | Do not run `vercel --prod` or any deploy command unless the user specifically requests it. |
+| 2026-07-28 | Hybrid consultations model | DATA_MODEL.md base + preferred_instrument, age_group, experience_level, goals columns |
+| 2026-07-28 | All DB columns snake_case | Converted all TS interfaces, services, contexts, and pages to match |
+| 2026-07-28 | PostgREST JOINs for learners | Denormalized data returned to UI (user name + programme title via JOIN, not separate queries) |
+| 2026-07-28 | Users table: first_name + last_name | Separate columns instead of full_name, concatenated in service layer |
+| 2026-07-29 | Dedicated `/about` route instead of Home section | Founder biography warranted its own page; Home now focuses on services and CTA |
+
+---
+
+## Data Loading Pattern (MANDATORY)
+
+> **All admin pages MUST follow this pattern. No exceptions.**
+
+### Rule
+Admin pages must **never** fetch data independently with their own `useEffect` + `useState`. Instead, they must read from `AdminContext` via the `useAdmin()` hook. All data is pre-fetched once when the admin layout mounts.
+
+### How it works
+1. `AdminContext` pre-fetches ALL admin datasets in parallel on mount (`Promise.allSettled`)
+2. `dataCache` (in-memory, 5-min TTL) prevents redundant fetches across tab switches
+3. Individual pages call `useAdmin()` and read context values directly
+4. Pages show a Skeleton only while `loading` from context is true — then render instantly
+5. After mutations, pages call `context.refresh*()` which clears cache and re-fetches
+
+### Pattern template for new admin pages
+```tsx
+import { useAdmin } from '../../context/AdminContext';
+
+export const MyPage: React.FC = () => {
+  const { myDataset, loading, refreshMyDataset } = useAdmin();
+  // Read from context, NEVER fetch independently
+  if (loading) return <Skeleton variant="table-row" count={5} />;
+  return <div>{/* render myDataset */}</div>;
+};
+```
+
+### Adding new data to AdminContext
+1. Add `EXA_COLUMNS` constant for slim queries
+2. Add `useState` + setter in `AdminProvider`
+3. Add to `Promise.allSettled` in `useEffect`
+4. Add `refresh*` function with `clearCache` + re-fetch
+5. Export via context value + `useAdmin()` hook
+
+### Learner pages (different pattern)
+Learner pages use `LearnerContext` for identity only (learnerId), then fetch per-page data scoped to that learner. This is correct — each page needs different learner-specific data.
 
 ---
 
@@ -121,7 +183,7 @@
 - `DESIGN_SYSTEM.md` — Tokens, component patterns, Tailwind refactor
 - `IA_AND_NAVIGATION.md` — Information Architecture & navigation trees
 - `ROUTES.md` — Route definitions, layout wrappers, auth guards
-- `DATA_MODEL.md` — Supabase schema, 15 tables, RLS, storage buckets
+- `DATA_MODEL.md` — Supabase schema, 17 tables, RLS, storage buckets
 - `SERVICES.md` — Supabase API functions, auth helpers
 - `COMPONENTS.md` — Shared UI component library specs
 - `PAGES.md` — 25+ screen specifications
@@ -138,7 +200,7 @@
 - `hooks/useAuth.tsx` — AuthProvider + useAuth hook
 - `types/index.ts` — TypeScript interfaces
 - `types/database.ts` — Supabase database types
-- `pages/public/` — 7 public pages (no props — use React Router)
+- `pages/public/` — 11 public pages (Home, About, Programmes, ProgrammeDetails, Instruments, InstrumentDetails, ExamPrep, Consultancy, Instructors, Contact, ConsultationWizard)
 - `pages/admin/AdminDashboard.tsx` — Admin dashboard (cached, slim column queries)
 - `pages/admin/BookingsManagement.tsx` — Unified Bookings page with Individual/Corporate toggle
 - `pages/admin/ProgrammeManagement.tsx` — Programme CRUD (useMemo, column-specific fetch)

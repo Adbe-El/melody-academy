@@ -1,6 +1,6 @@
 # Product Requirements Document (PRD)
 
-## Music Academy & Services Platform (MVP)
+## Matt-Agba Music Consult (MVP)
 
 ### Version
 
@@ -10,7 +10,7 @@ v1.0 (MVP)
 
 ## 1. Product Summary
 
-The Music Academy & Services Platform is a web application that serves as the digital front office for a professional music academy. It enables prospective learners, parents, instructors, schools, and churches to discover the academy's services, book consultations, enquire about programmes, apply as instructors, browse musical instruments, and access learning resources after enrolment.
+Matt-Agba Music Consult is a web application that serves as the digital front office for a professional music academy. It enables prospective learners, parents, instructors, schools, and churches to discover the academy's services, book consultations, enquire about programmes, apply as instructors, browse musical instruments, and access learning resources after enrolment.
 
 The platform does **not** host live classes or process payments. Lessons, consultations, and payments are handled externally through the academy's preferred channels (e.g., physical classes, Zoom, WhatsApp, or bank transfer).
 

@@ -17,7 +17,7 @@ import { useApp } from '../../context/AppContext';
 
 export const Home = () => {
   const navigate = useNavigate();
-  const { programmes, instruments } = useApp();
+  const { instruments } = useApp();
 
   const services = [
     {
@@ -27,7 +27,7 @@ export const Home = () => {
       icon: BookOpen
     },
     {
-      id: 'instructors',
+      id: 'contact?purpose=tutor',
       title: 'Find a Tutor',
       description: 'Book private lessons with verified tutors.',
       icon: UserCheck
@@ -95,22 +95,22 @@ export const Home = () => {
     {
       num: '01',
       title: 'Choose',
-      desc: 'Pick a service or program that fits your musical goals.'
-    },
-    {
-      num: '02',
-      title: 'Book',
-      desc: 'Schedule a consultation or exploratory lesson with our academy.'
-    },
-    {
-      num: '03',
-      title: 'Learn & Connect',
-      desc: 'Join personalized sessions and access online LMS resources.'
-    },
-    {
-      num: '04',
-      title: 'Achieve',
-      desc: 'Track your progress, earn certificates, and pass graded exams.'
+              desc: 'Choose your path — private lessons, exam prep, or consultancy.'
+            },
+            {
+              num: '02',
+              title: 'Connect',
+              desc: 'Book a free consultation to discuss your goals with Matthew.'
+            },
+            {
+              num: '03',
+              title: 'Learn & Grow',
+              desc: 'Follow a structured curriculum with personalized guidance.'
+            },
+            {
+              num: '04',
+              title: 'Excel',
+              desc: 'Pass graded exams, earn certificates, and perform with confidence.'
     }
   ];
 
@@ -121,7 +121,7 @@ export const Home = () => {
       role: "Piano Student"
     },
     {
-      quote: "MelodyAcademy helped our church build a strong, cohesive worship team. The consultancy service was top-notch.",
+      quote: "Matt-Agba Music Consult helped our church build a strong, cohesive worship team. The consultancy service was top-notch.",
       name: "Pastor Daniel",
       role: "Church Leader"
     },
@@ -144,19 +144,20 @@ export const Home = () => {
             
             {/* Pill Badge */}
             <div className="inline-flex items-center gap-2 bg-academy-sage text-academy-emerald px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide">
-              <Music className="w-3.5 h-3.5" /> Your music journey starts here
+              <Music className="w-3.5 h-3.5" /> Learn from a pianist with 25+ years of experience
             </div>
 
             {/* Main Headline */}
             <h1 className="font-serif text-5xl sm:text-6xl xl:text-7xl font-bold tracking-tight text-academy-charcoal leading-[1.1]">
-              Inspire.<br />
-              Learn.<br />
-              <span className="text-academy-emerald">Become.</span>
+              Master the Piano.<br />
+              Shape the Music.<br />
+              <span className="text-academy-emerald">Transform Your World.</span>
             </h1>
 
             {/* Subtext */}
             <p className="text-gray-600 text-lg sm:text-xl leading-relaxed max-w-xl font-normal">
-              Live music education, expert guidance, and real opportunities to help you grow as a musician.
+              Matt-Agba Music Consult offers world-class piano education, ABRSM & Trinity exam preparation,
+              and professional consultancy — founded by Matthew Agba, a globally connected pianist and educator.
             </p>
 
             {/* Hero CTAs */}
@@ -182,7 +183,7 @@ export const Home = () => {
                 <img className="w-8 h-8 rounded-full border-2 border-academy-cream" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" alt="Learner" />
                 <img className="w-8 h-8 rounded-full border-2 border-academy-cream" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80" alt="Learner" />
               </div>
-              <span className="font-semibold text-gray-900">10K+ learners</span> are growing their skills with us
+              <span className="font-semibold text-gray-900">100+ pianists mentored</span> with distinction-level results
             </div>
 
           </div>
@@ -193,34 +194,34 @@ export const Home = () => {
             {/* Arched Mask Image */}
             <div className="relative w-full max-w-md aspect-[4/5] overflow-hidden arch-image-mask shadow-2xl border-4 border-white">
               <img
-                src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=800&auto=format&fit=crop"
-                alt="Musician playing piano"
+                src="https://images.unsplash.com/photo-1513883049090-d0b7439799bf?q=80&w=800&auto=format&fit=crop"
+                alt="Pianist at the keyboard"
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
             </div>
 
             {/* Top Floating Badge */}
-            <div className="absolute top-8 -left-4 sm:-left-8 bg-white/90 backdrop-blur-md p-3.5 rounded-2xl shadow-xl border border-white/60 flex items-center gap-3 max-w-[220px] animate-float">
+            <div className="absolute top-8 -left-4 sm:-left-8 bg-white/90 backdrop-blur-md p-3.5 rounded-2xl shadow-xl border border-white/60 flex items-center gap-3 max-w-[180px] sm:max-w-[220px] animate-float">
               <div className="w-10 h-10 rounded-xl bg-academy-sage text-academy-emerald flex items-center justify-center flex-shrink-0 relative">
                 <BookOpen className="w-5 h-5" />
                 <span className="absolute -top-1 -right-1 w-3 h-3 bg-academy-emerald rounded-full animate-pulse-ring" />
               </div>
               <div>
-                <p className="text-xs font-bold text-gray-900">Live Classes</p>
-                <p className="text-[11px] text-gray-500 leading-tight">Interact in real-time with top tutors</p>
+                <p className="text-xs font-bold text-gray-900">One-on-One Coaching</p>
+                <p className="text-[11px] text-gray-500 leading-tight">Personalized sessions with Matthew</p>
               </div>
             </div>
 
             {/* Bottom Floating Badge */}
-            <div className="absolute -bottom-4 -right-4 sm:-right-6 bg-white/90 backdrop-blur-md p-3.5 rounded-2xl shadow-xl border border-white/60 flex items-center gap-3 max-w-[230px] animate-float-slow">
+            <div className="absolute -bottom-4 -right-4 sm:-right-6 bg-white/90 backdrop-blur-md p-3.5 rounded-2xl shadow-xl border border-white/60 flex items-center gap-3 max-w-[190px] sm:max-w-[230px] animate-float-slow">
               <div className="w-10 h-10 rounded-xl bg-academy-sage text-academy-emerald flex items-center justify-center flex-shrink-0 relative">
                 <CheckCircle2 className="w-5 h-5" />
                 <span className="absolute -top-1 -right-1 w-3 h-3 bg-academy-emerald rounded-full animate-pulse-ring" />
               </div>
               <div>
-                <p className="text-xs font-bold text-gray-900">Verified Experts</p>
-                <p className="text-[11px] text-gray-500 leading-tight">Learn from certified music professionals</p>
+                <p className="text-xs font-bold text-gray-900">ABRSM & Trinity</p>
+                <p className="text-[11px] text-gray-500 leading-tight">Exam prep with distinction results</p>
               </div>
             </div>
 
@@ -236,7 +237,7 @@ export const Home = () => {
             Explore Our Services
           </h2>
           <p className="text-gray-600 text-sm max-w-lg mx-auto">
-            Comprehensive solutions for individual learners, exam prep, instrument buyers, and institutions.
+            Piano lessons, ABRSM/Trinity exam prep, instrument sales, and institutional consultancy.
           </p>
         </div>
 
@@ -378,13 +379,13 @@ export const Home = () => {
               className="bg-white rounded-3xl overflow-hidden border border-gray-200/80 p-4 hover-lift cursor-pointer flex flex-col justify-between"
             >
               <div className="relative h-44 rounded-2xl overflow-hidden bg-gray-100 mb-3">
-                <img src={inst.imageUrl} alt={inst.name} className="w-full h-full object-cover" />
+                <img src={inst.image_url} alt={inst.name} className="w-full h-full object-cover" />
                 <span className="absolute top-2 left-2 bg-academy-emerald text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">
                   {inst.condition}
                 </span>
               </div>
               <div>
-                <p className="text-xs font-semibold text-academy-emerald">{inst.category}</p>
+                <p className="text-xs font-semibold text-academy-emerald">{inst.category_name}</p>
                 <h4 className="font-serif text-base font-bold text-gray-900 line-clamp-1">{inst.name}</h4>
                 <p className="text-sm font-bold text-gray-900 mt-1">{inst.price}</p>
               </div>
@@ -398,8 +399,8 @@ export const Home = () => {
         <div className="bg-academy-emerald rounded-3xl p-8 sm:p-12 text-white shadow-2xl relative overflow-hidden">
           
           <div className="text-center space-y-2 mb-10">
-            <h2 className="font-serif text-3xl sm:text-4xl font-bold">What Our Learners Say</h2>
-            <p className="text-gray-300 text-sm">Real stories from students, parents, and church leaders.</p>
+            <h2 className="font-serif text-3xl sm:text-4xl font-bold">What People Say</h2>
+            <p className="text-gray-300 text-sm">Real stories from students, church leaders, and exam candidates.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
@@ -426,20 +427,20 @@ export const Home = () => {
           {/* Stats Bar */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 border-t border-white/20 text-center">
             <div>
-              <p className="font-serif text-3xl sm:text-4xl font-bold text-academy-gold">10K+</p>
-              <p className="text-xs text-gray-300 font-medium">Active Learners</p>
+              <p className="font-serif text-3xl sm:text-4xl font-bold text-academy-gold">25+</p>
+              <p className="text-xs text-gray-300 font-medium">Years of Experience</p>
             </div>
             <div>
-              <p className="font-serif text-3xl sm:text-4xl font-bold text-academy-gold">600+</p>
-              <p className="text-xs text-gray-300 font-medium">Expert Tutors</p>
+              <p className="font-serif text-3xl sm:text-4xl font-bold text-academy-gold">100+</p>
+              <p className="text-xs text-gray-300 font-medium">Pianists Mentored</p>
             </div>
             <div>
-              <p className="font-serif text-3xl sm:text-4xl font-bold text-academy-gold">5K+</p>
-              <p className="text-xs text-gray-300 font-medium">Classes Completed</p>
+              <p className="font-serif text-3xl sm:text-4xl font-bold text-academy-gold">ABRSM</p>
+              <p className="text-xs text-gray-300 font-medium">Trinity & MUSON Certified</p>
             </div>
             <div>
-              <p className="font-serif text-3xl sm:text-4xl font-bold text-academy-gold">98%</p>
-              <p className="text-xs text-gray-300 font-medium">Satisfaction Rate</p>
+              <p className="font-serif text-3xl sm:text-4xl font-bold text-academy-gold">Global</p>
+              <p className="text-xs text-gray-300 font-medium">UK • USA • Canada • Nigeria</p>
             </div>
           </div>
 
@@ -450,10 +451,10 @@ export const Home = () => {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
         <div className="bg-academy-sage rounded-3xl p-8 sm:p-14 border border-academy-emerald/10 space-y-4">
           <h2 className="font-serif text-3xl sm:text-4xl font-bold text-academy-emerald">
-            Ready to Begin Your Musical Journey?
+            Ready to Begin Your Piano Journey?
           </h2>
           <p className="text-gray-700 text-sm max-w-xl mx-auto">
-            Book a consultation today to meet our academic team, discuss your learning goals, and explore tailored programmes.
+            Book a free consultation with Matthew Agba and start your journey toward musical excellence.
           </p>
           <div className="pt-2 flex justify-center gap-4">
             <button

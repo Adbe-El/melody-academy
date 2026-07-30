@@ -6,123 +6,201 @@ export interface Programme {
   category: 'Keyboard' | 'Guitar' | 'Vocals' | 'Drums' | 'Production' | 'Strings' | 'Theory' | 'Exam Prep';
   description: string;
   level: 'Beginner' | 'Intermediate' | 'Advanced' | 'All Levels';
-  ageGroup: 'Kids (5-12)' | 'Teens (13-17)' | 'Adults (18+)' | 'All Ages';
+  age_group: 'Kids (5-12)' | 'Teens (13-17)' | 'Adults (18+)' | 'All Ages';
   duration: string;
   featured?: boolean;
-  imageUrl: string;
-  syllabusHighlights: string[];
+  image_url: string;
+  syllabus_highlights: string[];
+  status: 'active' | 'archived' | 'draft';
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface Consultation {
   id: string;
-  fullName: string;
+  full_name: string;
   email: string;
   phone: string;
-  preferredInstrument: string;
-  ageGroup: string;
-  experienceLevel: string;
-  goals: string;
-  status: 'new' | 'contacted' | 'scheduled' | 'completed' | 'enrolled' | 'cancelled';
-  createdAt: string;
+  consultation_type: 'music_lessons' | 'exams' | 'consultancy' | 'general';
+  preferred_date?: string;
+  programme_id?: string;
   notes?: string;
+  preferred_instrument?: string;
+  age_group?: string;
+  experience_level?: string;
+  goals?: string;
+  status: 'new' | 'contacted' | 'scheduled' | 'completed' | 'enrolled' | 'cancelled';
+  admin_notes?: string;
+  created_at: string;
+  updated_at?: string;
 }
 
 export interface InstructorApplication {
   id: string;
-  fullName: string;
+  full_name: string;
   email: string;
   phone: string;
-  primaryInstrument: string;
-  secondaryInstruments?: string;
-  yearsExperience: number;
+  primary_instrument: string;
+  secondary_instruments?: string;
+  years_experience: number;
   qualifications: string;
   bio: string;
-  resumeFileName?: string;
+  cv_url?: string;
+  certificates_urls?: string[];
   status: 'pending' | 'under_review' | 'shortlisted' | 'accepted' | 'rejected';
-  createdAt: string;
+  admin_notes?: string;
+  created_at: string;
+  updated_at?: string;
 }
 
 export interface Instrument {
   id: string;
   name: string;
-  category: 'Keyboard' | 'Guitar' | 'Strings' | 'Drums & Percussion' | 'Wind' | 'Accessories';
+  category_id: string;
+  category_name?: string;
   price: string;
   description: string;
   specifications: string[];
-  inStock: boolean;
-  imageUrl: string;
+  availability: boolean;
+  image_url: string;
   condition: 'Brand New' | 'Certified Pre-owned';
+  whatsapp_message?: string;
+  status: 'active' | 'archived' | 'out_of_stock';
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface ConsultancyRequest {
   id: string;
-  organizationName: string;
-  organizationType: 'School' | 'Church' | 'Choir' | 'Corporate' | 'Private Group';
-  contactPerson: string;
+  organization_name: string;
+  organization_type: 'School' | 'Church' | 'Choir' | 'Corporate' | 'Private Group';
+  contact_person: string;
   email: string;
   phone: string;
-  serviceNeeded: string;
+  service_needed: string;
   details: string;
-  status: 'new' | 'in_discussion' | 'completed';
-  createdAt: string;
+  status: 'new' | 'in_discussion' | 'completed' | 'cancelled';
+  admin_notes?: string;
+  created_at: string;
+  updated_at?: string;
 }
 
 export interface Learner {
   id: string;
-  userId: string;
-  fullName: string;
+  user_id: string;
+  programme_id: string;
+  enrolment_date: string;
+  progress: number;
+  certificate_status: 'not_eligible' | 'eligible' | 'issued';
+  created_at?: string;
+  // Joined from users table
+  full_name: string;
   email: string;
-  programmeId: string;
-  programmeTitle: string;
-  instructorName: string;
-  enrolledDate: string;
-  progressPercentage: number;
-  status: 'active' | 'completed' | 'paused';
+  // Joined from programmes table
+  programme_title: string;
 }
 
 export interface LessonNote {
   id: string;
-  learnerId: string;
+  programme_id: string;
+  learner_id?: string;
   title: string;
-  topic: string;
+  topic?: string;
   content: string;
-  practiceGoals: string;
-  dateAssigned: string;
+  practice_goals?: string;
+  file_url?: string;
+  video_url?: string;
+  upload_date: string;
+  created_at?: string;
+  // Joined
+  programme_title?: string;
 }
 
 export interface Assignment {
   id: string;
-  learnerId: string;
+  programme_id: string;
+  learner_id: string;
   title: string;
-  description: string;
-  dueDate: string;
+  instructions?: string;
+  due_date: string;
   status: 'pending' | 'submitted' | 'reviewed';
-  feedback?: string;
+  created_at?: string;
+  // Joined
+  programme_title?: string;
 }
 
 export interface LMSResource {
   id: string;
-  programmeId: string;
-  programmeTitle: string;
+  programme_id: string;
   title: string;
-  fileType: 'pdf' | 'audio' | 'sheet_music';
-  fileUrl: string;
-  category: string;
+  type: 'pdf' | 'audio' | 'sheet_music' | 'video';
+  file_url: string;
+  video_url?: string;
+  category?: string;
+  created_at?: string;
+  // Joined
+  programme_title?: string;
 }
 
 export interface Certificate {
   id: string;
-  learnerId: string;
-  learnerName: string;
-  programmeTitle: string;
-  issueDate: string;
-  certificateCode: string;
+  learner_id: string;
+  programme_id: string;
+  learner_name: string;
+  programme_title: string;
+  issue_date: string;
+  certificate_code: string;
+  certificate_url?: string;
+  created_at?: string;
 }
 
 export interface Announcement {
   id: string;
   title: string;
   message: string;
-  date: string;
-  important?: boolean;
+  programme_id?: string;
+  important: boolean;
+  publish_date: string;
+  created_at?: string;
+}
+
+export interface WebsiteContent {
+  id: string;
+  section: 'hero' | 'testimonial' | 'faq' | 'partner' | 'stat' | 'cta';
+  title: string;
+  content: string;
+  image_url?: string;
+  active: boolean;
+  order: number;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface AcademySettings {
+  id: string;
+  whatsapp_number: string;
+  academy_name: string;
+  academy_email: string;
+  academy_phone: string;
+  address: string;
+  updated_at?: string;
+}
+
+export interface InstrumentCategory {
+  id: string;
+  name: string;
+  slug: string;
+  created_at?: string;
+}
+
+export interface AssignmentSubmission {
+  id: string;
+  assignment_id: string;
+  learner_id: string;
+  submission_url: string;
+  submission_text?: string;
+  feedback?: string;
+  grade?: string;
+  submitted_at: string;
+  reviewed_at?: string;
 }

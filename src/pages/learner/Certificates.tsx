@@ -46,17 +46,17 @@ export const Certificates: React.FC = () => {
               <div className="w-16 h-16 rounded-full bg-academy-emerald text-academy-gold mx-auto flex items-center justify-center shadow-lg">
                 <Award className="w-10 h-10" />
               </div>
-              <span className="text-xs font-bold uppercase tracking-widest text-academy-emerald">Official Academy Certificate</span>
+              <span className="text-xs font-bold uppercase tracking-widest text-academy-emerald">Official Certificate</span>
               <h3 className="font-serif text-3xl font-bold text-gray-900">Certificate of Completion</h3>
               <p className="text-xs text-gray-600">This is proudly awarded to</p>
               <p className="font-serif text-3xl font-bold text-academy-emerald border-b border-academy-emerald/20 pb-2 inline-block px-8">
-                {cert.learnerName}
+                {cert.learner_name}
               </p>
               <p className="text-xs text-gray-700">for successfully fulfilling the curriculum requirements of</p>
-              <p className="font-serif text-xl font-bold text-gray-900">{cert.programmeTitle}</p>
+              <p className="font-serif text-xl font-bold text-gray-900">{cert.programme_title}</p>
               <div className="pt-4 flex items-center justify-between text-xs text-gray-500 border-t border-gray-200">
-                <span>Issue Date: {cert.issueDate}</span>
-                <span>Code: {cert.certificateCode}</span>
+                <span>Issue Date: {cert.issue_date}</span>
+                <span>Code: {cert.certificate_code}</span>
               </div>
               <button
                 onClick={() => window.print()}

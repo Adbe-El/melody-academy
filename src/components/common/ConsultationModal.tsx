@@ -30,7 +30,16 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    addConsultation(formData);
+    addConsultation({
+      full_name: formData.fullName,
+      email: formData.email,
+      phone: formData.phone,
+      consultation_type: 'general',
+      preferred_instrument: formData.preferredInstrument,
+      age_group: formData.ageGroup,
+      experience_level: formData.experienceLevel,
+      goals: formData.goals,
+    });
     setSubmitted(true);
   };
 
@@ -69,14 +78,14 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
               Consultation Request Received!
             </h3>
             <p className="text-gray-600 text-sm max-w-md mx-auto leading-relaxed">
-              Thank you, <span className="font-semibold text-black">{formData.fullName}</span>. An academy academic advisor will contact you via WhatsApp/Email within 24 hours to schedule your personalized consultation.
+              Thank you, <span className="font-semibold text-black">{formData.fullName}</span>. Matthew Agba or a team member will contact you via WhatsApp/Email within 24 hours to schedule your personalized consultation.
             </p>
             <div className="pt-4">
               <button
                 onClick={handleReset}
                 className="px-8 py-3 rounded-full bg-academy-emerald text-white font-medium hover:bg-academy-emerald-hover transition-all shadow"
               >
-                Back to Academy
+                Back to Home
               </button>
             </div>
           </div>

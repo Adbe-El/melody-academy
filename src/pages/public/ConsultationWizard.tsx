@@ -87,7 +87,7 @@ export const ConsultationWizard: React.FC = () => {
   const handleSubmit = async () => {
     try {
       await consultationsService.create({
-        fullName: `${formData.firstName} ${formData.lastName}`,
+        full_name: `${formData.firstName} ${formData.lastName}`,
         email: formData.email,
         phone: formData.phone,
         consultation_type: formData.consultationType,
@@ -133,14 +133,14 @@ export const ConsultationWizard: React.FC = () => {
       {/* Header */}
       <div className="text-center space-y-3">
         <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-academy-emerald bg-academy-sage px-3.5 py-1 rounded-full">
-          <Sparkles className="w-3.5 h-3.5" /> Academy-First Guidance
+          <Sparkles className="w-3.5 h-3.5" /> Expert-Led Guidance
         </span>
         <h1 className="font-serif text-3xl sm:text-4xl font-bold text-gray-900">
           Book a Music Consultation
         </h1>
         <p className="text-gray-600 text-sm max-w-lg mx-auto">
-          Start with a 1-on-1 consultation so our academy directors can recommend the ideal programme
-          tailored to your goals.
+Start with a 1-on-1 consultation so Matthew Agba can recommend the ideal programme
+              tailored to your goals.
         </p>
       </div>
 
@@ -347,7 +347,7 @@ export const ConsultationWizard: React.FC = () => {
       </div>
 
       {/* Navigation */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-3">
         {step > 0 ? (
           <button
             onClick={handleBack}

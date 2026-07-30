@@ -73,7 +73,7 @@ export async function getCurrentUser(): Promise<AuthUser | null> {
   return {
     id: profile.id,
     email: profile.email,
-    fullName: profile.full_name,
+    fullName: `${profile.first_name} ${profile.last_name}`,
     role: profile.role,
     avatarUrl: profile.avatar_url,
     phone: profile.phone
@@ -87,6 +87,17 @@ export async function getUserProfile(userId: string) {
     .eq('id', userId)
     .single();
   return { data, error };
+}
+
+export async function updateProfile(userId: string, updates: { first_name?: string; last_name?: string; phone?: string | null }) {
+  const { data, error } = await supabase
+    .from('users')
+    .update(updates)
+    .eq('id', userId)
+    .select()
+    .single();
+  if (error) throw error;
+  return data;
 }
 
 export function onAuthStateChange(callback: (user: User | null) => void) {

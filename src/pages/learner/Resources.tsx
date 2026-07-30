@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Download, FileText, Music, File } from 'lucide-react';
+import { Download, FileText, Music, File, Video } from 'lucide-react';
 import { useLearner } from '../../context/LearnerContext';
 import { getResourcesByProgramme } from '../../services/resources';
 import { EmptyState } from '../../components/ui/EmptyState';
 import { Skeleton } from '../../components/ui/Skeleton';
+import { YouTubeEmbed } from '../../components/common/YouTubeEmbed';
 import type { LMSResource } from '../../types';
 
 const fileTypeIcons: Record<string, React.ReactNode> = {
   pdf: <FileText className="w-5 h-5" />,
   audio: <Music className="w-5 h-5" />,
   sheet_music: <File className="w-5 h-5" />,
+  video: <Video className="w-5 h-5" />,
 };
 
 export const Resources: React.FC = () => {
@@ -19,8 +21,8 @@ export const Resources: React.FC = () => {
 
   useEffect(() => {
     if (learnerLoading) return;
-    if (!learner?.programmeId) { setLoading(false); return; }
-    getResourcesByProgramme(learner.programmeId)
+    if (!learner?.programme_id) { setLoading(false); return; }
+    getResourcesByProgramme(learner.programme_id)
       .then(setResources)
       .catch(() => {})
       .finally(() => setLoading(false));
@@ -51,18 +53,21 @@ export const Resources: React.FC = () => {
             <div key={res.id} className="bg-white p-6 rounded-3xl border border-gray-200/80 space-y-3 shadow-sm flex flex-col justify-between">
               <div className="space-y-2">
                 <div className="w-10 h-10 rounded-2xl bg-academy-sage text-academy-emerald flex items-center justify-center">
-                  {fileTypeIcons[res.fileType] || <FileText className="w-5 h-5" />}
+                  {fileTypeIcons[res.type] || <FileText className="w-5 h-5" />}
                 </div>
                 <span className="text-[10px] font-bold text-academy-emerald uppercase">{res.category}</span>
                 <h3 className="font-serif text-base font-bold text-gray-900">{res.title}</h3>
-                <p className="text-xs text-gray-500 font-medium">Format: {res.fileType.toUpperCase()}</p>
+                <p className="text-xs text-gray-500 font-medium">Format: {res.type.toUpperCase()}</p>
+                {res.video_url && <YouTubeEmbed url={res.video_url} title={res.title} />}
               </div>
-              <button
-                onClick={() => window.open(res.fileUrl, '_blank')}
-                className="w-full py-2.5 rounded-full bg-academy-emerald text-white text-xs font-bold hover:bg-academy-emerald-hover transition-all flex items-center justify-center gap-2 shadow"
-              >
-                <Download className="w-3.5 h-3.5" /> Download
-              </button>
+              {res.file_url && (
+                <button
+                  onClick={() => window.open(res.file_url, '_blank')}
+                  className="w-full py-2.5 rounded-full bg-academy-emerald text-white text-xs font-bold hover:bg-academy-emerald-hover transition-all flex items-center justify-center gap-2 shadow"
+                >
+                  <Download className="w-3.5 h-3.5" /> Download
+                </button>
+              )}
             </div>
           ))}
         </div>

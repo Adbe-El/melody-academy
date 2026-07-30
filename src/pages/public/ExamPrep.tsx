@@ -138,7 +138,7 @@ export const ExamPrep = () => {
         </p>
         <div className="pt-2 flex justify-center">
           <button
-            onClick={() => navigate('/contact')}
+            onClick={() => navigate('/contact?purpose=exam')}
             className="px-8 py-3.5 rounded-full bg-academy-gold hover:bg-academy-gold-hover text-academy-emerald font-bold text-sm shadow-md transition-all flex items-center gap-2"
           >
             Register Exam Interest <ArrowRight className="w-4 h-4" />
@@ -221,7 +221,7 @@ export const ExamPrep = () => {
                   <h3 className="font-serif text-lg font-bold text-gray-900 mb-1">
                     {step.title}
                   </h3>
-                  <p className="text-xs text-gray-600 leading-relaxed max-w-[220px]">
+                  <p className="text-xs text-gray-600 leading-relaxed max-w-full sm:max-w-[220px]">
                     {step.description}
                   </p>
                 </div>
@@ -277,7 +277,7 @@ export const ExamPrep = () => {
                   ))}
                 </div>
                 <button
-                  onClick={() => navigate('/contact')}
+                  onClick={() => navigate('/contact?purpose=exam')}
                   className="w-full mt-2 py-2.5 rounded-full bg-academy-emerald text-white text-xs font-semibold hover:bg-academy-emerald-hover transition-all"
                 >
                   Consult for {board.name.split(' ')[0]}
@@ -346,13 +346,13 @@ export const ExamPrep = () => {
         </p>
         <div className="pt-2 flex justify-center flex-wrap gap-4">
           <button
-            onClick={() => navigate('/contact')}
+            onClick={() => navigate('/contact?purpose=exam')}
             className="px-8 py-3.5 rounded-full bg-academy-emerald hover:bg-academy-emerald-hover text-white font-medium text-sm shadow-md transition-all flex items-center gap-2"
           >
             Register Interest <ArrowRight className="w-4 h-4" />
           </button>
           <button
-            onClick={() => navigate('/contact')}
+            onClick={() => navigate('/contact?purpose=exam')}
             className="px-8 py-3.5 rounded-full border border-academy-emerald text-academy-emerald font-medium text-sm hover:bg-academy-emerald hover:text-white transition-all"
           >
             Book Consultation

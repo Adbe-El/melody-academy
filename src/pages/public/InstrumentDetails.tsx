@@ -25,11 +25,11 @@ export const InstrumentDetails: React.FC = () => {
   }
 
   const related = instruments
-    .filter(i => i.category === instrument.category && i.id !== instrument.id)
+    .filter(i => i.category_name === instrument.category_name && i.id !== instrument.id)
     .slice(0, 3);
 
   const handleWhatsAppEnquiry = () => {
-    const text = `Hi MelodyAcademy! 👋 I am interested in inquiring about purchasing the *${instrument.name}* (${instrument.price}). Please share availability, warranty details, and payment options.`;
+    const text = `Hi Matt-Agba Music Consult! 👋 I am interested in inquiring about purchasing the *${instrument.name}* (${instrument.price}). Please share availability, warranty details, and payment options.`;
     window.open(getWhatsAppUrl(text), '_blank');
   };
 
@@ -63,7 +63,7 @@ export const InstrumentDetails: React.FC = () => {
         {/* Left — Image */}
         <div className="relative rounded-3xl overflow-hidden bg-gray-100 aspect-square">
           <img
-            src={instrument.imageUrl}
+            src={instrument.image_url}
             alt={instrument.name}
             className="w-full h-full object-cover"
           />
@@ -77,7 +77,7 @@ export const InstrumentDetails: React.FC = () => {
 
           {/* Category Badge */}
           <span className="text-xs font-bold uppercase tracking-wider text-academy-emerald bg-academy-sage self-start px-3 py-1 rounded-full">
-            {instrument.category}
+            {instrument.category_name}
           </span>
 
           {/* Name */}
@@ -130,7 +130,7 @@ export const InstrumentDetails: React.FC = () => {
 
           {/* Availability */}
           <div>
-            {instrument.inStock ? (
+            {instrument.availability ? (
               <span className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-full">
                 <Check className="w-3.5 h-3.5" /> In Stock
               </span>
@@ -160,7 +160,7 @@ export const InstrumentDetails: React.FC = () => {
               Related Instruments
             </span>
             <h2 className="font-serif text-2xl font-bold text-gray-900">
-              More in {instrument.category}
+              More in {instrument.category_name}
             </h2>
           </div>
 
@@ -173,12 +173,12 @@ export const InstrumentDetails: React.FC = () => {
               >
                 <div>
                   <div className="relative h-44 rounded-2xl overflow-hidden bg-gray-100 mb-3">
-                    <img src={rel.imageUrl} alt={rel.name} className="w-full h-full object-cover" />
+                    <img src={rel.image_url} alt={rel.name} className="w-full h-full object-cover" />
                     <span className="absolute top-2 left-2 bg-academy-emerald text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">
                       {rel.condition}
                     </span>
                   </div>
-                  <p className="text-xs font-semibold text-academy-emerald">{rel.category}</p>
+                  <p className="text-xs font-semibold text-academy-emerald">{rel.category_name}</p>
                   <h4 className="font-serif text-base font-bold text-gray-900 line-clamp-1">{rel.name}</h4>
                   <p className="text-sm font-bold text-gray-900 mt-1">{rel.price}</p>
                 </div>

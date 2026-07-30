@@ -1,4 +1,5 @@
-import { createService } from './factory';
+import { supabase } from '../lib/supabase';
+import { createAppError } from '../lib/errors';
 
 interface ExamRegistration {
   id: string;
@@ -15,4 +16,27 @@ interface ExamRegistration {
   updated_at: string;
 }
 
-export const examRegistrationsService = createService<ExamRegistration>('exam_registrations');
+export const examRegistrationsService = {
+  getAll: async (): Promise<ExamRegistration[]> => {
+    const { data, error } = await supabase
+      .from('exam_registrations')
+      .select('*')
+      .order('created_at', { ascending: false });
+    if (error) throw createAppError('FETCH_EXAM_REGISTRATIONS', error.message, error);
+    return data as unknown as ExamRegistration[];
+  },
+  update: async (id: string, updates: Partial<ExamRegistration>): Promise<ExamRegistration> => {
+    const { data, error } = await supabase
+      .from('exam_registrations')
+      .update({ ...updates, updated_at: new Date().toISOString() })
+      .eq('id', id)
+      .select()
+      .single();
+    if (error) throw createAppError('UPDATE_EXAM_REGISTRATION', error.message, error);
+    return data as unknown as ExamRegistration;
+  },
+  delete: async (id: string): Promise<void> => {
+    const { error } = await supabase.from('exam_registrations').delete().eq('id', id);
+    if (error) throw createAppError('DELETE_EXAM_REGISTRATION', error.message, error);
+  },
+};
