@@ -25,6 +25,15 @@ export const examRegistrationsService = {
     if (error) throw createAppError('FETCH_EXAM_REGISTRATIONS', error.message, error);
     return data as unknown as ExamRegistration[];
   },
+  create: async (input: Record<string, unknown>): Promise<ExamRegistration> => {
+    const { data, error } = await supabase
+      .from('exam_registrations')
+      .insert({ ...input, created_at: new Date().toISOString(), updated_at: new Date().toISOString() })
+      .select()
+      .single();
+    if (error) throw createAppError('CREATE_EXAM_REGISTRATION', error.message, error);
+    return data as unknown as ExamRegistration;
+  },
   update: async (id: string, updates: Partial<ExamRegistration>): Promise<ExamRegistration> => {
     const { data, error } = await supabase
       .from('exam_registrations')
