@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Search, Clock, Users, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { Search, Clock, Users, ArrowRight, CheckCircle2, GraduationCap } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../../context/AppContext';
 import { Reveal } from '../../components/common/Reveal';
-import { SectionHeading } from '../../components/common/SectionHeading';
+import { MagneticButton } from '../../components/common/MagneticButton';
 
 export const Programmes = () => {
   const navigate = useNavigate();
@@ -23,16 +23,38 @@ export const Programmes = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
 
-      {/* Header */}
-      <SectionHeading
-        eyebrow="Academic Catalog"
-        title={
-          <>
-            Our Music <span className="text-academy-emerald">Programmes</span>
-          </>
-        }
-        subtitle="Explore structured curriculum designed for all ages and skill levels—from beginner foundations to advanced ABRSM diploma preparation."
-      />
+      {/* Hero Banner */}
+      <section className="relative bg-academy-emerald-dark rounded-3xl p-8 sm:p-14 text-white text-center space-y-4 shadow-xl overflow-hidden">
+        <div className="absolute inset-0 staff-lines opacity-40" aria-hidden="true" />
+        <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-academy-gold/20 blur-3xl" aria-hidden="true" />
+        <div className="absolute inset-0 grain-overlay" aria-hidden="true" />
+        <div className="relative">
+          <Reveal>
+            <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider bg-white/10 text-academy-gold px-4 py-1.5 rounded-full border border-white/15">
+              <GraduationCap className="w-3.5 h-3.5" /> Academic Catalog
+            </span>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <h1 className="font-serif text-3xl sm:text-5xl font-bold mt-4">
+              Our Music <span className="text-gradient-gold italic">Programmes</span>
+            </h1>
+          </Reveal>
+          <Reveal delay={0.2}>
+            <p className="text-gray-300 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+              Explore structured curriculum designed for all ages and skill levels—from beginner
+              foundations to advanced ABRSM and ISoM diploma preparation.
+            </p>
+          </Reveal>
+          <Reveal delay={0.3} className="pt-2 flex justify-center">
+            <MagneticButton
+              onClick={() => navigate('/contact')}
+              className="px-8 py-3.5 rounded-full bg-academy-gold hover:bg-academy-gold-hover text-academy-emerald font-bold text-sm shadow-md transition-all flex items-center gap-2"
+            >
+              Book a Free Consultation <ArrowRight className="w-4 h-4" />
+            </MagneticButton>
+          </Reveal>
+        </div>
+      </section>
 
       {/* Filter & Search Bar */}
       <Reveal delay={0.1}>

@@ -99,6 +99,14 @@ export const ExamPrep = () => {
         'Prestigious national music examinations recognised by major institutions and schools across West Africa.',
       badges: ['Practical Examinations', 'Theory of Music', 'Diploma Program'],
     },
+    {
+      name: 'ISoM',
+      fullName: 'International School of Musicians',
+      country: 'United Kingdom',
+      description:
+        'UK-accredited graded examinations designed to build confident, well-rounded musicians with internationally recognised qualifications.',
+      badges: ['Graded Practical Exams', 'Music Theory', 'Performance Diplomas'],
+    },
   ];
 
   const faqs = [
@@ -115,7 +123,7 @@ export const ExamPrep = () => {
     {
       question: 'Are exams conducted online or in person?',
       answer:
-        'ABRSM and Trinity both offer Recorded Video Assessment (RVA) as well as traditional in-person exams. MUSON exams are conducted in person. We will guide you through the format that suits you best.',
+        'ABRSM and Trinity both offer Recorded Video Assessment (RVA) as well as traditional in-person exams. MUSON exams are conducted in person, and ISoM offers flexible practical and theory assessment options. We will guide you through the format that suits you best.',
     },
     {
       question: 'What happens if I don\'t pass the exam?',
@@ -145,7 +153,7 @@ export const ExamPrep = () => {
           </Reveal>
           <Reveal delay={0.2}>
             <p className="text-gray-300 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
-              Prepare for ABRSM, Trinity College London, and MUSON examinations
+              Prepare for ABRSM, Trinity College London, MUSON, and ISoM examinations
               with expert coaching, mock evaluations, and dedicated sight-reading
               and aural training.
             </p>
@@ -258,7 +266,7 @@ export const ExamPrep = () => {
               Accredited Exam Boards <span className="text-academy-emerald">Supported</span>
             </>
           }
-          subtitle="We coach candidates across the three major examination bodies recognised in Nigeria and internationally."
+          subtitle="We coach candidates across major international examination bodies recognised in Nigeria, the UK, and beyond."
         />
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {examBoards.map((board, idx) => (

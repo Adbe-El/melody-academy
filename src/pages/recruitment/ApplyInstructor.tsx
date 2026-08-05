@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import { UploadCloud, CheckCircle, FileText, Send, ChevronDown, ChevronUp, Music, Award, Users, Clock } from 'lucide-react';
+import { UploadCloud, CheckCircle, FileText, Send, ChevronDown, ChevronUp, Music, Award, Users, Clock, UserPlus } from 'lucide-react';
 import { useToast } from '../../components/ui/Toast';
 import { instructorAppsService } from '../../services/instructorApps';
 import { uploadFile } from '../../services/storage';
+import { Reveal } from '../../components/common/Reveal';
+import { SectionHeading } from '../../components/common/SectionHeading';
+import { MagneticButton } from '../../components/common/MagneticButton';
 
 const requirements = [
   'Minimum 3 years of professional music teaching or performance experience',
@@ -88,19 +91,41 @@ export const ApplyInstructor: React.FC = () => {
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
-      {/* Header */}
-      <div className="text-center space-y-3 max-w-2xl mx-auto">
-        <span className="text-xs font-bold uppercase tracking-wider text-academy-emerald bg-academy-sage px-3.5 py-1 rounded-full">
-          Faculty Recruitment
-        </span>
-        <h1 className="font-serif text-4xl sm:text-5xl font-bold text-gray-900">
-          Apply as a Music Instructor
-        </h1>
-        <p className="text-gray-600 text-sm sm:text-base">
-          Join our network of qualified music educators. We connect exceptional tutors with dedicated
-          individual and institutional learners.
-        </p>
-      </div>
+      {/* Hero Banner */}
+      <section className="relative bg-academy-emerald-dark rounded-3xl p-8 sm:p-14 text-white text-center space-y-4 shadow-xl overflow-hidden">
+        <div className="absolute inset-0 staff-lines opacity-40" aria-hidden="true" />
+        <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-academy-gold/20 blur-3xl" aria-hidden="true" />
+        <div className="absolute inset-0 grain-overlay" aria-hidden="true" />
+        <div className="relative">
+          <Reveal>
+            <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider bg-white/10 text-academy-gold px-4 py-1.5 rounded-full border border-white/15">
+              <UserPlus className="w-3.5 h-3.5" /> Faculty Recruitment
+            </span>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <h1 className="font-serif text-3xl sm:text-5xl font-bold mt-4">
+              Apply as a Music <span className="text-gradient-gold italic">Instructor</span>
+            </h1>
+          </Reveal>
+          <Reveal delay={0.2}>
+            <p className="text-gray-300 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+              Join our network of qualified music educators. We connect exceptional tutors with
+              dedicated individual and institutional learners.
+            </p>
+          </Reveal>
+          <Reveal delay={0.3} className="pt-2 flex justify-center">
+            <MagneticButton
+              onClick={() => {
+                const el = document.getElementById('application-form');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="px-8 py-3.5 rounded-full bg-academy-gold hover:bg-academy-gold-hover text-academy-emerald font-bold text-sm shadow-md transition-all flex items-center gap-2"
+            >
+              Start Your Application <Send className="w-4 h-4" />
+            </MagneticButton>
+          </Reveal>
+        </div>
+      </section>
 
       {submitted ? (
         <div className="bg-white p-10 rounded-3xl text-center space-y-4 border border-emerald-200 shadow-lg">
@@ -135,41 +160,69 @@ export const ApplyInstructor: React.FC = () => {
       ) : (
         <>
           {/* Requirements */}
-          <section className="space-y-5">
-            <h2 className="font-serif text-2xl font-bold text-gray-900">What We Look For</h2>
-            <div className="bg-white rounded-3xl border border-gray-200/80 p-6 sm:p-8 shadow-soft">
-              <ul className="space-y-3">
-                {requirements.map((req, i) => (
-                  <li key={i} className="flex items-start gap-3 text-sm text-gray-700">
-                    <span className="w-5 h-5 rounded-full bg-academy-sage text-academy-emerald flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <CheckCircle className="w-3 h-3" />
-                    </span>
-                    {req}
-                  </li>
-                ))}
-              </ul>
-            </div>
+          <section className="space-y-6">
+            <SectionHeading
+              align="left"
+              eyebrow="What we look for"
+              title={
+                <>
+                  What We <span className="text-academy-emerald">Look For</span>
+                </>
+              }
+            />
+            <Reveal>
+              <div className="bg-white rounded-3xl border border-gray-200/80 p-6 sm:p-8 shadow-soft">
+                <ul className="space-y-3">
+                  {requirements.map((req, i) => (
+                    <li key={i} className="flex items-start gap-3 text-sm text-gray-700">
+                      <span className="w-5 h-5 rounded-full bg-academy-sage text-academy-emerald flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <CheckCircle className="w-3 h-3" />
+                      </span>
+                      {req}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Reveal>
           </section>
 
           {/* Benefits */}
-          <section className="space-y-5">
-            <h2 className="font-serif text-2xl font-bold text-gray-900">Why Teach With Us</h2>
+          <section className="space-y-6">
+            <SectionHeading
+              align="left"
+              eyebrow="Why teach with us"
+              title={
+                <>
+                  Why <span className="text-academy-emerald">Teach With Us</span>
+                </>
+              }
+            />
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {benefits.map((b, i) => (
-                <div key={i} className="bg-white rounded-3xl border border-gray-200/80 p-6 shadow-soft hover-lift">
-                  <div className="w-10 h-10 rounded-xl bg-academy-sage text-academy-emerald flex items-center justify-center mb-3">
-                    <b.icon className="w-5 h-5" />
+                <Reveal key={i} delay={(i % 2) * 0.08}>
+                  <div className="bg-white rounded-3xl border border-gray-200/80 p-6 shadow-soft hover-lift">
+                    <div className="w-10 h-10 rounded-xl bg-academy-sage text-academy-emerald flex items-center justify-center mb-3">
+                      <b.icon className="w-5 h-5" />
+                    </div>
+                    <h3 className="font-serif text-lg font-bold text-gray-900">{b.title}</h3>
+                    <p className="text-xs text-gray-600 mt-1 leading-relaxed">{b.description}</p>
                   </div>
-                  <h3 className="font-serif text-lg font-bold text-gray-900">{b.title}</h3>
-                  <p className="text-xs text-gray-600 mt-1 leading-relaxed">{b.description}</p>
-                </div>
+                </Reveal>
               ))}
             </div>
           </section>
 
           {/* FAQ */}
-          <section className="space-y-5">
-            <h2 className="font-serif text-2xl font-bold text-gray-900">Frequently Asked Questions</h2>
+          <section className="space-y-6">
+            <SectionHeading
+              align="left"
+              eyebrow="Good to know"
+              title={
+                <>
+                  Frequently Asked <span className="text-academy-emerald">Questions</span>
+                </>
+              }
+            />
             <div className="space-y-2">
               {faqs.map((faq, i) => (
                 <div key={i} className="bg-white rounded-2xl border border-gray-200/80 overflow-hidden">
@@ -195,9 +248,18 @@ export const ApplyInstructor: React.FC = () => {
           </section>
 
           {/* Application Form */}
-          <section className="space-y-5">
-            <h2 className="font-serif text-2xl font-bold text-gray-900">Submit Your Application</h2>
-            <form onSubmit={handleSubmit} className="bg-white p-8 sm:p-10 rounded-3xl border border-gray-200/80 shadow-soft space-y-6">
+          <section id="application-form" className="space-y-6">
+            <SectionHeading
+              align="left"
+              eyebrow="Submit your application"
+              title={
+                <>
+                  Apply to <span className="text-academy-emerald">Join the Faculty</span>
+                </>
+              }
+            />
+            <Reveal>
+              <form onSubmit={handleSubmit} className="bg-white p-8 sm:p-10 rounded-3xl border border-gray-200/80 shadow-soft space-y-6">
               {/* Section 1 */}
               <div className="border-b border-gray-100 pb-4">
                 <h3 className="font-serif text-lg font-bold text-gray-900 flex items-center gap-2">
@@ -289,6 +351,7 @@ export const ApplyInstructor: React.FC = () => {
                 <Send className="w-4 h-4" /> {uploading ? 'Uploading & Submitting...' : 'Submit Instructor Application'}
               </button>
             </form>
+            </Reveal>
           </section>
         </>
       )}

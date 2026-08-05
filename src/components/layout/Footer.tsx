@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Music, Mail, Phone, MapPin, Globe, Share2 } from 'lucide-react';
+import { Music, Mail, Phone, MapPin } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
+import { SocialLinks } from '../common/SocialLinks';
 
 export const Footer: React.FC = () => {
-  const { whatsappNumber } = useApp();
+  const { whatsappNumber, secondaryWhatsappNumber } = useApp();
 
   return (
     <footer className="bg-academy-emerald-dark text-white pt-16 pb-12 border-t border-academy-emerald-hover">
@@ -24,13 +25,8 @@ export const Footer: React.FC = () => {
             <p className="text-gray-300 text-sm leading-relaxed max-w-sm">
               Empowering the next generation of musicians through expert piano education, professional exam preparation, consultancy, and global opportunities — founded by Matthew Agba, a distinguished pianist and educator with 25+ years of experience.
             </p>
-            <div className="pt-2 flex items-center space-x-3 text-gray-400">
-              <span className="w-9 h-9 rounded-full bg-white/5 flex items-center justify-center text-academy-gold">
-                <Globe className="w-4 h-4" />
-              </span>
-              <span className="w-9 h-9 rounded-full bg-white/5 flex items-center justify-center text-academy-gold">
-                <Share2 className="w-4 h-4" />
-              </span>
+            <div className="pt-2">
+              <SocialLinks size="sm" />
             </div>
           </div>
 
@@ -66,7 +62,10 @@ export const Footer: React.FC = () => {
               </li>
               <li className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-academy-gold flex-shrink-0" />
-                <span>{whatsappNumber}</span>
+                <span className="flex flex-col">
+                  <span>{whatsappNumber}</span>
+                  <span>{secondaryWhatsappNumber}</span>
+                </span>
               </li>
               <li className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-academy-gold flex-shrink-0" />

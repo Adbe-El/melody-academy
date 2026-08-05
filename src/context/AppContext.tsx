@@ -68,7 +68,9 @@ interface AppContextType {
 
   // Utility
   whatsappNumber: string;
+  secondaryWhatsappNumber: string;
   setWhatsappNumber: (num: string) => void;
+  setSecondaryWhatsappNumber: (num: string) => void;
   getWhatsAppUrl: (messageText: string) => string;
 }
 
@@ -76,7 +78,8 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [userRole, setUserRole] = useState<UserRole>('visitor');
-  const [whatsappNumber, setWhatsappNumberState] = useState<string>('+2348006356391');
+  const [whatsappNumber, setWhatsappNumberState] = useState<string>('+2348068416031');
+  const [secondaryWhatsappNumber, setSecondaryWhatsappNumberState] = useState<string>('+2347062215323');
   const [loading, setLoading] = useState(true);
 
   const [programmes, setProgrammes] = useState<Programme[]>([]);
@@ -312,6 +315,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
   };
 
+  const setSecondaryWhatsappNumber = (num: string) => {
+    setSecondaryWhatsappNumberState(num);
+  };
+
   const getWhatsAppUrl = (messageText: string) => {
     const cleanNum = whatsappNumber.replace(/[^0-9]/g, '');
     const encoded = encodeURIComponent(messageText);
@@ -353,7 +360,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         addResource,
         issueCertificate,
         whatsappNumber,
+        secondaryWhatsappNumber,
         setWhatsappNumber,
+        setSecondaryWhatsappNumber,
         getWhatsAppUrl
       }}
     >

@@ -6,10 +6,10 @@
 
 ## Current Status
 
-- **Last completed phase:** Phase 11 — Design Primitive Propagation (COMPLETE)
-- **Current phase:** DESIGN PRIMITIVE PROPAGATION COMPLETE
-- **Current feature:** Shared primitives from the Home redesign propagated to all remaining public pages. About rebuilt (line-mask gold hero, count-up stats band, affiliation ticker, dark emerald charity section, waveform quote, magnetic CTAs). Programmes, Instruments, ExamPrep, Consultancy, Contact, ProgrammeDetails, InstrumentDetails and ConsultationWizard all upgraded with SectionHeading headers, staggered Reveal cards, and dark staff-lines/grain hero banners. Consultancy success stories now use the auto-advancing TestimonialCarousel. Build + lint clean (only pre-existing warnings remain).
-- **Next steps:** Review pages visually at `/about`, `/programmes`, `/instruments`, `/exam-prep`, `/consultancy`, `/contact`; consider propagating to learner/admin portals in future phases
+- **Last completed phase:** Phase 12 — Site Content & Contact Updates (COMPLETE)
+- **Current phase:** SITE CONTENT & CONTACT UPDATES COMPLETE
+- **Current feature:** Social links added sitewide (YouTube, Instagram, Facebook, LinkedIn, TikTok) via new SocialLinks component in Footer + Contact page. ISoM (International School of Musicians, UK) added to ExamPrep boards, Programmes subtitle, Home exam card, ConsultationWizard, and Contact exam-board dropdown (+ examRegistrations/admin types). Phone number updated: primary +2348068416031 (WhatsApp links), secondary +2347062215323 shown in Footer + Contact. Build clean. Deployed to production via `vercel deploy --prod`.
+- **Next steps:** Review changes visually at `/exam-prep`, `/programmes`, `/contact`; commit + push to GitHub
 - **Blockers:** None
 - **Supabase credentials:** Project `zadrvszroluveuozckog`, URL `https://zadrvszroluveuozckog.supabase.co`
 - **Admin emails:** `adbeelomiunu@gmail.com`, `mattagbamusicconsult@gmail.com`

@@ -19,8 +19,7 @@ const AFFILIATIONS_LIST = [
   'Art to Heart Foundation'
 ];
 
-const MAESTRO_IMG =
-  'https://images.unsplash.com/photo-1513883049090-d0b7439799bf?q=80&w=900&auto=format&fit=crop';
+const MAESTRO_IMG = '/images/matthew-agba-portrait.jpg';
 
 const stats = [
   { value: 25, suffix: '+', label: 'Years of experience' },
@@ -108,17 +107,18 @@ export const About: React.FC = () => {
             </Reveal>
           </div>
 
-          <Reveal x={24} y={0} className="lg:col-span-5 relative flex justify-center">
-            <div className="relative w-full max-w-md aspect-[4/5] overflow-hidden arch-image-mask shadow-2xl border-4 border-white">
+          <Reveal x={24} y={0} className="lg:col-span-5 relative flex justify-center lg:justify-end">
+            <div className="relative w-full max-w-md aspect-[4/5] overflow-hidden arch-image-mask shadow-2xl border-4 border-white ml-auto">
               <img
                 src={MAESTRO_IMG}
                 alt="Matthew Agba — Pianist"
                 loading="lazy"
                 className="w-full h-full object-cover"
+                style={{ objectPosition: 'center 15%' }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
             </div>
-            <div className="absolute top-8 -left-4 sm:-left-8 bg-white/90 backdrop-blur-md p-3.5 rounded-2xl shadow-xl border border-white/60 flex items-center gap-3 max-w-[180px] sm:max-w-[220px] animate-float">
+            <div className="absolute top-8 -right-2 sm:-right-4 bg-white/90 backdrop-blur-md p-3.5 rounded-2xl shadow-xl border border-white/60 flex items-center gap-3 max-w-[180px] sm:max-w-[220px] animate-float">
               <div className="w-10 h-10 rounded-xl bg-academy-sage text-academy-emerald flex items-center justify-center flex-shrink-0">
                 <Award className="w-5 h-5" />
               </div>
@@ -127,7 +127,7 @@ export const About: React.FC = () => {
                 <p className="text-[11px] text-gray-500 leading-tight">Professional pianist & educator</p>
               </div>
             </div>
-            <div className="absolute -bottom-4 -right-4 sm:-right-6 bg-white/90 backdrop-blur-md p-3.5 rounded-2xl shadow-xl border border-white/60 flex items-center gap-3 max-w-[190px] sm:max-w-[230px] animate-float-slow">
+            <div className="absolute -bottom-4 left-2 sm:left-0 bg-white/90 backdrop-blur-md p-3.5 rounded-2xl shadow-xl border border-white/60 flex items-center gap-3 max-w-[190px] sm:max-w-[230px] animate-float-slow">
               <div className="w-10 h-10 rounded-xl bg-academy-sage text-academy-emerald flex items-center justify-center flex-shrink-0">
                 <Globe className="w-5 h-5" />
               </div>

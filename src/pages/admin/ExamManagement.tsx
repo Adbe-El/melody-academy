@@ -12,7 +12,7 @@ interface ExamRegistration {
   email: string;
   phone?: string;
   exam_type: 'practical' | 'theory';
-  exam_board: 'ABRSM' | 'Trinity' | 'MUSON';
+  exam_board: 'ABRSM' | 'Trinity' | 'MUSON' | 'ISoM';
   level: string;
   preferred_start_date?: string;
   notes?: string;

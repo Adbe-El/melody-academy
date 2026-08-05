@@ -34,10 +34,9 @@ const DEFAULT_PROGRAMME_IMG =
   'https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?q=80&w=900&auto=format&fit=crop';
 
 const HERO_IMG =
-  'https://images.unsplash.com/photo-1513883049090-d0b7439799bf?q=80&w=900&auto=format&fit=crop';
+  'https://images.unsplash.com/photo-1711399248782-55b33075c63f?q=80&w=900&auto=format&fit=crop';
 
-const MAESTRO_IMG =
-  'https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?q=80&w=900&auto=format&fit=crop';
+const MAESTRO_IMG = '/images/matthew-agba-portrait.jpg';
 
 const AFFILIATIONS = [
   'ABRSM',
@@ -119,7 +118,7 @@ const services: Service[] = [
   },
   {
     title: 'Exam Preparation',
-    desc: 'ABRSM, Trinity & MUSON — with distinction-level results.',
+    desc: 'ABRSM, Trinity, MUSON & ISoM — with distinction-level results.',
     icon: Award,
     to: '/exam-prep',
     accent: 'bg-academy-sage',
@@ -365,9 +364,9 @@ export const Home = () => {
             initial={{ opacity: 0, scale: 0.94 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.9, ease: LINE_EASE, delay: 0.35 }}
-            className="lg:col-span-5 relative flex justify-center"
+            className="lg:col-span-5 relative flex justify-center lg:justify-end"
           >
-            <div className="relative w-full max-w-md">
+            <div className="relative w-full max-w-md ml-auto">
               {/* Rotating vinyl ring */}
               <div
                 className="absolute -top-10 -right-8 w-40 h-40 rounded-full border-4 border-academy-gold/25 border-dashed animate-spin-slow hidden sm:block"
@@ -389,7 +388,7 @@ export const Home = () => {
               </motion.div>
 
               {/* Floating badges */}
-              <div className="absolute top-8 -left-4 sm:-left-8 bg-white/95 backdrop-blur-md p-3.5 rounded-2xl shadow-xl border border-white/60 flex items-center gap-3 max-w-[200px] animate-float">
+              <div className="absolute top-8 -right-2 sm:-right-4 bg-white/95 backdrop-blur-md p-3.5 rounded-2xl shadow-xl border border-white/60 flex items-center gap-3 max-w-[200px] animate-float">
                 <div className="w-10 h-10 rounded-xl bg-academy-emerald text-academy-gold flex items-center justify-center flex-shrink-0 relative">
                   <Award className="w-5 h-5" />
                   <span className="absolute -top-1 -right-1 w-3 h-3 bg-academy-gold rounded-full animate-pulse-ring" />
@@ -400,7 +399,7 @@ export const Home = () => {
                 </div>
               </div>
 
-              <div className="absolute -bottom-5 -right-3 sm:-right-6 bg-white/95 backdrop-blur-md p-3.5 rounded-2xl shadow-xl border border-white/60 flex items-center gap-3 max-w-[210px] animate-float-slow">
+              <div className="absolute -bottom-5 left-2 sm:left-0 bg-white/95 backdrop-blur-md p-3.5 rounded-2xl shadow-xl border border-white/60 flex items-center gap-3 max-w-[210px] animate-float-slow">
                 <div className="flex items-center gap-1.5">
                   <Waveform bars={12} className="h-8" />
                 </div>
@@ -617,15 +616,16 @@ export const Home = () => {
       {/* ================= MEET THE MAESTRO ================= */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-14 lg:gap-16 items-center">
-          <Reveal x={-24} y={0} className="lg:col-span-5">
-            <div className="relative max-w-md mx-auto">
+          <Reveal x={-24} y={0} className="lg:col-span-5 lg:flex lg:justify-end">
+            <div className="relative max-w-md ml-auto">
               <div className="absolute -top-8 -left-8 w-40 h-40 rounded-full border-4 border-academy-gold/30 border-dashed animate-spin-slow hidden sm:block" aria-hidden="true" />
               <div className="relative w-full aspect-[4/5] arch-image-mask overflow-hidden border-4 border-white shadow-2xl">
                 <img
                   src={MAESTRO_IMG}
-                  alt="Hands of a pianist on the keys"
+                  alt="Matthew Agba, Founder and Lead Educator at Matt-Agba Music Consult"
                   loading="lazy"
                   className="w-full h-full object-cover"
+                  style={{ objectPosition: 'center 15%' }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-academy-emerald-dark/50 via-transparent to-transparent" aria-hidden="true" />
               </div>

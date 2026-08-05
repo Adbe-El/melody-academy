@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
-import { MapPin, Phone, Mail, Clock, Send, CheckCircle, MessageSquare, Globe, Share2 } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Send, CheckCircle, MessageSquare } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 import { useApp } from '../../context/AppContext';
 import { consultationsService } from '../../services/consultations';
 import { examRegistrationsService } from '../../services/examRegistrations';
 import { Reveal } from '../../components/common/Reveal';
 import { SectionHeading } from '../../components/common/SectionHeading';
+import { SocialLinks } from '../../components/common/SocialLinks';
 
 const PURPOSES = ['tutor', 'exam', 'general'] as const;
 
 export const Contact = () => {
-  const { whatsappNumber, getWhatsAppUrl } = useApp();
+  const { whatsappNumber, secondaryWhatsappNumber, getWhatsAppUrl } = useApp();
   const [searchParams] = useSearchParams();
   const [submitted, setSubmitted] = useState(false);
   const [submittedEmail, setSubmittedEmail] = useState('');
@@ -68,7 +69,7 @@ export const Contact = () => {
           email: form.email,
           phone: form.phone || null,
           exam_type: form.examType as 'practical' | 'theory',
-          exam_board: form.examBoard as 'ABRSM' | 'Trinity' | 'MUSON',
+          exam_board: form.examBoard as 'ABRSM' | 'Trinity' | 'MUSON' | 'ISoM',
           level: form.level,
           preferred_start_date: form.preferredStartDate || null,
           notes: form.notes || null,
@@ -157,6 +158,7 @@ export const Contact = () => {
                 <div>
                   <p className="font-bold text-white">Helpline & WhatsApp</p>
                   <p className="text-xs text-gray-300">{whatsappNumber}</p>
+                  <p className="text-xs text-gray-300">{secondaryWhatsappNumber}</p>
                 </div>
               </div>
 
@@ -180,19 +182,13 @@ export const Contact = () => {
           </div>
 
           {/* Social Links */}
-          <div className="flex items-center gap-4 pt-4 border-t border-white/20">
-            <a href="https://wa.me/" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-white/10 hover:bg-academy-whatsapp flex items-center justify-center transition-colors">
-              <MessageSquare className="w-5 h-5" />
-            </a>
-            <a href="https://instagram.com/" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-white/10 hover:bg-pink-600 flex items-center justify-center transition-colors">
-              <Globe className="w-5 h-5" />
-            </a>
-            <a href="https://facebook.com/" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-white/10 hover:bg-blue-600 flex items-center justify-center transition-colors">
-              <Globe className="w-5 h-5" />
-            </a>
-            <a href="https://x.com/" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-white/10 hover:bg-black flex items-center justify-center transition-colors">
-              <Share2 className="w-5 h-5" />
-            </a>
+          <div className="pt-4 border-t border-white/20">
+            <div className="flex items-center gap-4">
+              <a href="https://wa.me/" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-white/10 hover:bg-academy-whatsapp flex items-center justify-center transition-colors">
+                <MessageSquare className="w-5 h-5" />
+              </a>
+              <SocialLinks />
+            </div>
           </div>
 
           <div className="space-y-3 pt-2 border-t border-white/20">
@@ -324,6 +320,7 @@ export const Contact = () => {
                           <option value="ABRSM">ABRSM</option>
                           <option value="Trinity">Trinity</option>
                           <option value="MUSON">MUSON</option>
+                          <option value="ISoM">ISoM</option>
                         </select>
                         {errors.examBoard && <p className="text-red-500 text-[10px] mt-1">{errors.examBoard}</p>}
                       </div>

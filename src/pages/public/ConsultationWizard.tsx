@@ -31,7 +31,7 @@ const initialData: FormData = {
 
 const consultationTypes: { value: ConsultationType; label: string; description: string }[] = [
   { value: 'music_lessons', label: 'Music Lessons', description: 'Individual or group instrumental/vocal lessons' },
-  { value: 'exams', label: 'Professional Exams', description: 'ABRSM, Trinity, MUSON exam preparation' },
+  { value: 'exams', label: 'Professional Exams', description: 'ABRSM, Trinity, MUSON & ISoM exam preparation' },
   { value: 'consultancy', label: 'Music Consultancy', description: 'School, church, or choir music programme setup' },
   { value: 'general', label: 'General Enquiry', description: 'Any other question or interest' },
 ];
