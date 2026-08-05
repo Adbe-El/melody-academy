@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Music, Menu, X, LogIn } from 'lucide-react';
+import { Music, Menu, X, LogIn, ArrowRight } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 
 export const Navbar: React.FC = () => {
@@ -10,13 +10,10 @@ export const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
-    { to: '/about', label: 'About' },
-    { to: '/programmes', label: 'Courses' },
+    { to: '/programmes', label: 'Programmes' },
     { to: '/instruments', label: 'Instruments' },
-    { to: '/exam-prep', label: 'Exam Prep' },
-    { to: '/consultancy', label: 'Consultancy' },
-    { to: '/contact?purpose=general', label: 'Contact Us' },
-    { to: '/apply-instructor', label: 'Join as Tutor' },
+    { to: '/about', label: 'About' },
+    { to: '/contact?purpose=general', label: 'Contact' },
   ];
 
   const isActive = (path: string) => {
@@ -82,6 +79,12 @@ export const Navbar: React.FC = () => {
                 >
                   Sign Out
                 </button>
+                <button
+                  onClick={() => navigate('/contact')}
+                  className="px-5 py-2.5 rounded-full bg-academy-gold hover:bg-academy-gold-hover text-academy-emerald-dark font-bold text-sm transition-all flex items-center gap-1.5"
+                >
+                  Book Consultation <ArrowRight className="w-3.5 h-3.5" />
+                </button>
               </div>
             ) : (
               <div className="flex items-center gap-2">
@@ -92,6 +95,12 @@ export const Navbar: React.FC = () => {
                   <LogIn className="w-4 h-4" />
                   Sign In
                 </Link>
+                <button
+                  onClick={() => navigate('/contact')}
+                  className="px-5 py-2.5 rounded-full bg-academy-emerald hover:bg-academy-emerald-hover text-white font-semibold text-sm shadow-md transition-all flex items-center gap-1.5"
+                >
+                  Book Consultation <ArrowRight className="w-3.5 h-3.5" />
+                </button>
               </div>
             )}
           </div>
@@ -137,6 +146,12 @@ export const Navbar: React.FC = () => {
                 {user.role === 'admin' ? 'Admin Panel' : 'My Portal'}
               </button>
               <button
+                onClick={() => { navigate('/contact'); setMobileMenuOpen(false); }}
+                className="w-full py-3 rounded-full bg-academy-gold text-academy-emerald-dark font-bold text-center shadow"
+              >
+                Book Consultation
+              </button>
+              <button
                 onClick={() => { signOut(); navigate('/'); setMobileMenuOpen(false); }}
                 className="w-full py-2 text-sm text-gray-500 hover:text-red-600 transition-colors"
               >
@@ -145,6 +160,12 @@ export const Navbar: React.FC = () => {
             </>
           ) : (
             <>
+              <button
+                onClick={() => { navigate('/contact'); setMobileMenuOpen(false); }}
+                className="w-full py-3 rounded-full bg-academy-gold text-academy-emerald-dark font-bold text-center shadow"
+              >
+                Book Consultation
+              </button>
               <Link
                 to="/auth/login"
                 onClick={() => setMobileMenuOpen(false)}

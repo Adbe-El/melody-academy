@@ -188,3 +188,134 @@
   transform-origin: bottom;
   animation: eq 1.4s ease-in-out infinite;
 }
+
+/* --- Concert Hall additions --- */
+
+/* Gold gradient text */
+.text-gradient-gold {
+  background: linear-gradient(120deg, #e8c766 0%, #d4af37 45%, #f5e3a8 70%, #b8972e 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 6s linear infinite;
+}
+
+/* Grain / noise texture overlay */
+.grain-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.06;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+}
+
+/* Sheet-music staff lines */
+.staff-lines {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 3px,
+    rgba(212, 175, 55, 0.18) 3px,
+    rgba(212, 175, 55, 0.18) 4px
+  );
+}
+
+/* Gold/emerald duotone treatment for photography */
+.duotone-gold {
+  position: relative;
+  isolation: isolate;
+}
+.duotone-gold img {
+  filter: grayscale(1) contrast(1.08) brightness(0.92);
+  mix-blend-mode: luminosity;
+}
+.duotone-gold::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(160deg, rgba(212, 175, 55, 0.5), rgba(15, 56, 44, 0.15));
+  mix-blend-mode: screen;
+}
+.duotone-gold::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(180deg, rgba(15, 56, 44, 0.72), rgba(9, 37, 29, 0.55));
+  mix-blend-mode: multiply;
+}
+
+/* Rising musical note */
+@keyframes note-float {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(0.6);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.7;
+  }
+  85% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(-140px) rotate(18deg) scale(1);
+    opacity: 0;
+  }
+}
+.animate-note-float {
+  animation: note-float 6s ease-in-out infinite;
+}
+
+/* Scroll hint bounce */
+@keyframes scroll-hint {
+  0%, 100% { transform: translateY(0); opacity: 0.9; }
+  50% { transform: translateY(8px); opacity: 0.4; }
+}
+.animate-scroll-hint {
+  animation: scroll-hint 1.8s ease-in-out infinite;
+}
+
+/* Slow spin (vinyl / ring motif) */
+@keyframes spin-slow {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.animate-spin-slow {
+  animation: spin-slow 24s linear infinite;
+}
+
+/* Fade-up used by JS-free fallbacks */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Marquee pause on hover */
+.marquee-pause:hover > div {
+  animation-play-state: paused;
+}
+
+/* Hide scrollbars (horizontal gallery rows) */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Reduced motion: neutralize all decorative motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

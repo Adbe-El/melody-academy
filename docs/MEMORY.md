@@ -6,10 +6,10 @@
 
 ## Current Status
 
-- **Last completed phase:** Phase 9 — About Page (COMPLETE)
-- **Current phase:** ABOUT PAGE COMPLETE
-- **Current feature:** About page created with biography, certifications, global affiliations, charity work, and teaching philosophy; `/about` route registered in App.tsx and Navbar
-- **Next steps:** Test the app end-to-end (login as admin, verify data loads from Supabase); verify About page rendering at `/about`
+- **Last completed phase:** Phase 10 — Home Page Concert Hall Redesign (COMPLETE)
+- **Current phase:** HOME REDESIGN COMPLETE
+- **Current feature:** Home page rebuilt as a cinematic "Concert Hall" experience — dark-emerald hero with line-mask headline reveal, parallax portrait, affiliation ticker, bento services grid, featured programmes (live data + tilt cards), maestro stats with count-up counters, self-drawing journey timeline, auto-advancing testimonial carousel, horizontal instrument gallery, and animated final CTA. New shared primitives (Reveal, SectionHeading, Counter, MagneticButton, Waveform, AffiliationTicker, TestimonialCarousel) set the design tone for other public pages. Navbar trimmed to 4 links + Book Consultation CTA; public Admin link removed from Footer.
+- **Next steps:** Review Home visually at `/` (login as admin if needed for data); propagate shared primitives to About/Programmes/etc. in follow-ups
 - **Blockers:** None
 - **Supabase credentials:** Project `zadrvszroluveuozckog`, URL `https://zadrvszroluveuozckog.supabase.co`
 - **Admin emails:** `adbeelomiunu@gmail.com`, `mattagbamusicconsult@gmail.com`
@@ -101,6 +101,15 @@
 - [x] 9.3 Added "About" link to Navbar
 - [x] 9.4 Updated PAGES.md and MEMORY.md to document the new page
 
+### Phase 10 — Home Page Concert Hall Redesign (COMPLETE)
+
+- [x] 10.1 Added CSS foundation — gold gradient text, grain overlay, staff-lines motif, note-float, scroll-hint, spin-slow, marquee pause, scrollbar-hide, prefers-reduced-motion guards
+- [x] 10.2 Built shared primitives — Reveal, SectionHeading, Counter, MagneticButton, Waveform, AffiliationTicker, TestimonialCarousel (all reduced-motion aware)
+- [x] 10.3 Rebuilt Home.tsx — 9 sections: parallax hero w/ line-mask headline, affiliation ticker, bento services (route dedupe fix), live featured programmes w/ tilt cards, maestro stats + quote, self-drawing journey timeline, auto-advance testimonial carousel, horizontal instrument gallery w/ empty states, animated final CTA w/ WhatsApp
+- [x] 10.4 Navbar trim — 4 links (Programmes, Instruments, About, Contact) + gold/emerald "Book Consultation" CTA; mobile drawer updated
+- [x] 10.5 Footer — removed public "Admin Dashboard" link, added About Matthew + Apply as Instructor
+- [x] 10.6 Verified — `npm run build` and `npm run lint` clean (only pre-existing warnings remain)
+
 ---
 
 ## Resume Instructions
@@ -132,6 +141,7 @@
 | 2026-07-28 | PostgREST JOINs for learners | Denormalized data returned to UI (user name + programme title via JOIN, not separate queries) |
 | 2026-07-28 | Users table: first_name + last_name | Separate columns instead of full_name, concatenated in service layer |
 | 2026-07-29 | Dedicated `/about` route instead of Home section | Founder biography warranted its own page; Home now focuses on services and CTA |
+| 2026-08-05 | Concert Hall home redesign | Home rebuilt as cinematic dark-emerald "art & music hub" — real institutions in ticker, live programme data, parallax/count-up/timeline/carousel motion. Shared primitives set tone for future public pages. All motion respects prefers-reduced-motion. |
 
 ---
 
