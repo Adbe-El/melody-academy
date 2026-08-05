@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
-import { Building2, Church, GraduationCap, Users, CheckCircle, Send, Sparkles, ChevronDown, Quote } from 'lucide-react';
+import { Building2, Church, GraduationCap, Users, CheckCircle, Send, Sparkles, ChevronDown } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
+import { Reveal } from '../../components/common/Reveal';
+import { SectionHeading } from '../../components/common/SectionHeading';
+import { TestimonialCarousel, type Testimonial } from '../../components/common/TestimonialCarousel';
 
 export const Consultancy: React.FC = () => {
   const { addConsultancyRequest } = useApp();
@@ -72,7 +75,7 @@ export const Consultancy: React.FC = () => {
     }
   ];
 
-  const testimonials = [
+  const testimonials: Testimonial[] = [
     {
       quote: "Matt-Agba Music Consult transformed our church worship team from a struggling group into a polished, spirit-filled band. The vocal coaching and sound check protocols alone were worth every naira.",
       name: "Pastor Emeka Obi",
@@ -111,51 +114,77 @@ export const Consultancy: React.FC = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
-      
+
       {/* Hero Header */}
-      <div className="bg-academy-emerald rounded-3xl p-8 sm:p-14 text-white text-center space-y-4 shadow-xl">
-        <span className="text-xs font-bold uppercase tracking-wider bg-white/10 text-academy-gold px-4 py-1.5 rounded-full border border-white/10">
-          Expert Music Consultancy
-        </span>
-        <h1 className="font-serif text-3xl sm:text-5xl font-bold">
-          Consultancy by Matthew Agba
-        </h1>
-        <p className="text-gray-300 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
-          With 25+ years as a pianist, organist, and music educator — and certifications from ABRSM, MUSON, and ISoM London — Matthew Agba partners with schools, churches, and corporate brands to build world-class music programs.
-        </p>
-      </div>
+      <section className="relative bg-academy-emerald-dark rounded-3xl p-8 sm:p-14 text-white text-center space-y-4 shadow-xl overflow-hidden">
+        <div className="absolute inset-0 staff-lines opacity-40" aria-hidden="true" />
+        <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-academy-gold/20 blur-3xl" aria-hidden="true" />
+        <div className="absolute inset-0 grain-overlay" aria-hidden="true" />
+        <div className="relative">
+          <Reveal>
+            <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider bg-white/10 text-academy-gold px-4 py-1.5 rounded-full border border-white/15">
+              <Sparkles className="w-3.5 h-3.5" /> Expert Music Consultancy
+            </span>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <h1 className="font-serif text-3xl sm:text-5xl font-bold mt-4">
+              Consultancy by <span className="text-gradient-gold italic">Matthew Agba</span>
+            </h1>
+          </Reveal>
+          <Reveal delay={0.2}>
+            <p className="text-gray-300 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+              With 25+ years as a pianist, organist, and music educator — and certifications from ABRSM, MUSON, and ISoM London — Matthew Agba partners with schools, churches, and corporate brands to build world-class music programs.
+            </p>
+          </Reveal>
+        </div>
+      </section>
 
       {/* Services Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {services.map((s, idx) => {
-          const Icon = s.icon;
-          return (
-            <div key={idx} className="bg-white p-6 rounded-3xl border border-gray-200/80 hover:border-academy-emerald/30 hover-lift flex gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-academy-sage text-academy-emerald flex items-center justify-center flex-shrink-0">
-                <Icon className="w-6 h-6" />
-              </div>
-              <div className="space-y-1">
-                <h3 className="font-serif text-xl font-bold text-gray-900">{s.title}</h3>
-                <p className="text-xs text-gray-600 leading-relaxed">{s.description}</p>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+      <section className="space-y-6">
+        <SectionHeading
+          eyebrow="What we offer"
+          title={
+            <>
+              Consultancy <span className="text-academy-emerald">Services</span>
+            </>
+          }
+          subtitle="Tailored engagements that build sustainable, excellent music programs."
+        />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {services.map((s, idx) => {
+            const Icon = s.icon;
+            return (
+              <Reveal key={s.title} delay={(idx % 2) * 0.1}>
+                <div className="bg-white p-6 rounded-3xl border border-gray-200/80 hover:border-academy-emerald/30 hover-lift flex gap-4 h-full">
+                  <div className="w-12 h-12 rounded-2xl bg-academy-sage text-academy-emerald flex items-center justify-center flex-shrink-0">
+                    <Icon className="w-6 h-6" />
+                  </div>
+                  <div className="space-y-1">
+                    <h3 className="font-serif text-xl font-bold text-gray-900">{s.title}</h3>
+                    <p className="text-xs text-gray-600 leading-relaxed">{s.description}</p>
+                  </div>
+                </div>
+              </Reveal>
+            );
+          })}
+        </div>
+      </section>
 
       {/* Consultancy Request Form */}
-      <div className="bg-academy-cream-light p-8 sm:p-12 rounded-3xl border border-black/5 max-w-3xl mx-auto shadow-sm">
-        <div className="text-center space-y-2 mb-8">
-          <div className="inline-flex items-center gap-1.5 bg-academy-sage text-academy-emerald px-3.5 py-1 rounded-full text-xs font-semibold">
-            <Sparkles className="w-3.5 h-3.5" /> Request Institutional Proposal
+      <section className="bg-academy-cream-light p-8 sm:p-12 rounded-3xl border border-black/5 max-w-3xl mx-auto shadow-sm">
+        <Reveal>
+          <div className="text-center space-y-2 mb-8">
+            <div className="inline-flex items-center gap-1.5 bg-academy-sage text-academy-emerald px-3.5 py-1 rounded-full text-xs font-semibold">
+              <Sparkles className="w-3.5 h-3.5" /> Request Institutional Proposal
+            </div>
+            <h2 className="font-serif text-3xl font-bold text-gray-900">
+              Submit Consultancy Inquiry
+            </h2>
+            <p className="text-xs text-gray-600">
+              Fill out the details below and Matthew Agba (or a team member) will contact your office with a tailored proposal.
+            </p>
           </div>
-          <h2 className="font-serif text-3xl font-bold text-gray-900">
-            Submit Consultancy Inquiry
-          </h2>
-          <p className="text-xs text-gray-600">
-            Fill out the details below and Matthew Agba (or a team member) will contact your office with a tailored proposal.
-          </p>
-        </div>
+        </Reveal>
 
         {submitted ? (
           <div className="bg-white p-8 rounded-2xl text-center space-y-4 border border-emerald-200">
@@ -284,35 +313,34 @@ export const Consultancy: React.FC = () => {
             </button>
           </form>
         )}
-      </div>
+      </section>
 
       {/* Success Stories */}
-      <div className="space-y-6">
-        <div className="text-center space-y-2">
-          <h2 className="font-serif text-3xl font-bold text-gray-900">Success Stories</h2>
-          <p className="text-xs text-gray-600 max-w-lg mx-auto">
-            See what past consultancy clients say about working with Matthew Agba.
-          </p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {testimonials.map((t, idx) => (
-            <div key={idx} className="bg-white p-6 rounded-3xl border border-gray-200/80 space-y-4 hover-lift">
-              <Quote className="w-8 h-8 text-academy-gold" />
-              <p className="text-sm text-gray-700 leading-relaxed italic">"{t.quote}"</p>
-              <div className="pt-4 border-t border-gray-100">
-                <p className="font-serif text-sm font-bold text-gray-900">{t.name}</p>
-                <p className="text-[10px] text-gray-500">{t.role}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+      <section className="space-y-6">
+        <SectionHeading
+          eyebrow="Client voices"
+          title={
+            <>
+              Success <span className="text-academy-emerald">Stories</span>
+            </>
+          }
+          subtitle="See what past consultancy clients say about working with Matthew Agba."
+        />
+        <Reveal delay={0.1}>
+          <TestimonialCarousel testimonials={testimonials} className="max-w-3xl mx-auto bg-white p-8 sm:p-10 rounded-3xl border border-gray-200/80 shadow-sm" />
+        </Reveal>
+      </section>
 
       {/* FAQ Accordion */}
-      <div className="max-w-3xl mx-auto space-y-6">
-        <div className="text-center space-y-2">
-          <h2 className="font-serif text-3xl font-bold text-gray-900">Frequently Asked Questions</h2>
-        </div>
+      <section className="max-w-3xl mx-auto space-y-6">
+        <SectionHeading
+          eyebrow="Questions"
+          title={
+            <>
+              Frequently Asked <span className="text-academy-emerald">Questions</span>
+            </>
+          }
+        />
         <div className="space-y-3">
           {faqs.map((faq, idx) => (
             <div key={idx} className={`bg-white rounded-2xl border transition-colors ${
@@ -335,7 +363,7 @@ export const Consultancy: React.FC = () => {
             </div>
           ))}
         </div>
-      </div>
+      </section>
 
     </div>
   );

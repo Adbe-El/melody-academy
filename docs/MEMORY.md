@@ -6,10 +6,10 @@
 
 ## Current Status
 
-- **Last completed phase:** Phase 10 — Home Page Concert Hall Redesign (COMPLETE)
-- **Current phase:** HOME REDESIGN COMPLETE
-- **Current feature:** Home page rebuilt as a cinematic "Concert Hall" experience — dark-emerald hero with line-mask headline reveal, parallax portrait, affiliation ticker, bento services grid, featured programmes (live data + tilt cards), maestro stats with count-up counters, self-drawing journey timeline, auto-advancing testimonial carousel, horizontal instrument gallery, and animated final CTA. New shared primitives (Reveal, SectionHeading, Counter, MagneticButton, Waveform, AffiliationTicker, TestimonialCarousel) set the design tone for other public pages. Navbar trimmed to 4 links + Book Consultation CTA; public Admin link removed from Footer.
-- **Next steps:** Review Home visually at `/` (login as admin if needed for data); propagate shared primitives to About/Programmes/etc. in follow-ups
+- **Last completed phase:** Phase 11 — Design Primitive Propagation (COMPLETE)
+- **Current phase:** DESIGN PRIMITIVE PROPAGATION COMPLETE
+- **Current feature:** Shared primitives from the Home redesign propagated to all remaining public pages. About rebuilt (line-mask gold hero, count-up stats band, affiliation ticker, dark emerald charity section, waveform quote, magnetic CTAs). Programmes, Instruments, ExamPrep, Consultancy, Contact, ProgrammeDetails, InstrumentDetails and ConsultationWizard all upgraded with SectionHeading headers, staggered Reveal cards, and dark staff-lines/grain hero banners. Consultancy success stories now use the auto-advancing TestimonialCarousel. Build + lint clean (only pre-existing warnings remain).
+- **Next steps:** Review pages visually at `/about`, `/programmes`, `/instruments`, `/exam-prep`, `/consultancy`, `/contact`; consider propagating to learner/admin portals in future phases
 - **Blockers:** None
 - **Supabase credentials:** Project `zadrvszroluveuozckog`, URL `https://zadrvszroluveuozckog.supabase.co`
 - **Admin emails:** `adbeelomiunu@gmail.com`, `mattagbamusicconsult@gmail.com`
@@ -110,6 +110,15 @@
 - [x] 10.5 Footer — removed public "Admin Dashboard" link, added About Matthew + Apply as Instructor
 - [x] 10.6 Verified — `npm run build` and `npm run lint` clean (only pre-existing warnings remain)
 
+### Phase 11 — Design Primitive Propagation (COMPLETE)
+
+- [x] 11.1 About page rebuilt — gold gradient hero, count-up stats band, affiliation ticker, dark emerald charity section, waveform quote, magnetic CTAs
+- [x] 11.2 Programmes + Instruments — SectionHeading headers, staggered Reveal cards, staff-lines/grain hero banners
+- [x] 11.3 ExamPrep + Consultancy — SectionHeading everywhere, Reveal cards, Consultancy success stories → TestimonialCarousel
+- [x] 11.4 Contact + ConsultationWizard — SectionHeading/Reveal header + Reveal columns
+- [x] 11.5 ProgrammeDetails + InstrumentDetails — Reveal-wrapped content sections
+- [x] 11.6 Verified — `npm run build` and `npm run lint` clean; no new warnings introduced
+
 ---
 
 ## Resume Instructions
@@ -142,6 +151,7 @@
 | 2026-07-28 | Users table: first_name + last_name | Separate columns instead of full_name, concatenated in service layer |
 | 2026-07-29 | Dedicated `/about` route instead of Home section | Founder biography warranted its own page; Home now focuses on services and CTA |
 | 2026-08-05 | Concert Hall home redesign | Home rebuilt as cinematic dark-emerald "art & music hub" — real institutions in ticker, live programme data, parallax/count-up/timeline/carousel motion. Shared primitives set tone for future public pages. All motion respects prefers-reduced-motion. |
+| 2026-08-05 | Propagate primitives to all public pages | About, Programmes, Instruments, ExamPrep, Consultancy, Contact, ProgrammeDetails, InstrumentDetails, ConsultationWizard upgraded with SectionHeading/Reveal/Counter/MagneticButton/Waveform/AffiliationTicker/TestimonialCarousel. Consultancy testimonials converted to auto-advancing carousel. Consistent dark hero treatment (staff-lines + grain + gold glow) across page banners. |
 
 ---
 

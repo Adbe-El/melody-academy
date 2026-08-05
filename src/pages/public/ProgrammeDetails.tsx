@@ -13,6 +13,7 @@ import {
   AlertCircle,
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
+import { Reveal } from '../../components/common/Reveal';
 
 const faqs = [
   {
@@ -95,6 +96,7 @@ const ProgrammeDetails = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
 
         {/* ── Overview ──────────────────────────────────────── */}
+        <Reveal>
         <section className="space-y-6">
           <div className="space-y-2 max-w-3xl">
             <span className="text-xs font-bold uppercase tracking-wider text-academy-emerald bg-academy-sage px-3.5 py-1 rounded-full">
@@ -143,8 +145,10 @@ const ProgrammeDetails = () => {
             </div>
           </div>
         </section>
+        </Reveal>
 
         {/* ── Learning Outcomes ──────────────────────────────── */}
+        <Reveal delay={0.1}>
         <section className="space-y-6">
           <div className="space-y-2 max-w-3xl">
             <span className="text-xs font-bold uppercase tracking-wider text-academy-emerald bg-academy-sage px-3.5 py-1 rounded-full">
@@ -166,8 +170,10 @@ const ProgrammeDetails = () => {
             </ul>
           </div>
         </section>
+        </Reveal>
 
         {/* ── Suitable For ───────────────────────────────────── */}
+        <Reveal delay={0.1}>
         <section className="space-y-6">
           <div className="space-y-2 max-w-3xl">
             <span className="text-xs font-bold uppercase tracking-wider text-academy-emerald bg-academy-sage px-3.5 py-1 rounded-full">
@@ -204,8 +210,10 @@ const ProgrammeDetails = () => {
             </div>
           </div>
         </section>
+        </Reveal>
 
         {/* ── FAQ ────────────────────────────────────────────── */}
+        <Reveal delay={0.1}>
         <section className="space-y-6">
           <div className="space-y-2 max-w-3xl">
             <span className="text-xs font-bold uppercase tracking-wider text-academy-emerald bg-academy-sage px-3.5 py-1 rounded-full">
@@ -251,8 +259,10 @@ const ProgrammeDetails = () => {
             })}
           </div>
         </section>
+        </Reveal>
 
         {/* ── CTA ────────────────────────────────────────────── */}
+        <Reveal>
         <section className="bg-academy-emerald rounded-3xl p-8 sm:p-12 text-center space-y-6 shadow-xl">
           <Music className="w-10 h-10 text-academy-gold mx-auto" />
           <h2 className="font-serif text-3xl sm:text-4xl font-bold text-white max-w-xl mx-auto leading-tight">
@@ -276,6 +286,7 @@ const ProgrammeDetails = () => {
             </Link>
           </div>
         </section>
+        </Reveal>
 
       </div>
     </div>

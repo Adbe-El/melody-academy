@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { CheckCircle, ArrowLeft, ArrowRight, Sparkles, Calendar } from 'lucide-react';
 import { useToast } from '../../components/ui/Toast';
 import { consultationsService } from '../../services/consultations';
+import { Reveal } from '../../components/common/Reveal';
 
 type ConsultationType = 'music_lessons' | 'exams' | 'consultancy' | 'general';
 
@@ -131,6 +132,7 @@ export const ConsultationWizard: React.FC = () => {
   return (
     <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
       {/* Header */}
+      <Reveal>
       <div className="text-center space-y-3">
         <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-academy-emerald bg-academy-sage px-3.5 py-1 rounded-full">
           <Sparkles className="w-3.5 h-3.5" /> Expert-Led Guidance
@@ -143,6 +145,7 @@ Start with a 1-on-1 consultation so Matthew Agba can recommend the ideal program
               tailored to your goals.
         </p>
       </div>
+      </Reveal>
 
       {/* Step indicator */}
       <div className="flex items-center justify-center gap-2">

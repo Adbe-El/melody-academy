@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, MessageCircle, Check, X, ChevronRight } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
+import { Reveal } from '../../components/common/Reveal';
 
 export const InstrumentDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -58,6 +59,7 @@ export const InstrumentDetails: React.FC = () => {
       </button>
 
       {/* Main Content — Two Column */}
+      <Reveal>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14">
 
         {/* Left — Image */}
@@ -151,9 +153,11 @@ export const InstrumentDetails: React.FC = () => {
 
         </div>
       </div>
+      </Reveal>
 
       {/* Related Instruments */}
       {related.length > 0 && (
+        <Reveal delay={0.1}>
         <section className="space-y-6 pt-8 border-t border-gray-200">
           <div>
             <span className="text-xs font-bold uppercase tracking-wider text-academy-emerald">
@@ -191,6 +195,7 @@ export const InstrumentDetails: React.FC = () => {
             ))}
           </div>
         </section>
+        </Reveal>
       )}
 
     </div>

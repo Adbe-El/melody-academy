@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { MapPin, Phone, Mail, Clock, Send, CheckCircle, MessageSquare, Globe, Share2 } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 import { useApp } from '../../context/AppContext';
 import { consultationsService } from '../../services/consultations';
 import { examRegistrationsService } from '../../services/examRegistrations';
+import { Reveal } from '../../components/common/Reveal';
+import { SectionHeading } from '../../components/common/SectionHeading';
 
 const PURPOSES = ['tutor', 'exam', 'general'] as const;
 
@@ -120,22 +122,21 @@ export const Contact = () => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
       
       {/* Header */}
-      <div className="text-center space-y-3 max-w-2xl mx-auto">
-        <span className="text-xs font-bold uppercase tracking-wider text-academy-emerald bg-academy-sage px-3.5 py-1 rounded-full">
-          Get in Touch
-        </span>
-        <h1 className="font-serif text-4xl sm:text-5xl font-bold text-gray-900">
-          Contact Matt-Agba Music Consult
-        </h1>
-        <p className="text-gray-600 text-sm sm:text-base">
-          Have questions about piano lessons, exam preparation, consultancy, or instrument sales? Matthew Agba is here to help.
-        </p>
-      </div>
+      <SectionHeading
+        eyebrow="Get in Touch"
+        title={
+          <>
+            Contact <span className="text-academy-emerald">Matt-Agba Music Consult</span>
+          </>
+        }
+        subtitle="Have questions about piano lessons, exam preparation, consultancy, or instrument sales? Matthew Agba is here to help."
+      />
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
         
         {/* Contact Details Card */}
-        <div className="lg:col-span-5 bg-academy-emerald text-white p-8 sm:p-10 rounded-3xl space-y-8 shadow-xl flex flex-col justify-between">
+        <Reveal x={-24} y={0} className="lg:col-span-5">
+        <div className="bg-academy-emerald text-white p-8 sm:p-10 rounded-3xl space-y-8 shadow-xl flex flex-col justify-between h-full">
           <div className="space-y-6">
             <h3 className="font-serif text-2xl font-bold text-white">Get in Touch with Matthew</h3>
             <p className="text-gray-300 text-xs leading-relaxed">
@@ -211,9 +212,11 @@ export const Contact = () => {
             </button>
           </div>
         </div>
+        </Reveal>
 
         {/* General Enquiry Form + Map */}
-        <div className="lg:col-span-7 space-y-6">
+        <Reveal x={24} y={0} delay={0.1} className="lg:col-span-7">
+        <div className="space-y-6">
           <div id="contact-form" className="bg-white p-8 sm:p-10 rounded-3xl border border-gray-200/80 shadow-sm space-y-6">
             <h3 className="font-serif text-2xl font-bold text-gray-900">Get in Touch</h3>
 
@@ -377,6 +380,7 @@ export const Contact = () => {
             />
           </div>
         </div>
+        </Reveal>
 
       </div>
 
